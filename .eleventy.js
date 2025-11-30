@@ -27,12 +27,17 @@ module.exports = function (eleventyConfig) {
     return new Date().getFullYear();
   });
 
-  // Check if URL is active
+  // Check if URL is active (improved for nested routes)
   eleventyConfig.addFilter("isActive", (pageUrl, navUrl) => {
     if (!pageUrl || !navUrl) return false;
     if (pageUrl === navUrl) return true;
     if (navUrl === '/' && pageUrl === '/') return true;
-    if (navUrl !== '/' && pageUrl.startsWith(navUrl)) return true;
+    // For nested routes: if we're on /news/posts/article, /news should be active
+    if (navUrl !== '/' && pageUrl.startsWith(navUrl)) {
+      // Make sure it's not just a partial match (e.g., /new shouldn't match /news)
+      const nextChar = pageUrl[navUrl.length];
+      return !nextChar || nextChar === '/' || nextChar === '?';
+    }
     return false;
   });
 

@@ -44,21 +44,28 @@
     <script src="/static/js/swup-scroll-plugin.js"></script>
     <script src="/static/js/swup-head-plugin.js"></script>
     <script>
-      // Initialize Lenis and Swup after scripts are loaded
-      document.addEventListener('DOMContentLoaded', function() {
-        // Initialize Lenis for smooth scrolling
+      // Initialize Lenis and Swup - wait for all scripts to load
+      (function initSwupAndLenis() {
+        // Check if all required libraries are loaded
+        if (typeof Swup === 'undefined' || typeof Lenis === 'undefined') {
+          setTimeout(initSwupAndLenis, 50);
+          return;
+        }
+
+        // Initialize Lenis for smooth scrolling with better settings
         let lenis;
         if (typeof Lenis !== 'undefined') {
           lenis = new Lenis({
-            duration: 1.2,
+            duration: 1.5,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             orientation: 'vertical',
             gestureOrientation: 'vertical',
             smoothWheel: true,
-            wheelMultiplier: 1,
-            smoothTouch: false,
-            touchMultiplier: 2,
+            wheelMultiplier: 0.8, // Slightly slower for smoother feel
+            smoothTouch: true, // Enable smooth touch for mobile
+            touchMultiplier: 1.5,
             infinite: false,
+            lerp: 0.08, // Lower lerp for smoother animation
           });
 
           // Animation loop for Lenis
@@ -70,12 +77,7 @@
 
           // Make Lenis available globally
           window.lenis = lenis;
-        }
-
-        // Check if Swup is available
-        if (typeof Swup === 'undefined') {
-          console.warn('Swup is not loaded');
-          return;
+          console.log('Lenis initialized');
         }
 
         // Get plugin constructors (UMD modules export to window)
@@ -96,7 +98,10 @@
           ].filter(Boolean),
           cache: true,
           animateHistoryBrowsing: true,
+          animationSelector: '[class*="transition-"], #swup',
         });
+
+        console.log('Swup initialized');
 
         // Integrate Lenis with Swup
         if (lenis) {
@@ -136,8 +141,46 @@
           if (window.Alpine) {
             window.Alpine.initTree(document.body);
           }
+          
+          // Update active navigation item after page transition
+          updateActiveNavItem();
         });
-      });
+
+        // Function to update active navigation item
+        function updateActiveNavItem() {
+          const currentUrl = window.location.pathname;
+          const navLinks = document.querySelectorAll('nav a[href]');
+          
+          navLinks.forEach(link => {
+            const linkUrl = link.getAttribute('href');
+            let isActive = false;
+            
+            // Check if link matches current URL
+            if (linkUrl === currentUrl || (linkUrl === '/' && currentUrl === '/')) {
+              isActive = true;
+            } else if (linkUrl !== '/' && currentUrl.startsWith(linkUrl)) {
+              // For nested routes like /news/posts/article
+              // If we're on /news or /news/*, mark News as active
+              isActive = true;
+            }
+            
+            // Update classes
+            if (isActive) {
+              link.classList.add('text-indigo-600', 'dark:text-indigo-400', 'bg-indigo-100', 'dark:bg-indigo-900/30', 'font-semibold', 'border-b-2', 'border-indigo-600', 'dark:border-indigo-400');
+              link.classList.remove('text-gray-700', 'dark:text-gray-300', 'hover:text-indigo-600', 'dark:hover:text-indigo-400', 'hover:bg-gray-100', 'dark:hover:bg-gray-800');
+            } else {
+              link.classList.remove('text-indigo-600', 'dark:text-indigo-400', 'bg-indigo-100', 'dark:bg-indigo-900/30', 'font-semibold', 'border-b-2', 'border-indigo-600', 'dark:border-indigo-400');
+              link.classList.add('text-gray-700', 'dark:text-gray-300');
+            }
+          });
+        }
+
+        // Update active nav on initial load
+        updateActiveNavItem();
+
+        // Make swup available globally for debugging
+        window.swup = swup;
+      })();
     </script>
     
     <!-- Webflow JS - Add your Webflow JS files here -->

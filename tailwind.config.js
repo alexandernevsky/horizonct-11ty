@@ -1,5 +1,9 @@
 module.exports = {
-  content: ["./**/*.html"],
+  content: [
+    "./src/**/*.{html,njk,md,js}",
+    "./src/_includes/**/*.{html,njk}",
+    "./src/_data/**/*.{yaml,yml,json}",
+  ],
   darkMode: 'class',
   theme: {
     container: {

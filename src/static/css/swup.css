@@ -1,38 +1,48 @@
-/* Swup transition styles */
-html.is-changing .transition-fade {
-  transition: opacity 0.3s ease-in-out;
+/* Swup transition styles - Enhanced animations */
+html.is-changing {
+  overflow-x: hidden;
 }
 
-html.is-animating .transition-fade {
-  opacity: 0;
-}
-
-html.is-rendering .transition-fade {
-  opacity: 0;
-}
-
-/* Smooth transitions for all content */
+/* Fade + Slide animation for page transitions */
 #swup {
-  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
 }
 
+/* Out animation - page leaving */
 html.is-animating #swup {
   opacity: 0;
-  transform: translateY(10px);
+  transform: translateY(20px) scale(0.98);
 }
 
+html.is-leaving #swup {
+  opacity: 0;
+  transform: translateY(-20px) scale(0.98);
+}
+
+/* In animation - page entering */
 html.is-rendering #swup {
   opacity: 0;
+  transform: translateY(20px) scale(0.98);
 }
 
 html.is-ready #swup {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
-/* Prevent flash of unstyled content during transitions */
-html.is-changing {
-  overflow-x: hidden;
+/* Smooth fade for specific elements */
+.transition-fade {
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html.is-animating .transition-fade,
+html.is-rendering .transition-fade {
+  opacity: 0;
+}
+
+html.is-ready .transition-fade {
+  opacity: 1;
 }
 
 /* Lenis smooth scroll styles */
@@ -55,4 +65,3 @@ html.lenis {
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
 }
-
