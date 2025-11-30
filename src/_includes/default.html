@@ -15,31 +15,31 @@
     <link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
     <!-- Swup CSS - Inline for immediate loading -->
     <style>
-      /* Swup slide animation - Top to Bottom (as per documentation) */
+      /* Swup fade animation - exactly as on swup.js.org */
       html.is-changing {
         overflow-x: hidden;
       }
 
       /* Define transition duration during page visits */
-      html.is-changing .transition-slide {
-        transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        transform: translateY(0);
+      html.is-changing .transition-fade {
+        transition: opacity 0.25s ease-in-out;
+        opacity: 1;
       }
 
-      /* Out animation - page leaving (slides up) */
-      html.is-animating .transition-slide,
-      html.is-leaving .transition-slide {
-        transform: translateY(-100%);
+      /* Out animation - page leaving (fades out) */
+      html.is-animating .transition-fade,
+      html.is-leaving .transition-fade {
+        opacity: 0;
       }
 
-      /* In animation - page entering (slides down from top) */
-      html.is-rendering .transition-slide {
-        transform: translateY(100%);
+      /* In animation - page entering (starts invisible, fades in) */
+      html.is-rendering .transition-fade {
+        opacity: 0;
       }
 
-      /* Final state */
-      html.is-ready .transition-slide {
-        transform: translateY(0);
+      /* Final state - page fully loaded */
+      html.is-ready .transition-fade {
+        opacity: 1;
       }
 
       /* Lenis smooth scroll styles */
@@ -76,7 +76,7 @@
   <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-200" data-lenis-prevent="false">
     {% include "./partials/navbar.html" %}
 
-    <main id="swup" class="flex-grow transition-slide">
+    <main id="swup" class="flex-grow transition-fade">
       {{ content | safe }}
     </main>
 
@@ -152,7 +152,7 @@
           ].filter(Boolean),
           cache: true,
           animateHistoryBrowsing: true,
-          animationSelector: '.transition-slide', // As per documentation
+          animationSelector: '.transition-fade', // As per documentation
           animationScope: 'html', // As per documentation
         });
 
