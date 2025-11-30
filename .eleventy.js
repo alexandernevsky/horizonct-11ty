@@ -133,7 +133,6 @@ module.exports = function (eleventyConfig) {
     "./node_modules/swup/dist/Swup.umd.js": "./static/js/swup.js",
     "./node_modules/@swup/scroll-plugin/dist/index.umd.js": "./static/js/swup-scroll-plugin.js",
     "./node_modules/@swup/head-plugin/dist/index.umd.js": "./static/js/swup-head-plugin.js",
-    "./node_modules/lenis/dist/lenis.min.js": "./static/js/lenis.min.js",
     // Copy Geist font
     "./node_modules/geist/dist/fonts/geist-sans/Geist-Variable.woff2": "./static/fonts/geist/Geist-Variable.woff2",
     // Copy EB Garamond fonts (latin subset for variable-like behavior)

@@ -1,46 +1,195 @@
 ---
 layout: default
 title: Careers | Horizon Commodities Trading
-description: Join the Horizon Commodities Trading team and help shape the future of global commodity trading
+description: Join Horizon Commodities Trading and shape the future of global energy and industrial supply
 path: careers
+hero_title: "Shape the Future of Global Energy & Industrial Supply"
+hero_subtitle: "Careers at Horizon Commodities Trading"
+intro_text: "At Horizon, we are not just trading paper. We manage the complex physical journey of essential resources—from mine to market—that power cities and build infrastructure globally. We are looking for driven professionals who are ready to tackle real-world logistical challenges and make a tangible impact in the dynamic world of physical commodity trading. If you prefer execution over abstraction, this is where you belong"
+benefit_1_title: "Global Impact"
+benefit_1_text: "Play a direct role in securing energy and raw material supplies for major economies across Asia and beyond"
+benefit_2_title: "Operational Mastery"
+benefit_2_text: "Gain deep expertise in end-to-end physical supply chain management, from minehead logistics to shipping and finance"
+benefit_3_title: "Dynamic Environment"
+benefit_3_text: "Thrive in a fast-paced culture where market intelligence and quick decision-making are essential to success"
+benefit_4_title: "Meritocratic Culture"
+benefit_4_text: "Advance your career in an environment that rewards performance, execution, and tangible results above all else"
+openings_intro: "Each role is integral to advancing sustainable supply chain solutions and offers a unique chance to contribute to meaningful, industry-leading work."
+cta_text: "We're always on the lookout for great talent. If you didn't see your dream role but want to work with Horizon CT, we want to hear from you."
 ---
 
-<section class="py-12 bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
+<!-- Hero Section -->
+<section class="py-20 bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     <div class="max-w-4xl mx-auto text-center">
-      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">Careers</h1>
-      <p class="text-xl text-gray-700 dark:text-gray-300">
-        Join our team and help shape the future of global commodity trading
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+        {{ hero_title }}
+      </h1>
+      <h2 class="text-2xl md:text-3xl text-gray-700 dark:text-gray-300 mb-8">
+        {{ hero_subtitle }}
+      </h2>
+      <p class="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
+        {{ intro_text }}
       </p>
+      <a href="#openings" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 transition-colors">
+        View Openings
+      </a>
     </div>
   </div>
 </section>
 
+<!-- Work @ Horizon Section -->
 <section class="py-16 bg-white dark:bg-gray-800">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="max-w-4xl mx-auto prose prose-lg dark:prose-invert max-w-none">
-      <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Join Our Team</h2>
-      <p class="text-gray-700 dark:text-gray-300 mb-6">
-        Horizon Commodities Trading is always looking for talented individuals who are passionate about global commodity trading and supply chain excellence.
-      </p>
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-12 text-center">Work @ Horizon CT</h2>
       
-      <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">Why Work With Us</h3>
-      <ul class="list-disc list-inside text-gray-700 dark:text-gray-300 mb-6 space-y-2">
-        <li>Work with a dynamic team in the heart of Hong Kong</li>
-        <li>Opportunities for professional growth and development</li>
-        <li>Competitive compensation packages</li>
-        <li>Exposure to global markets and international trade</li>
-      </ul>
-      
-      <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">Open Positions</h3>
-      <p class="text-gray-700 dark:text-gray-300 mb-6">
-        We are currently accepting applications for various positions. Please send your resume and cover letter to <a href="mailto:{{ settings.email }}" class="text-indigo-600 dark:text-indigo-400 hover:underline">{{ settings.email }}</a>.
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Benefit 1 -->
+        <div class="bg-gray-50 dark:bg-gray-900 p-8 rounded-lg border border-gray-200 dark:border-gray-700">
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">{{ benefit_1_title }}</h3>
+          <p class="text-gray-700 dark:text-gray-300">
+            {{ benefit_1_text }}
+          </p>
+        </div>
+
+        <!-- Benefit 2 -->
+        <div class="bg-gray-50 dark:bg-gray-900 p-8 rounded-lg border border-gray-200 dark:border-gray-700">
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">{{ benefit_2_title }}</h3>
+          <p class="text-gray-700 dark:text-gray-300">
+            {{ benefit_2_text }}
+          </p>
+        </div>
+
+        <!-- Benefit 3 -->
+        <div class="bg-gray-50 dark:bg-gray-900 p-8 rounded-lg border border-gray-200 dark:border-gray-700">
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">{{ benefit_3_title }}</h3>
+          <p class="text-gray-700 dark:text-gray-300">
+            {{ benefit_3_text }}
+          </p>
+        </div>
+
+        <!-- Benefit 4 -->
+        <div class="bg-gray-50 dark:bg-gray-900 p-8 rounded-lg border border-gray-200 dark:border-gray-700">
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">{{ benefit_4_title }}</h3>
+          <p class="text-gray-700 dark:text-gray-300">
+            {{ benefit_4_text }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Current Openings Section -->
+<section id="openings" class="py-16 bg-gray-50 dark:bg-gray-900">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Current Openings</h2>
+      <p class="text-lg text-gray-700 dark:text-gray-300 mb-12">
+        {{ openings_intro }}
       </p>
-      
-      <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">How to Apply</h3>
-      <p class="text-gray-700 dark:text-gray-300">
-        To apply for a position, please send your CV and cover letter to our HR department at <a href="mailto:{{ settings.email }}" class="text-indigo-600 dark:text-indigo-400 hover:underline">{{ settings.email }}</a> with the subject line "Career Application - [Position Name]".
+
+      <div class="space-y-6">
+        <!-- Job 1: Supply Chain Analyst -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow">
+          <div class="flex items-start justify-between">
+            <div class="flex-1">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">open role</span>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Supply Chain Analyst — (Coal & Bulk Commodities)</h3>
+              </div>
+              <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mt-2">
+                <span>Full Time</span>
+                <span>•</span>
+                <span>Dubai</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Job 2: Customer Success Manager -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow">
+          <div class="flex items-start justify-between">
+            <div class="flex-1">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">open role</span>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Customer Success Manager</h3>
+              </div>
+              <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mt-2">
+                <span>Full Time</span>
+                <span>•</span>
+                <span>Dubai</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Job 3: Supply Chain Consultant -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow">
+          <div class="flex items-start justify-between">
+            <div class="flex-1">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">open role</span>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Supply Chain Consultant</h3>
+              </div>
+              <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mt-2">
+                <span>Full Time</span>
+                <span>•</span>
+                <span>Dubai</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Job 4: Software Engineer -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow">
+          <div class="flex items-start justify-between">
+            <div class="flex-1">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">open role</span>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Software Engineer - Sustainability Solutions</h3>
+              </div>
+              <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mt-2">
+                <span>Contract</span>
+                <span>•</span>
+                <span>Dubai</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Job 5: Sustainability Data Analyst -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow">
+          <div class="flex items-start justify-between">
+            <div class="flex-1">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">open role</span>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Sustainability Data Analyst</h3>
+              </div>
+              <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mt-2">
+                <span>Full Time</span>
+                <span>•</span>
+                <span>Dubai</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-16 bg-white dark:bg-gray-800">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto text-center">
+      <p class="text-xl text-gray-700 dark:text-gray-300 mb-8">
+        {{ cta_text }}
       </p>
+      <a href="/contact" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 transition-colors">
+        Get in touch
+      </a>
     </div>
   </div>
 </section>

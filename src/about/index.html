@@ -1,48 +1,120 @@
 ---
 layout: default
 title: About Us | Horizon Commodities Trading
-description: Learn about Horizon Commodities Trading LTD - connecting industrial buyers with vetted producers
+description: Learn about Horizon Commodities Trading Limited - connecting reputable mining producers with large-scale industrial end-users across Asia and the Middle East
 path: about
+hero_title: "We Move the Raw Power<br>That Drives Civilization"
+hero_subtitle: "Learn About us"
+main_heading: "Horizon Commodities Trading Limited powers industrial growth through reliable, producer-direct commodity trading"
+main_text_1: "At **Horizon Commodities Trading Limited**, we believe that in the volatile world of physical trading, certainty is the most valuable asset. We are not just brokers; we are supply chain managers. Based in Hong Kong, we specialize in connecting reputable mining producers with large-scale industrial end-users across Asia and the Middle East, ensuring the steady flow of essential thermal and metallurgical coal."
+main_text_2: "Our approach is built on physical control. We don't just rely on paperwork; we actively manage the logistics chain from minehead to discharge port. By mandating independent quality inspections and coordinating intermodal transport, we provide our clients with the operational assurance they need to run their power plants and steel mills without interruption."
+feature_1_num: "01."
+feature_1_title: "Producer-Direct Access"
+feature_1_text: "We connect you directly with reputable mining producers, eliminating intermediaries and ensuring transparent, reliable supply chains."
+feature_2_num: "02."
+feature_2_title: "Verified Quality Control"
+feature_2_text: "Every shipment undergoes independent quality inspections by accredited laboratories, ensuring 100% compliance with your specifications."
+feature_3_num: "03."
+feature_3_title: "Operational Reliability"
+feature_3_text: "We actively manage the entire logistics chain from minehead to discharge port, ensuring your operations run without interruption."
+feature_4_num: "04."
+feature_4_title: "Long-Term Partnership"
+feature_4_text: "We build lasting relationships with both producers and end-users, creating value through consistent, reliable service over time."
+news_title: "News & Insight"
+news_description: "Curated articles that provide professional and balanced perspectives on the latest trends, data-driven analyses, and practical advice for navigating the green logistics landscape."
 ---
 
-<section class="py-12 bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
+<!-- Hero Section -->
+<section class="py-20 bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     <div class="max-w-4xl mx-auto text-center">
-      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">About Us</h1>
-      <p class="text-xl text-gray-700 dark:text-gray-300">
-        Learn about Horizon Commodities Trading LTD and our mission to transform global commodity trading
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+        {{ hero_title | safe }}
+      </h1>
+      <p class="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-8">
+        {{ hero_subtitle }}
       </p>
     </div>
   </div>
 </section>
 
+<!-- Main Content Section -->
 <section class="py-16 bg-white dark:bg-gray-800">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="max-w-4xl mx-auto prose prose-lg dark:prose-invert max-w-none">
-      <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Horizon Commodities Trading LTD</h2>
-      <p class="text-gray-700 dark:text-gray-300 mb-6">
-        Horizon Commodities Trading LTD is a Hong Kong registered company specializing in physical commodity trading with a focus on energy, metallurgy, and construction materials.
-      </p>
-      
-      <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">Our Mission</h3>
-      <p class="text-gray-700 dark:text-gray-300 mb-6">
-        We transform the complexity of global physical trading into a streamlined, strategic advantage, ensuring your operations run on verified quality and predictable schedules.
-      </p>
-      
-      <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">Our Approach</h3>
-      <p class="text-gray-700 dark:text-gray-300 mb-6">
-        We source directly from vetted producers and suppliers, ensuring origin transparency, spec alignment, and structured contracting under Incoterms® 2020 standards.
-      </p>
-      
-      <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">Quality Assurance</h3>
-      <p class="text-gray-700 dark:text-gray-300 mb-6">
-        Every shipment is verified by independent ISO/IEC 17025 accredited laboratories (SGS/Intertek) prior to dispatch, ensuring 100% quality compliance.
-      </p>
-      
-      <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">Global Logistics</h3>
-      <p class="text-gray-700 dark:text-gray-300">
-        Our team coordinates the entire supply chain — from rail wagon allocation at the mine to port terminal handling and vessel chartering — ensuring your cargo arrives on schedule with a 98% on-time delivery rate.
-      </p>
+    <div class="max-w-4xl mx-auto">
+      <div class="prose prose-lg dark:prose-invert max-w-none mb-16">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+          {{ main_heading }}
+        </h2>
+        <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
+          {{ main_text_1 }}
+        </p>
+        <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
+          {{ main_text_2 }}
+        </p>
+      </div>
+
+      <!-- Key Features Grid -->
+      <div class="grid md:grid-cols-2 gap-8 mb-16">
+        <!-- Feature 01 -->
+        <div class="bg-gray-50 dark:bg-gray-900 p-8 rounded-lg border border-gray-200 dark:border-gray-700">
+          <div class="flex items-start mb-4">
+            <span class="text-4xl font-bold text-indigo-600 dark:text-indigo-400 mr-4">{{ feature_1_num }}</span>
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">{{ feature_1_title }}</h3>
+          </div>
+          <p class="text-gray-700 dark:text-gray-300">
+            {{ feature_1_text }}
+          </p>
+        </div>
+
+        <!-- Feature 02 -->
+        <div class="bg-gray-50 dark:bg-gray-900 p-8 rounded-lg border border-gray-200 dark:border-gray-700">
+          <div class="flex items-start mb-4">
+            <span class="text-4xl font-bold text-indigo-600 dark:text-indigo-400 mr-4">{{ feature_2_num }}</span>
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">{{ feature_2_title }}</h3>
+          </div>
+          <p class="text-gray-700 dark:text-gray-300">
+            {{ feature_2_text }}
+          </p>
+        </div>
+
+        <!-- Feature 03 -->
+        <div class="bg-gray-50 dark:bg-gray-900 p-8 rounded-lg border border-gray-200 dark:border-gray-700">
+          <div class="flex items-start mb-4">
+            <span class="text-4xl font-bold text-indigo-600 dark:text-indigo-400 mr-4">{{ feature_3_num }}</span>
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">{{ feature_3_title }}</h3>
+          </div>
+          <p class="text-gray-700 dark:text-gray-300">
+            {{ feature_3_text }}
+          </p>
+        </div>
+
+        <!-- Feature 04 -->
+        <div class="bg-gray-50 dark:bg-gray-900 p-8 rounded-lg border border-gray-200 dark:border-gray-700">
+          <div class="flex items-start mb-4">
+            <span class="text-4xl font-bold text-indigo-600 dark:text-indigo-400 mr-4">{{ feature_4_num }}</span>
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">{{ feature_4_title }}</h3>
+          </div>
+          <p class="text-gray-700 dark:text-gray-300">
+            {{ feature_4_text }}
+          </p>
+        </div>
+      </div>
+
+      <!-- News & Insight Section -->
+      <div class="border-t border-gray-200 dark:border-gray-700 pt-12">
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">{{ news_title }}</h2>
+            <p class="text-gray-600 dark:text-gray-400">
+              {{ news_description }}
+            </p>
+          </div>
+        </div>
+        <a href="/news" class="inline-flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium">
+          View Blog →
+        </a>
+      </div>
     </div>
   </div>
 </section>

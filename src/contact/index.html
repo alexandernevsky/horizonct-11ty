@@ -3,14 +3,18 @@ layout: default
 title: Contact Us | Horizon Commodities Trading
 description: Get in touch with Horizon Commodities Trading LTD
 path: contact
+hero_title: "Contact Us"
+hero_subtitle: "Get in touch with our team to discuss your commodity trading needs"
+form_title: "Request a Quote"
+form_description: "Share your required specifications and volume. Our trading desk will respond with a structured, competitive offer within one business day."
 ---
 
 <section class="py-12 bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     <div class="max-w-4xl mx-auto text-center">
-      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">Contact Us</h1>
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">{{ hero_title }}</h1>
       <p class="text-xl text-gray-700 dark:text-gray-300">
-        Get in touch with our team to discuss your commodity trading needs
+        {{ hero_subtitle }}
       </p>
     </div>
   </div>
@@ -44,9 +48,9 @@ path: contact
       
       <!-- Contact Form -->
       <div>
-        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Request a Quote</h2>
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">{{ form_title }}</h2>
         <p class="text-gray-700 dark:text-gray-300 mb-6">
-          Share your required specifications and volume. Our trading desk will respond with a structured, competitive offer within one business day.
+          {{ form_description }}
         </p>
         
         <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="space-y-6">

@@ -106,3 +106,87 @@ collections:
           - { label: Email, name: email, widget: string }
           - { label: Author, name: author, widget: string }
           - { label: URL, name: url, widget: string }
+  - label: "Pages"
+    name: "pages"
+    editor:
+      preview: false
+    files:
+      - label: "Home Page"
+        name: "home"
+        file: "src/index.html"
+        fields:
+          - { label: "Page Title", name: "title", widget: "string" }
+          - { label: "Meta Description", name: "description", widget: "string" }
+          - { label: "Hero Title", name: "hero_title", widget: "string" }
+          - { label: "Hero Subtitle", name: "hero_subtitle", widget: "text" }
+          - { label: "Hero CTA Text", name: "hero_cta_text", widget: "string" }
+          - { label: "Hero Badge Text", name: "hero_badge", widget: "string" }
+      - label: "About Page"
+        name: "about"
+        file: "src/about/index.html"
+        fields:
+          - { label: "Page Title", name: "title", widget: "string" }
+          - { label: "Meta Description", name: "description", widget: "string" }
+          - { label: "Hero Title", name: "hero_title", widget: "string" }
+          - { label: "Hero Subtitle", name: "hero_subtitle", widget: "string" }
+          - { label: "Main Heading", name: "main_heading", widget: "string" }
+          - { label: "Main Text Paragraph 1", name: "main_text_1", widget: "text" }
+          - { label: "Main Text Paragraph 2", name: "main_text_2", widget: "text" }
+          - { label: "Feature 1 Number", name: "feature_1_num", widget: "string" }
+          - { label: "Feature 1 Title", name: "feature_1_title", widget: "string" }
+          - { label: "Feature 1 Text", name: "feature_1_text", widget: "text" }
+          - { label: "Feature 2 Number", name: "feature_2_num", widget: "string" }
+          - { label: "Feature 2 Title", name: "feature_2_title", widget: "string" }
+          - { label: "Feature 2 Text", name: "feature_2_text", widget: "text" }
+          - { label: "Feature 3 Number", name: "feature_3_num", widget: "string" }
+          - { label: "Feature 3 Title", name: "feature_3_title", widget: "string" }
+          - { label: "Feature 3 Text", name: "feature_3_text", widget: "text" }
+          - { label: "Feature 4 Number", name: "feature_4_num", widget: "string" }
+          - { label: "Feature 4 Title", name: "feature_4_title", widget: "string" }
+          - { label: "Feature 4 Text", name: "feature_4_text", widget: "text" }
+          - { label: "News Section Title", name: "news_title", widget: "string" }
+          - { label: "News Section Description", name: "news_description", widget: "text" }
+      - label: "Careers Page"
+        name: "careers"
+        file: "src/careers/index.html"
+        fields:
+          - { label: "Page Title", name: "title", widget: "string" }
+          - { label: "Meta Description", name: "description", widget: "string" }
+          - { label: "Hero Title", name: "hero_title", widget: "string" }
+          - { label: "Hero Subtitle", name: "hero_subtitle", widget: "string" }
+          - { label: "Intro Text", name: "intro_text", widget: "text" }
+          - { label: "Benefit 1 Title", name: "benefit_1_title", widget: "string" }
+          - { label: "Benefit 1 Text", name: "benefit_1_text", widget: "text" }
+          - { label: "Benefit 2 Title", name: "benefit_2_title", widget: "string" }
+          - { label: "Benefit 2 Text", name: "benefit_2_text", widget: "text" }
+          - { label: "Benefit 3 Title", name: "benefit_3_title", widget: "string" }
+          - { label: "Benefit 3 Text", name: "benefit_3_text", widget: "text" }
+          - { label: "Benefit 4 Title", name: "benefit_4_title", widget: "string" }
+          - { label: "Benefit 4 Text", name: "benefit_4_text", widget: "text" }
+          - { label: "Openings Intro", name: "openings_intro", widget: "text" }
+          - { label: "CTA Text", name: "cta_text", widget: "text" }
+      - label: "Contact Page"
+        name: "contact"
+        file: "src/contact/index.html"
+        fields:
+          - { label: "Page Title", name: "title", widget: "string" }
+          - { label: "Meta Description", name: "description", widget: "string" }
+          - { label: "Hero Title", name: "hero_title", widget: "string" }
+          - { label: "Hero Subtitle", name: "hero_subtitle", widget: "text" }
+          - { label: "Form Title", name: "form_title", widget: "string" }
+          - { label: "Form Description", name: "form_description", widget: "text" }
+      - label: "Customers Page"
+        name: "customers"
+        file: "src/customers/index.html"
+        fields:
+          - { label: "Page Title", name: "title", widget: "string" }
+          - { label: "Meta Description", name: "description", widget: "string" }
+          - { label: "Hero Title", name: "hero_title", widget: "string" }
+          - { label: "Hero Subtitle", name: "hero_subtitle", widget: "text" }
+          - { label: "Main Heading", name: "main_heading", widget: "string" }
+          - { label: "Main Text", name: "main_text", widget: "text" }
+          - { label: "Testimonial Quote", name: "testimonial_quote", widget: "text" }
+          - { label: "Testimonial Author", name: "testimonial_author", widget: "string" }
+          - { label: "Testimonial Title", name: "testimonial_title", widget: "string" }
+          - { label: "Industries Heading", name: "industries_heading", widget: "string" }
+          - { label: "Why Choose Us Heading", name: "why_heading", widget: "string" }
