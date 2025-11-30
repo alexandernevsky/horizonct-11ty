@@ -12,6 +12,25 @@ public_folder: "/static/img"
 local_backend: true
 # publish_mode: editorial_workflow
 collections:
+  - label: "News"
+    name: "news"
+    folder: "src/news/posts"
+    create: true
+    slug: "{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Author", name: "author", widget: "string", default: "Horizon Commodities Trading" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Featured Image", name: "image", widget: "image", required: false }
+      - { label: "Body", name: "body", widget: "markdown" }
+      - widget: select
+        label: "Category"
+        name: "category"
+        multiple: false
+        options: ["Market Updates", "Company News", "Industry Insights"]
   - label: "Blog"
     name: "blog"
     folder: "src/posts"
@@ -64,5 +83,10 @@ collections:
         file: "src/_data/settings.yaml"
         fields:
           - { label: Name, name: name, widget: string }
+          - { label: Company Name, name: company_name, widget: string }
+          - { label: Registration No, name: registration_no, widget: string }
+          - { label: Address, name: address, widget: string }
+          - { label: Phone, name: phone, widget: string }
+          - { label: Email, name: email, widget: string }
           - { label: Author, name: author, widget: string }
           - { label: URL, name: url, widget: string }

@@ -1,9 +1,39 @@
-<footer class="{{ 'fixed' if path == 'home' }} bottom-0 text-center w-full py-4">
-    <small class="text-gray-500">Copyright ©
-        {{settings.name}}
-        2020. Made with ❤ by
-        <a href="{{settings.url}}" target="_blank" class="underline">{{settings.author}}</a>
-        •
-        <a href="https://github.com/surjithctly/neat-starter" class="underline" target="_blank" rel="noopener">View on Github</a>
-    </small>
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h3>{{ settings.company_name }}</h3>
+        <p>Registration No. {{ settings.registration_no }}</p>
+        <p>{{ settings.address }}</p>
+        <p>Phone: <a href="tel:{{ settings.phone }}">{{ settings.phone }}</a></p>
+        <p>Email: <a href="mailto:{{ settings.email }}">{{ settings.email }}</a></p>
+      </div>
+      
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          {% if navigation.items %}
+            {% for item in navigation.items %}
+              <li><a href="{{ item.url }}">{{ item.text }}</a></li>
+            {% endfor %}
+          {% endif %}
+        </ul>
+      </div>
+      
+      <div class="footer-social">
+        <h4>Follow Us</h4>
+        <div class="social-links">
+          <a href="#" target="_blank" rel="noopener">Facebook</a>
+          <a href="#" target="_blank" rel="noopener">Instagram</a>
+          <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="#" target="_blank" rel="noopener">YouTube</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>Copyright © {{ settings.company_name }} {{ "now" | date: "%Y" }}. All rights reserved.</p>
+      <p><a href="/privacy-policy">Privacy Policy</a></p>
+    </div>
+  </div>
 </footer>
