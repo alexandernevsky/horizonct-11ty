@@ -1,0 +1,15 @@
+---
+items:
+  - text: Home
+    url: "/"
+  - text: About
+    url: "/about"
+  - text: Careers
+    url: "/careers"
+  - text: News
+    url: "/news"
+  - text: Customers
+    url: "/customers"
+  - text: Contact
+    url: "/contact"
+

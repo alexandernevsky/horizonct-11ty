@@ -1,0 +1,24 @@
+---
+en:
+  lang: en
+  langName: English
+  home: Home
+  about: About
+  careers: Careers
+  news: News
+  customers: Customers
+  contact: Contact
+  privacyPolicy: Privacy Policy
+  switchTo: Switch to Russian
+ru:
+  lang: ru
+  langName: Русский
+  home: Главная
+  about: О нас
+  careers: Карьера
+  news: Новости
+  customers: Клиенты
+  contact: Контакты
+  privacyPolicy: Политика конфиденциальности
+  switchTo: Switch to English
+

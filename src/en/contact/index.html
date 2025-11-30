@@ -1,0 +1,114 @@
+---
+layout: default
+title: Contact Us | Horizon Commodities Trading
+description: Contact Horizon Commodities Trading Limited. Our HQ is in Dubai, UAE. Get in touch via email, phone, or message us directly.
+path: contact
+lang: en
+hero_title: "Contact"
+hq_location: "Our HQ is in Dubai, UAE"
+form_intro: "Connect with **Horizon Commodities Trading Limited** to explore how optimized physical supply chain solutions can enhance your business operations. Our team is ready to assist with deep market expertise and tailored logistical advice for your coal and bulk commodity needs"
+form_button_text: "Send Message"
+---
+
+<!-- Hero Section -->
+<section class="py-20 bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+        {{ hero_title }}
+      </h1>
+      <p class="text-xl md:text-2xl text-gray-700 dark:text-gray-300">
+        {{ hq_location }}
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Information Section -->
+<section class="py-16 bg-white dark:bg-gray-800">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <!-- Email -->
+        <div class="text-center">
+          <div class="mb-4">
+            <span class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">email address</span>
+          </div>
+          <a href="mailto:{{ settings.email }}" class="text-2xl font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors">
+            {{ settings.email }}
+          </a>
+        </div>
+
+        <!-- Phone -->
+        <div class="text-center">
+          <div class="mb-4">
+            <span class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">phone</span>
+          </div>
+          <a href="tel:{{ settings.phone }}" class="text-2xl font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors">
+            {{ settings.phone }}
+          </a>
+        </div>
+
+        <!-- Address -->
+        <div class="text-center">
+          <div class="mb-4">
+            <span class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">address</span>
+          </div>
+          <address class="text-lg text-gray-900 dark:text-white not-italic">
+            {{ settings.address }}
+          </address>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Form Section -->
+<section class="py-16 bg-gray-50 dark:bg-gray-900">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 text-center">Message us</h2>
+      <div class="prose prose-lg dark:prose-invert max-w-none mb-8 text-center">
+        <p class="text-gray-700 dark:text-gray-300">
+          {{ form_intro | safe }}
+        </p>
+      </div>
+      
+      <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="space-y-6 bg-white dark:bg-gray-800 p-8 rounded-lg border border-gray-200 dark:border-gray-700">
+        <input type="hidden" name="form-name" value="contact" />
+        <p class="hidden">
+          <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+        </p>
+        
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Name *</label>
+          <input type="text" id="name" name="name" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors" />
+        </div>
+        
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email *</label>
+          <input type="email" id="email" name="email" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors" />
+        </div>
+        
+        <div>
+          <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Phone</label>
+          <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors" />
+        </div>
+        
+        <div>
+          <label for="company" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Company</label>
+          <input type="text" id="company" name="company" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors" />
+        </div>
+        
+        <div>
+          <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Message *</label>
+          <textarea id="message" name="message" rows="6" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"></textarea>
+        </div>
+        
+        <button type="submit" class="w-full inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 transition-colors">
+          {{ form_button_text }}
+        </button>
+      </form>
+    </div>
+  </div>
+</section>

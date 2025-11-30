@@ -1,0 +1,64 @@
+---
+layout: default
+---
+
+<section class="py-12 bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+      <nav class="mb-6">
+        <a href="/careers" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 inline-flex items-center text-sm font-medium">
+          ← Back to Careers
+        </a>
+      </nav>
+      
+      <div class="flex items-center gap-3 mb-4">
+        {% if status == "open" %}
+        <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">Open</span>
+        {% else %}
+        <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200">Closed</span>
+        {% endif %}
+      </div>
+      
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">{{ title }}</h1>
+      
+      <div class="flex items-center gap-4 text-gray-600 dark:text-gray-400 mb-8">
+        <span>{{ type }}</span>
+        <span>•</span>
+        <span>{{ location }}</span>
+        {% if date %}
+        <span>•</span>
+        <time>{{ date | readableDate }}</time>
+        {% endif %}
+      </div>
+      
+      {% if description %}
+      <p class="text-xl text-gray-700 dark:text-gray-300 mb-8">
+        {{ description }}
+      </p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="py-16 bg-white dark:bg-gray-800">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto prose prose-lg dark:prose-invert max-w-none">
+      {{ content | safe }}
+    </div>
+  </div>
+</section>
+
+<section class="py-12 bg-gray-50 dark:bg-gray-900">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Ready to Apply?</h2>
+      <p class="text-gray-700 dark:text-gray-300 mb-6">
+        Send your CV and cover letter to <a href="mailto:{{ settings.email }}" class="text-indigo-600 dark:text-indigo-400 hover:underline">{{ settings.email }}</a> with the subject line "Career Application - {{ title }}".
+      </p>
+      <a href="/contact" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 transition-colors">
+        Contact Us
+      </a>
+    </div>
+  </div>
+</section>
+

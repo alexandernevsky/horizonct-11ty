@@ -1,18 +1,5 @@
 ---
-en:
-  - text: Home
-    url: "/"
-  - text: About
-    url: "/about"
-  - text: Careers
-    url: "/careers"
-  - text: News
-    url: "/news"
-  - text: Customers
-    url: "/customers"
-  - text: Contact
-    url: "/contact"
-ru:
+items:
   - text: Главная
     url: "/ru/"
   - text: О нас
@@ -25,3 +12,4 @@ ru:
     url: "/ru/customers"
   - text: Контакты
     url: "/ru/contact"
+

@@ -1,0 +1,91 @@
+---
+layout: default
+title: Клиенты | Horizon Commodities Trading
+description: Узнайте о наших клиентах и их историях успеха с Horizon Commodities Trading
+path: customers
+lang: ru
+hero_title: "Промышленные лидеры доверяют"
+hero_subtitle: "Horizon Commodities для надежных поставок"
+spotlight_title: "Клиент в центре внимания"
+testimonial_quote: "В секторе производства электроэнергии надежность поставок топлива абсолютно критична. Horizon Commodities последовательно поставляла тепловой уголь, точно соответствующий спецификациям нашего котла, партия за партией. Их прозрачный контроль над всей логистической цепочкой от железной дороги до судна обеспечивает операционную определенность, необходимую нам для поддержания базовой нагрузки без перерывов."
+testimonial_author: "Дэвид Чен"
+testimonial_title: "Директор по закупкам топлива, Apex Power Generation Ltd"
+testimonial_location: "(Юго-Восточная Азия)"
+more_stories_title: "Больше историй успеха"
+---
+
+<!-- Hero Section -->
+<section class="py-20 bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+        {{ hero_title }}<br>{{ hero_subtitle }}
+      </h1>
+    </div>
+  </div>
+</section>
+
+<!-- Customer Spotlight Section -->
+<section class="py-16 bg-white dark:bg-gray-800">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-12 text-center">
+        {{ spotlight_title }}
+      </h2>
+      
+      <div class="bg-indigo-50 dark:bg-indigo-900/20 p-8 md:p-12 rounded-lg border border-indigo-200 dark:border-indigo-800">
+        <blockquote class="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-6 italic leading-relaxed">
+          "{{ testimonial_quote }}"
+        </blockquote>
+        <div class="border-t border-indigo-200 dark:border-indigo-700 pt-6">
+          <p class="text-lg font-semibold text-gray-900 dark:text-white mb-1">
+            {{ testimonial_author }}
+          </p>
+          <p class="text-gray-600 dark:text-gray-400">
+            {{ testimonial_title }}<br>
+            {{ testimonial_location }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- More Success Stories Section -->
+<section class="py-16 bg-gray-50 dark:bg-gray-900">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-12 text-center">
+        {{ more_stories_title }}
+      </h2>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for story in collections.customerStories | reverse | limit(6) %}
+        <article class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow">
+          {% if story.data.image %}
+          <div class="mb-4">
+            <img src="{{ story.data.image }}" alt="{{ story.data.title }}" class="w-full h-48 object-cover rounded-lg">
+          </div>
+          {% endif %}
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">
+            {{ story.data.title }}
+          </h3>
+          {% if story.data.description %}
+          <p class="text-gray-600 dark:text-gray-400 mb-4">
+            {{ story.data.description }}
+          </p>
+          {% endif %}
+          <a href="{{ story.url }}" class="inline-flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium">
+            Читать историю клиента →
+          </a>
+        </article>
+        {% else %}
+        <div class="col-span-full text-center py-12">
+          <p class="text-gray-600 dark:text-gray-400 text-lg">Истории клиентов скоро появятся.</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+

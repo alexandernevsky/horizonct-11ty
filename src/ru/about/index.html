@@ -1,0 +1,117 @@
+---
+layout: default
+title: О нас | Horizon Commodities Trading
+description: Узнайте о Horizon Commodities Trading Limited - соединяем репутабельных производителей с крупными промышленными конечными потребителями в Азии и на Ближнем Востоке
+path: about
+lang: ru
+hero_title: "Мы движем сырой силой,<br>которая движет цивилизацию"
+hero_subtitle: "Узнайте о нас"
+main_heading: "Horizon Commodities Trading Limited обеспечивает промышленный рост через надежную, прямую торговлю сырьевыми товарами от производителей"
+main_text_1: "В **Horizon Commodities Trading Limited** мы верим, что в нестабильном мире физической торговли определенность - самый ценный актив. Мы не просто брокеры; мы менеджеры цепочки поставок. Базируясь в Гонконге, мы специализируемся на соединении репутабельных производителей с крупными промышленными конечными потребителями в Азии и на Ближнем Востоке, обеспечивая стабильный поток необходимого теплового и металлургического угля."
+main_text_2: "Наш подход основан на физическом контроле. Мы не просто полагаемся на документооборот; мы активно управляем логистической цепочкой от шахты до порта разгрузки. Обязательно проводя независимые проверки качества и координируя межмодальный транспорт, мы предоставляем нашим клиентам операционную уверенность, необходимую для бесперебойной работы их электростанций и сталелитейных заводов."
+feature_1_num: "1"
+feature_1_title: "Прямые отношения с производителями"
+feature_1_text: "Мы работаем напрямую с проверенными производителями, исключая посредников и обеспечивая прозрачность происхождения."
+feature_2_num: "2"
+feature_2_title: "Независимый контроль качества"
+feature_2_text: "Обязательные проверки качества от аккредитованных лабораторий (SGS, Intertek) на этапах загрузки и разгрузки."
+feature_3_num: "3"
+feature_3_title: "Управление логистикой"
+feature_3_text: "Полный контроль цепочки поставок от шахты до порта разгрузки, включая железнодорожный и морской транспорт."
+feature_4_num: "4"
+feature_4_title: "Операционная надежность"
+feature_4_text: "98% показатель своевременной доставки, обеспечивая непрерывность работы промышленных объектов наших клиентов."
+news_title: "Новости и аналитика"
+news_description: "Будьте в курсе последних рыночных тенденций, отраслевых анализов и новостей компании."
+news_cta_text: "Читать все новости"
+news_cta_link: "/news"
+---
+
+<!-- Hero Section -->
+<section class="py-20 bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+        {{ hero_title | safe }}
+      </h1>
+      <p class="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-8">
+        {{ hero_subtitle }}
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Main Content Section -->
+<section class="py-16 bg-white dark:bg-gray-800">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+      <div class="prose prose-lg dark:prose-invert max-w-none mb-16">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+          {{ main_heading }}
+        </h2>
+        <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
+          {{ main_text_1 }}
+        </p>
+        <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
+          {{ main_text_2 }}
+        </p>
+      </div>
+
+      <!-- Key Features Grid -->
+      <div class="grid md:grid-cols-2 gap-8 mb-16">
+        <div class="bg-gray-50 dark:bg-gray-900 p-8 rounded-lg border border-gray-200 dark:border-gray-700">
+          <div class="flex items-start mb-4">
+            <span class="text-4xl font-bold text-indigo-600 dark:text-indigo-400 mr-4">{{ feature_1_num }}.</span>
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">{{ feature_1_title }}</h3>
+          </div>
+          <p class="text-gray-700 dark:text-gray-300">
+            {{ feature_1_text }}
+          </p>
+        </div>
+        <div class="bg-gray-50 dark:bg-gray-900 p-8 rounded-lg border border-gray-200 dark:border-gray-700">
+          <div class="flex items-start mb-4">
+            <span class="text-4xl font-bold text-indigo-600 dark:text-indigo-400 mr-4">{{ feature_2_num }}.</span>
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">{{ feature_2_title }}</h3>
+          </div>
+          <p class="text-gray-700 dark:text-gray-300">
+            {{ feature_2_text }}
+          </p>
+        </div>
+        <div class="bg-gray-50 dark:bg-gray-900 p-8 rounded-lg border border-gray-200 dark:border-gray-700">
+          <div class="flex items-start mb-4">
+            <span class="text-4xl font-bold text-indigo-600 dark:text-indigo-400 mr-4">{{ feature_3_num }}.</span>
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">{{ feature_3_title }}</h3>
+          </div>
+          <p class="text-gray-700 dark:text-gray-300">
+            {{ feature_3_text }}
+          </p>
+        </div>
+        <div class="bg-gray-50 dark:bg-gray-900 p-8 rounded-lg border border-gray-200 dark:border-gray-700">
+          <div class="flex items-start mb-4">
+            <span class="text-4xl font-bold text-indigo-600 dark:text-indigo-400 mr-4">{{ feature_4_num }}.</span>
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">{{ feature_4_title }}</h3>
+          </div>
+          <p class="text-gray-700 dark:text-gray-300">
+            {{ feature_4_text }}
+          </p>
+        </div>
+      </div>
+
+      <!-- News & Insight Section -->
+      <div class="border-t border-gray-200 dark:border-gray-700 pt-12">
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">{{ news_title }}</h2>
+            <p class="text-gray-600 dark:text-gray-400">
+              {{ news_description }}
+            </p>
+          </div>
+        </div>
+        <a href="{{ news_cta_link }}" class="inline-flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium">
+          {{ news_cta_text }} →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+

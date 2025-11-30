@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://horizonct.hk/sitemap.xml
+

@@ -17,6 +17,12 @@ module.exports = function (eleventyConfig) {
     );
   });
 
+  // Date filter for sitemap (YYYY-MM-DD format)
+  eleventyConfig.addFilter("sitemapDate", (dateObj) => {
+    if (!dateObj) return new Date().toISOString().split('T')[0];
+    return DateTime.fromJSDate(dateObj, { zone: "utc" }).toFormat("YYYY-MM-DD");
+  });
+
   // Limit filter for arrays
   eleventyConfig.addFilter("limit", (array, limit) => {
     return array.slice(0, limit);
@@ -49,6 +55,27 @@ module.exports = function (eleventyConfig) {
       .replace(/[^\w-]+/g, '')
       .replace(/--+/g, '-')
       .replace(/^-+|-+$/g, '');
+  });
+
+  // Language switcher filter - returns alternate language URL
+  eleventyConfig.addFilter("switchLang", (currentUrl, currentLang, targetLang) => {
+    if (!currentUrl) return targetLang === 'ru' ? '/ru/' : '/';
+    
+    // If on news page, always redirect to home page of target language
+    if (currentUrl.startsWith('/news')) {
+      return targetLang === 'ru' ? '/ru/' : '/';
+    }
+    
+    // Remove language prefix if exists
+    let cleanUrl = currentUrl.replace(/^\/en\//, '/').replace(/^\/ru\//, '/');
+    if (cleanUrl === '/') cleanUrl = '';
+    
+    // Add target language prefix
+    if (targetLang === 'ru') {
+      return '/ru' + cleanUrl;
+    } else {
+      return cleanUrl || '/';
+    }
   });
 
   // Syntax Highlighting for Code blocks
@@ -92,6 +119,16 @@ module.exports = function (eleventyConfig) {
       post.data.relatedPosts = relatedPosts;
       return post;
     });
+  });
+
+  // Add collection for jobs (careers)
+  eleventyConfig.addCollection("jobs", function(collectionApi) {
+    return collectionApi.getFilteredByGlob("src/careers/jobs/*.md");
+  });
+
+  // Add collection for customer stories
+  eleventyConfig.addCollection("customerStories", function(collectionApi) {
+    return collectionApi.getFilteredByGlob("src/customers/stories/*.md");
   });
 
   // Add collection for tags
@@ -156,6 +193,9 @@ module.exports = function (eleventyConfig) {
 
   // Copy favicon to route of /_site
   eleventyConfig.addPassthroughCopy("./src/favicon.ico");
+  
+  // Copy robots.txt to route of /_site
+  eleventyConfig.addPassthroughCopy("./src/robots.txt");
 
   // Minify HTML
   eleventyConfig.addTransform("htmlmin", function (content, outputPath) {
