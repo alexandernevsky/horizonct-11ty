@@ -13,6 +13,8 @@
     {% block head %}{% endblock %}
     <!-- Tailwind CSS -->
     <link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
+    <!-- Swup CSS -->
+    <link rel="stylesheet" type="text/css" href="/static/css/swup.css"/>
     <!-- Webflow CSS - Add your Webflow CSS files here -->
     {% if webflow_css %}
       {% for css_file in webflow_css %}
@@ -23,16 +25,120 @@
       <link rel="stylesheet" type="text/css" href="/static/css/prism-tomorrow.css">
     {% endif %}
   </head>
-  <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-200">
+  <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-200" data-lenis-prevent="false">
     {% include "./partials/navbar.html" %}
 
-    <main class="flex-grow">
+    <main id="swup" class="flex-grow">
       {{ content | safe }}
     </main>
 
     {% include "./partials/footer.html" %}
 
     <script src="/static/js/alpine.js"></script>
+    
+    <!-- Lenis for smooth scrolling -->
+    <script src="/static/js/lenis.min.js"></script>
+    
+    <!-- Swup for page transitions -->
+    <script src="/static/js/swup.js"></script>
+    <script src="/static/js/swup-scroll-plugin.js"></script>
+    <script src="/static/js/swup-head-plugin.js"></script>
+    <script>
+      // Initialize Lenis and Swup after scripts are loaded
+      document.addEventListener('DOMContentLoaded', function() {
+        // Initialize Lenis for smooth scrolling
+        let lenis;
+        if (typeof Lenis !== 'undefined') {
+          lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            orientation: 'vertical',
+            gestureOrientation: 'vertical',
+            smoothWheel: true,
+            wheelMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
+            infinite: false,
+          });
+
+          // Animation loop for Lenis
+          function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+          }
+          requestAnimationFrame(raf);
+
+          // Make Lenis available globally
+          window.lenis = lenis;
+        }
+
+        // Check if Swup is available
+        if (typeof Swup === 'undefined') {
+          console.warn('Swup is not loaded');
+          return;
+        }
+
+        // Get plugin constructors (UMD modules export to window)
+        const ScrollPlugin = window.SwupScrollPlugin;
+        const HeadPlugin = window.SwupHeadPlugin;
+
+        const swup = new Swup({
+          plugins: [
+            ScrollPlugin ? new ScrollPlugin({
+              doScrollingRightAway: false,
+              animateScroll: false, // Disable Swup's scroll animation, use Lenis instead
+              scrollFriction: 0.3,
+              scrollAcceleration: 0.04,
+            }) : null,
+            HeadPlugin ? new HeadPlugin({
+              persistTags: 'style[data-swup], link[rel="stylesheet"]',
+            }) : null,
+          ].filter(Boolean),
+          cache: true,
+          animateHistoryBrowsing: true,
+        });
+
+        // Integrate Lenis with Swup
+        if (lenis) {
+          // Scroll to top on page change
+          swup.hooks.on('content:replace', () => {
+            // Small delay to ensure content is rendered
+            setTimeout(() => {
+              lenis.scrollTo(0, {
+                immediate: false,
+                duration: 1.2,
+              });
+            }, 100);
+          });
+
+          // Handle anchor links
+          swup.hooks.on('link:anchor', ({ hash }) => {
+            setTimeout(() => {
+              const element = document.querySelector(hash);
+              if (element) {
+                lenis.scrollTo(element, {
+                  offset: 0,
+                  duration: 1.5,
+                });
+              }
+            }, 100);
+          });
+
+          // Update Lenis when content changes
+          swup.hooks.on('content:replace', () => {
+            lenis.resize();
+          });
+        }
+
+        // Re-initialize Alpine.js after page transition
+        swup.hooks.on('content:replace', () => {
+          // Alpine.js will auto-initialize, but we can trigger a refresh if needed
+          if (window.Alpine) {
+            window.Alpine.initTree(document.body);
+          }
+        });
+      });
+    </script>
     
     <!-- Webflow JS - Add your Webflow JS files here -->
     {% if webflow_js %}

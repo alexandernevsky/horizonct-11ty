@@ -54,6 +54,10 @@ module.exports = function (eleventyConfig) {
     "./node_modules/alpinejs/dist/cdn.min.js": "./static/js/alpine.js",
     "./node_modules/prismjs/themes/prism-tomorrow.css":
       "./static/css/prism-tomorrow.css",
+    "./node_modules/swup/dist/Swup.umd.js": "./static/js/swup.js",
+    "./node_modules/@swup/scroll-plugin/dist/index.umd.js": "./static/js/swup-scroll-plugin.js",
+    "./node_modules/@swup/head-plugin/dist/index.umd.js": "./static/js/swup-head-plugin.js",
+    "./node_modules/lenis/dist/lenis.min.js": "./static/js/lenis.min.js",
   });
 
   // Copy Image Folder to /_site

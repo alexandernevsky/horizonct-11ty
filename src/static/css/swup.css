@@ -1,0 +1,58 @@
+/* Swup transition styles */
+html.is-changing .transition-fade {
+  transition: opacity 0.3s ease-in-out;
+}
+
+html.is-animating .transition-fade {
+  opacity: 0;
+}
+
+html.is-rendering .transition-fade {
+  opacity: 0;
+}
+
+/* Smooth transitions for all content */
+#swup {
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+html.is-animating #swup {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+html.is-rendering #swup {
+  opacity: 0;
+}
+
+html.is-ready #swup {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Prevent flash of unstyled content during transitions */
+html.is-changing {
+  overflow-x: hidden;
+}
+
+/* Lenis smooth scroll styles */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
