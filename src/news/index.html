@@ -9,39 +9,57 @@ pagination:
   alias: posts
 ---
 
-<section class="page-header">
-  <div class="container">
-    <h1>News</h1>
-  </div>
-</section>
-
-<section class="page-content">
-  <div class="container">
-    <div class="news-list">
-      {% for post in posts %}
-      <article class="news-item">
-        <h2><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
-        {% if post.data.description %}
-        <p class="excerpt">{{ post.data.description }}</p>
-        {% endif %}
-        {% if post.data.date %}
-        <time class="date">{{ post.data.date | readableDate }}</time>
-        {% endif %}
-        <a href="{{ post.url }}" class="read-more">Read full story →</a>
-      </article>
-      {% endfor %}
+<section class="py-12 bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">News</h1>
+      <p class="text-xl text-gray-700 dark:text-gray-300">
+        Stay updated with the latest news and insights from Horizon Commodities Trading
+      </p>
     </div>
-    
-    {% if pagination.pages.length > 1 %}
-    <nav class="pagination">
-      {% if pagination.previous %}
-      <a href="{{ pagination.previous }}">← Previous</a>
-      {% endif %}
-      {% if pagination.next %}
-      <a href="{{ pagination.next }}">Next →</a>
-      {% endif %}
-    </nav>
-    {% endif %}
   </div>
 </section>
 
+<section class="py-16 bg-white dark:bg-gray-800">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+      <div class="space-y-8">
+        {% for post in posts %}
+        <article class="bg-gray-50 dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+            <a href="{{ post.url }}" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">{{ post.data.title }}</a>
+          </h2>
+          {% if post.data.description %}
+          <p class="text-gray-600 dark:text-gray-400 mb-4">{{ post.data.description }}</p>
+          {% endif %}
+          {% if post.data.date %}
+          <time class="text-sm text-gray-500 dark:text-gray-500 block mb-4">{{ post.data.date | readableDate }}</time>
+          {% endif %}
+          <a href="{{ post.url }}" class="inline-flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium">
+            Read full story →
+          </a>
+        </article>
+        {% else %}
+        <div class="text-center py-12">
+          <p class="text-gray-600 dark:text-gray-400 text-lg">No news posts yet. Check back soon!</p>
+        </div>
+        {% endfor %}
+      </div>
+      
+      {% if pagination.pages.length > 1 %}
+      <nav class="mt-12 flex justify-center space-x-4">
+        {% if pagination.previous %}
+        <a href="{{ pagination.previous }}" class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+          ← Previous
+        </a>
+        {% endif %}
+        {% if pagination.next %}
+        <a href="{{ pagination.next }}" class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+          Next →
+        </a>
+        {% endif %}
+      </nav>
+      {% endif %}
+    </div>
+  </div>
+</section>

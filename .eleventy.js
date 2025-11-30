@@ -17,6 +17,25 @@ module.exports = function (eleventyConfig) {
     );
   });
 
+  // Limit filter for arrays
+  eleventyConfig.addFilter("limit", (array, limit) => {
+    return array.slice(0, limit);
+  });
+
+  // Current year filter
+  eleventyConfig.addFilter("currentYear", () => {
+    return new Date().getFullYear();
+  });
+
+  // Check if URL is active
+  eleventyConfig.addFilter("isActive", (pageUrl, navUrl) => {
+    if (!pageUrl || !navUrl) return false;
+    if (pageUrl === navUrl) return true;
+    if (navUrl === '/' && pageUrl === '/') return true;
+    if (navUrl !== '/' && pageUrl.startsWith(navUrl)) return true;
+    return false;
+  });
+
   // Syntax Highlighting for Code blocks
   eleventyConfig.addPlugin(syntaxHighlight);
 
