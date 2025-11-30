@@ -41,6 +41,16 @@ module.exports = function (eleventyConfig) {
     return false;
   });
 
+  // Slugify filter for tags
+  eleventyConfig.addFilter("slugify", (str) => {
+    if (!str) return '';
+    return str.toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^\w-]+/g, '')
+      .replace(/--+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  });
+
   // Syntax Highlighting for Code blocks
   eleventyConfig.addPlugin(syntaxHighlight);
 
@@ -51,6 +61,36 @@ module.exports = function (eleventyConfig) {
   // Add collection for news posts
   eleventyConfig.addCollection("news", function(collectionApi) {
     return collectionApi.getFilteredByGlob("src/news/posts/*.md");
+  });
+
+  // Add collection for tags
+  eleventyConfig.addCollection("tags", function(collectionApi) {
+    const allPosts = collectionApi.getFilteredByGlob("src/news/posts/*.md");
+    const tags = new Set();
+    
+    allPosts.forEach(post => {
+      if (post.data.tags && Array.isArray(post.data.tags)) {
+        post.data.tags.forEach(tag => {
+          if (tag) tags.add(tag);
+        });
+      }
+    });
+    
+    return Array.from(tags).map(tag => {
+      const slug = tag.toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w-]+/g, '')
+        .replace(/--+/g, '-')
+        .replace(/^-+|-+$/g, '');
+      
+      return {
+        tag: tag,
+        slug: slug,
+        posts: allPosts.filter(post => 
+          post.data.tags && Array.isArray(post.data.tags) && post.data.tags.includes(tag)
+        )
+      };
+    });
   });
 
   // Copy Static Files to /_Site

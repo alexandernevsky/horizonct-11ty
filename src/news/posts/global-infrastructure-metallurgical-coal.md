@@ -4,6 +4,10 @@ description: Major infrastructure investments worldwide drive sustained demand f
 date: 2024-02-10
 author: Horizon Commodities Trading
 category: Market Updates
+tags:
+  - Metallurgical Coal
+  - Infrastructure
+  - Market Analysis
 ---
 
 Global infrastructure development continues to drive strong fundamentals for metallurgical coal markets. Major construction projects across multiple continents require substantial steel production, creating sustained demand for high-quality coking coal.

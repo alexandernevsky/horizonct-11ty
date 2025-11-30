@@ -4,6 +4,10 @@ description: How consistent thermal coal delivery supports base-load power gener
 date: 2024-05-01
 author: Horizon Commodities Trading
 category: Company News
+tags:
+  - Customer Success
+  - Thermal Coal
+  - Energy
 ---
 
 Apex Power Generation Ltd, a major power producer in Asia, relies on Horizon Commodities Trading for consistent thermal coal supply. Their experience demonstrates how reliable commodity trading supports critical infrastructure operations.

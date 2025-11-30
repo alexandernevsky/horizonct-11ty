@@ -13,8 +13,56 @@
     {% block head %}{% endblock %}
     <!-- Tailwind CSS -->
     <link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
-    <!-- Swup CSS -->
-    <link rel="stylesheet" type="text/css" href="/static/css/swup.css"/>
+    <!-- Swup CSS - Inline for immediate loading -->
+    <style>
+      /* Swup slide animation - Top to Bottom (as per documentation) */
+      html.is-changing {
+        overflow-x: hidden;
+      }
+
+      /* Define transition duration during page visits */
+      html.is-changing .transition-slide {
+        transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        transform: translateY(0);
+      }
+
+      /* Out animation - page leaving (slides up) */
+      html.is-animating .transition-slide,
+      html.is-leaving .transition-slide {
+        transform: translateY(-100%);
+      }
+
+      /* In animation - page entering (slides down from top) */
+      html.is-rendering .transition-slide {
+        transform: translateY(100%);
+      }
+
+      /* Final state */
+      html.is-ready .transition-slide {
+        transform: translateY(0);
+      }
+
+      /* Lenis smooth scroll styles */
+      html.lenis {
+        height: auto;
+      }
+
+      .lenis.lenis-smooth {
+        scroll-behavior: auto !important;
+      }
+
+      .lenis.lenis-smooth [data-lenis-prevent] {
+        overscroll-behavior: contain;
+      }
+
+      .lenis.lenis-stopped {
+        overflow: hidden;
+      }
+
+      .lenis.lenis-scrolling iframe {
+        pointer-events: none;
+      }
+    </style>
     <!-- Webflow CSS - Add your Webflow CSS files here -->
     {% if webflow_css %}
       {% for css_file in webflow_css %}
@@ -28,14 +76,12 @@
   <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-200" data-lenis-prevent="false">
     {% include "./partials/navbar.html" %}
 
-    <main id="swup" class="flex-grow">
+    <main id="swup" class="flex-grow transition-slide">
       {{ content | safe }}
     </main>
 
     {% include "./partials/footer.html" %}
 
-    <script src="/static/js/alpine.js"></script>
-    
     <!-- Lenis for smooth scrolling -->
     <script src="/static/js/lenis.min.js"></script>
     
@@ -43,7 +89,15 @@
     <script src="/static/js/swup.js"></script>
     <script src="/static/js/swup-scroll-plugin.js"></script>
     <script src="/static/js/swup-head-plugin.js"></script>
+    
+    <!-- Alpine.js - Initialize after Swup as per documentation -->
+    <script src="/static/js/alpine.js"></script>
     <script>
+      // Initialize Alpine.js first (as per documentation)
+      if (window.Alpine) {
+        window.Alpine.start();
+      }
+      
       // Initialize Lenis and Swup - wait for all scripts to load
       (function initSwupAndLenis() {
         // Check if all required libraries are loaded
@@ -98,22 +152,38 @@
           ].filter(Boolean),
           cache: true,
           animateHistoryBrowsing: true,
-          animationSelector: '[class*="transition-"], #swup',
+          animationSelector: '.transition-slide', // As per documentation
+          animationScope: 'html', // As per documentation
         });
 
         console.log('Swup initialized');
 
+        // Alpine.js integration - as per documentation
+        // Alpine automatically reinitializes on content replace, but we can ensure it
+        swup.hooks.on('content:replace', () => {
+          // Alpine.js will auto-initialize, but we can trigger a refresh if needed
+          if (window.Alpine) {
+            window.Alpine.initTree(document.body);
+          }
+        });
+
         // Integrate Lenis with Swup
         if (lenis) {
+          // Stop Lenis during page transition for smoother animation
+          swup.hooks.on('visit:start', () => {
+            lenis.stop();
+          });
+          
           // Scroll to top on page change
           swup.hooks.on('content:replace', () => {
             // Small delay to ensure content is rendered
             setTimeout(() => {
+              lenis.start();
               lenis.scrollTo(0, {
                 immediate: false,
                 duration: 1.2,
               });
-            }, 100);
+            }, 150);
           });
 
           // Handle anchor links
@@ -135,13 +205,8 @@
           });
         }
 
-        // Re-initialize Alpine.js after page transition
+        // Update active navigation item after page transition
         swup.hooks.on('content:replace', () => {
-          // Alpine.js will auto-initialize, but we can trigger a refresh if needed
-          if (window.Alpine) {
-            window.Alpine.initTree(document.body);
-          }
-          
           // Update active navigation item after page transition
           updateActiveNavItem();
         });

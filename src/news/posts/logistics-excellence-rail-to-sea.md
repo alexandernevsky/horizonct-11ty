@@ -4,6 +4,9 @@ description: Our integrated logistics approach ensures 98% on-time delivery acro
 date: 2024-04-12
 author: Horizon Commodities Trading
 category: Company News
+tags:
+  - Logistics
+  - Company News
 ---
 
 Physical commodity trading requires seamless coordination across multiple transport modes. Our integrated rail-to-sea logistics approach has achieved a 98% on-time delivery rate, ensuring buyers receive their cargo exactly when needed.

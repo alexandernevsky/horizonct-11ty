@@ -4,6 +4,10 @@ description: Market analysis of thermal coal demand in Asian markets reveals con
 date: 2024-01-15
 author: Horizon Commodities Trading
 category: Market Updates
+tags:
+  - Thermal Coal
+  - Market Analysis
+  - Energy
 ---
 
 Despite global efforts to transition to renewable energy, Asian thermal coal demand has demonstrated remarkable resilience throughout 2024. Major economies in the region continue to rely on coal-fired power generation to meet their growing energy needs, creating sustained demand for high-quality thermal coal.

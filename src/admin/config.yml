@@ -25,12 +25,28 @@ collections:
       - { label: "Author", name: "author", widget: "string", default: "Horizon Commodities Trading" }
       - { label: "Publish Date", name: "date", widget: "datetime" }
       - { label: "Featured Image", name: "image", widget: "image", required: false }
-      - { label: "Body", name: "body", widget: "markdown" }
       - widget: select
         label: "Category"
         name: "category"
         multiple: false
         options: ["Market Updates", "Company News", "Industry Insights"]
+      - widget: select
+        label: "Tags"
+        name: "tags"
+        multiple: true
+        required: false
+        options:
+          - "Thermal Coal"
+          - "Metallurgical Coal"
+          - "Biomass"
+          - "Logistics"
+          - "Quality Control"
+          - "Market Analysis"
+          - "Customer Success"
+          - "Infrastructure"
+          - "Energy"
+          - "Sustainability"
+      - { label: "Body", name: "body", widget: "markdown" }
   - label: "Blog"
     name: "blog"
     folder: "src/posts"

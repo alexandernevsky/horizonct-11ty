@@ -4,6 +4,9 @@ description: Our commitment to independent laboratory verification guarantees sp
 date: 2024-03-20
 author: Horizon Commodities Trading
 category: Company News
+tags:
+  - Quality Control
+  - Company News
 ---
 
 Quality control is fundamental to reliable commodity trading. At Horizon Commodities Trading, we mandate independent verification by ISO/IEC 17025 accredited laboratories for every shipment, ensuring 100% compliance with contracted specifications.
