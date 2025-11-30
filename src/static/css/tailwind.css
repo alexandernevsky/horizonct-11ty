@@ -4,12 +4,53 @@
 
 /*Your Custom CSS Goes here*/
 
+/* Base font settings */
+body {
+  font-family: theme('fontFamily.sans');
+  font-variation-settings: 'wght' 400;
+}
+
+/* Secondary font ONLY for dates, captions, meta info - NOT for buttons or tags */
+time,
+small,
+.caption,
+.meta,
+.date {
+  font-family: theme('fontFamily.serif');
+  font-style: italic;
+  font-weight: 400;
+  font-variation-settings: 'wght' 400;
+}
+
+/* Headings - all use Geist with bold weight */
+h1, h2, h3, h4, h5, h6 {
+  font-family: theme('fontFamily.sans');
+  font-weight: 700;
+  font-variation-settings: 'wght' 700;
+}
+
 h1 {
   @apply text-4xl tracking-tighter mb-3 text-center lg:text-7xl;
 }
 
+h2 {
+  @apply text-3xl font-bold mb-3;
+}
+
 h3 {
   @apply text-2xl font-bold mb-3;
+}
+
+h4 {
+  @apply text-xl font-bold mb-2;
+}
+
+h5 {
+  @apply text-lg font-bold mb-2;
+}
+
+h6 {
+  @apply text-base font-bold mb-2;
 }
 
 /* Syntax Highlighting*/

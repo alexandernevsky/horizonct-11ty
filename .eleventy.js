@@ -58,9 +58,40 @@ module.exports = function (eleventyConfig) {
   // You may remove this if you can use JSON
   eleventyConfig.addDataExtension("yaml", (contents) => yaml.load(contents));
 
-  // Add collection for news posts
+  // Add collection for news posts with related posts
   eleventyConfig.addCollection("news", function(collectionApi) {
-    return collectionApi.getFilteredByGlob("src/news/posts/*.md");
+    const allPosts = collectionApi.getFilteredByGlob("src/news/posts/*.md");
+    
+    // Add related posts to each post
+    return allPosts.map(post => {
+      if (!post.data.tags || !Array.isArray(post.data.tags) || post.data.tags.length === 0) {
+        post.data.relatedPosts = [];
+        return post;
+      }
+      
+      // Find posts with matching tags (excluding current post)
+      const relatedPosts = allPosts
+        .filter(otherPost => {
+          // Exclude current post
+          if (otherPost.url === post.url) return false;
+          
+          // Check if posts share at least one tag
+          if (!otherPost.data.tags || !Array.isArray(otherPost.data.tags)) return false;
+          
+          return post.data.tags.some(tag => otherPost.data.tags.includes(tag));
+        })
+        // Sort by date (newest first)
+        .sort((a, b) => {
+          const dateA = a.data.date ? new Date(a.data.date) : new Date(0);
+          const dateB = b.data.date ? new Date(b.data.date) : new Date(0);
+          return dateB - dateA;
+        })
+        // Limit to 5 posts
+        .slice(0, 5);
+      
+      post.data.relatedPosts = relatedPosts;
+      return post;
+    });
   });
 
   // Add collection for tags
@@ -103,10 +134,23 @@ module.exports = function (eleventyConfig) {
     "./node_modules/@swup/scroll-plugin/dist/index.umd.js": "./static/js/swup-scroll-plugin.js",
     "./node_modules/@swup/head-plugin/dist/index.umd.js": "./static/js/swup-head-plugin.js",
     "./node_modules/lenis/dist/lenis.min.js": "./static/js/lenis.min.js",
+    // Copy Geist font
+    "./node_modules/geist/dist/fonts/geist-sans/Geist-Variable.woff2": "./static/fonts/geist/Geist-Variable.woff2",
+    // Copy EB Garamond fonts (latin subset for variable-like behavior)
+    "./node_modules/@fontsource/eb-garamond/files/eb-garamond-latin-400-normal.woff2": "./static/fonts/eb-garamond/eb-garamond-latin-400-normal.woff2",
+    "./node_modules/@fontsource/eb-garamond/files/eb-garamond-latin-400-italic.woff2": "./static/fonts/eb-garamond/eb-garamond-latin-400-italic.woff2",
+    "./node_modules/@fontsource/eb-garamond/files/eb-garamond-latin-800-normal.woff2": "./static/fonts/eb-garamond/eb-garamond-latin-800-normal.woff2",
+    "./node_modules/@fontsource/eb-garamond/files/eb-garamond-latin-800-italic.woff2": "./static/fonts/eb-garamond/eb-garamond-latin-800-italic.woff2",
   });
 
   // Copy Image Folder to /_site
   eleventyConfig.addPassthroughCopy("./src/static/img");
+
+  // Copy Fonts Folder to /_site
+  eleventyConfig.addPassthroughCopy("./src/static/fonts");
+
+  // Copy CSS files (including fonts.css) to /_site
+  eleventyConfig.addPassthroughCopy("./src/static/css");
 
   // Copy Webflow assets to /_site
   eleventyConfig.addPassthroughCopy("./src/static/webflow");

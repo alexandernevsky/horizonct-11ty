@@ -52,6 +52,63 @@ layout: default
       {{ content | safe }}
     </article>
     
+    <!-- Related Posts Section -->
+    {% set currentPost = page %}
+    {% set allPosts = collections.news | reverse %}
+    {% set relatedPosts = [] %}
+    {% set relatedCount = 0 %}
+    {% if tags and tags.length > 0 %}
+      {% for post in allPosts %}
+        {% if relatedCount < 5 and post.url != currentPost.url and post.data.tags %}
+          {% set hasMatchingTag = false %}
+          {% for tag in tags %}
+            {% if tag in post.data.tags %}
+              {% set hasMatchingTag = true %}
+            {% endif %}
+          {% endfor %}
+          {% if hasMatchingTag %}
+            {% set _ = relatedPosts.push(post) %}
+            {% set relatedCount = relatedCount + 1 %}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    {% if relatedPosts and relatedPosts.length > 0 %}
+    <div class="max-w-4xl mx-auto mt-16 pt-12 border-t border-gray-200 dark:border-gray-700">
+      <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-8">Related Articles</h2>
+      <div class="space-y-6">
+        {% for relatedPost in relatedPosts %}
+        <article class="bg-gray-50 dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow">
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">
+            <a href="{{ relatedPost.url }}" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">{{ relatedPost.data.title }}</a>
+          </h3>
+          {% if relatedPost.data.description %}
+          <p class="text-gray-600 dark:text-gray-400 mb-4">{{ relatedPost.data.description }}</p>
+          {% endif %}
+          
+          <!-- Tags -->
+          {% if relatedPost.data.tags and relatedPost.data.tags.length > 0 %}
+          <div class="flex flex-wrap gap-2 mb-4">
+            {% for tag in relatedPost.data.tags %}
+            <a href="/news/tags/{{ tag | slugify }}/" class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 hover:bg-indigo-200 dark:hover:bg-indigo-800 transition-colors">
+              {{ tag }}
+            </a>
+            {% endfor %}
+          </div>
+          {% endif %}
+          
+          {% if relatedPost.data.date %}
+          <time class="text-sm text-gray-500 dark:text-gray-500 block mb-4">{{ relatedPost.data.date | readableDate }}</time>
+          {% endif %}
+          <a href="{{ relatedPost.url }}" class="inline-flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium">
+            Read full story →
+          </a>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+    
     <div class="max-w-4xl mx-auto mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
       <a href="/news" class="inline-flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium">
         ← Back to All News

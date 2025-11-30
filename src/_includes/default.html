@@ -11,10 +11,52 @@
       <meta name="description" content="{{description}}"/>
     {% endif %}
     {% block head %}{% endblock %}
+    <!-- Local Fonts CSS -->
+    <link rel="stylesheet" type="text/css" href="/static/css/fonts.css"/>
     <!-- Tailwind CSS -->
     <link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
     <!-- Swup CSS - Inline for immediate loading -->
     <style>
+      /* Custom Fonts */
+      :root {
+        --font-primary: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        --font-secondary: 'EB Garamond', Georgia, serif;
+      }
+      
+      body {
+        font-family: var(--font-primary);
+        font-variation-settings: 'wght' 400;
+      }
+      
+      /* Headings - all use Geist with bold weight */
+      h1, h2, h3, h4, h5, h6 {
+        font-family: var(--font-primary);
+        font-weight: 700;
+        font-variation-settings: 'wght' 700;
+      }
+      
+      /* Secondary font ONLY for dates, captions, meta info - NOT for buttons or tags */
+      time,
+      small,
+      .caption,
+      .meta,
+      .date {
+        font-family: var(--font-secondary);
+        font-style: italic;
+        font-weight: 400;
+        font-variation-settings: 'wght' 400;
+      }
+      
+      /* Ensure nav buttons and tags use primary font (Geist) */
+      nav a,
+      nav button,
+      [class*="tag"],
+      .tag,
+      a[class*="tag"] {
+        font-family: var(--font-primary) !important;
+        font-style: normal !important;
+      }
+      
       /* Swup fade animation - exactly as on swup.js.org */
       html.is-changing {
         overflow-x: hidden;
@@ -42,9 +84,14 @@
         opacity: 1;
       }
 
-      /* Lenis smooth scroll styles */
-      html.lenis {
+      /* Lenis smooth scroll styles - official CSS from documentation */
+      html.lenis,
+      html.lenis body {
         height: auto;
+      }
+
+      html.lenis {
+        overflow-x: hidden;
       }
 
       .lenis.lenis-smooth {
@@ -61,6 +108,22 @@
 
       .lenis.lenis-scrolling iframe {
         pointer-events: none;
+      }
+
+      /* Disable native smooth scroll to let Lenis handle it */
+      html {
+        scroll-behavior: auto !important;
+      }
+
+      /* Ensure Lenis controls scrolling - CRITICAL: don't block overflow */
+      body {
+        overflow-x: hidden;
+        /* Don't set overflow-y: hidden - Lenis needs it to work */
+      }
+      
+      /* Ensure main content is scrollable */
+      main#swup {
+        /* Allow scrolling */
       }
     </style>
     <!-- Webflow CSS - Add your Webflow CSS files here -->
@@ -90,103 +153,208 @@
     <script src="/static/js/swup-scroll-plugin.js"></script>
     <script src="/static/js/swup-head-plugin.js"></script>
     
-    <!-- Alpine.js - Initialize after Swup as per documentation -->
+    <!-- Alpine.js - Auto-initializes, don't call start() manually -->
     <script src="/static/js/alpine.js"></script>
     <script>
-      // Initialize Alpine.js first (as per documentation)
-      if (window.Alpine) {
-        window.Alpine.start();
+      // Wait for DOM to be fully ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initLenisAndSwup);
+      } else {
+        initLenisAndSwup();
       }
-      
-      // Initialize Lenis and Swup - wait for all scripts to load
-      (function initSwupAndLenis() {
-        // Check if all required libraries are loaded
-        if (typeof Swup === 'undefined' || typeof Lenis === 'undefined') {
-          setTimeout(initSwupAndLenis, 50);
+
+      function initLenisAndSwup() {
+        // Check if Lenis is loaded
+        if (typeof Lenis === 'undefined') {
+          setTimeout(initLenisAndSwup, 50);
           return;
         }
 
-        // Initialize Lenis for smooth scrolling with better settings
-        let lenis;
-        if (typeof Lenis !== 'undefined') {
-          lenis = new Lenis({
-            duration: 1.5,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            orientation: 'vertical',
-            gestureOrientation: 'vertical',
-            smoothWheel: true,
-            wheelMultiplier: 0.8, // Slightly slower for smoother feel
-            smoothTouch: true, // Enable smooth touch for mobile
-            touchMultiplier: 1.5,
-            infinite: false,
-            lerp: 0.08, // Lower lerp for smoother animation
-          });
-
-          // Animation loop for Lenis
-          function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
+        // Initialize Lenis FIRST with autoRaf for automatic animation loop
+        // Don't specify wrapper/content - let Lenis use defaults (window/document.documentElement)
+        const lenis = new Lenis({
+          autoRaf: true, // Use automatic RAF loop as per Lenis documentation
+          duration: 3.5, // Slower duration for more noticeable smooth scrolling
+          easing: (t) => 1 - Math.pow(1 - t, 3),
+          orientation: 'vertical',
+          gestureOrientation: 'vertical',
+          smoothWheel: true,
+          wheelMultiplier: 0.3, // Much slower wheel for very noticeable smooth scrolling
+          smoothTouch: true,
+          touchMultiplier: 0.8,
+          infinite: false,
+          lerp: 0.08, // Lower lerp for smoother, slower animation
+          syncTouch: true,
+        });
+        
+        // Debug: Check if Lenis is actually running
+        console.log('Lenis instance:', lenis);
+        console.log('Lenis isScrolling:', lenis.isScrolling);
+        console.log('Lenis isStopped:', lenis.isStopped);
+        
+        // Listen to scroll events to verify it's working
+        lenis.on('scroll', ({ scroll, limit, velocity, direction, progress }) => {
+          // This will fire when Lenis is actually scrolling
+          if (Math.abs(velocity) > 0.01) {
+            console.log('🔄 Lenis scrolling:', { 
+              scroll: Math.round(scroll), 
+              velocity: velocity.toFixed(3),
+              direction 
+            });
           }
-          requestAnimationFrame(raf);
+        });
 
-          // Make Lenis available globally
-          window.lenis = lenis;
-          console.log('Lenis initialized');
+        // Make Lenis available globally
+        window.lenis = lenis;
+        
+        // Function to ensure Lenis classes are on HTML element
+        function ensureLenisClasses() {
+          const htmlElement = document.documentElement;
+          
+          // Ensure lenis class is there
+          if (!htmlElement.classList.contains('lenis')) {
+            htmlElement.classList.add('lenis');
+          }
+          
+          // CRITICAL: Add lenis-smooth class - this enables smooth scrolling
+          if (!htmlElement.classList.contains('lenis-smooth')) {
+            htmlElement.classList.add('lenis-smooth');
+          }
+          
+          return htmlElement.classList.contains('lenis-smooth');
+        }
+        
+        // Immediately add classes
+        ensureLenisClasses();
+        
+        // CRITICAL: Ensure Lenis is started and running
+        lenis.start();
+        
+        console.log('✅ Lenis initialized with autoRaf');
+        console.log('✅ Lenis started:', lenis.isStopped ? 'NO (stopped!)' : 'YES (running)');
+        
+        // Continuously check and restore classes (in case something removes them)
+        let checkInterval = setInterval(() => {
+          if (!ensureLenisClasses()) {
+            console.warn('⚠️ lenis-smooth class was removed, restoring...');
+          }
+        }, 500);
+        
+        // Stop checking after 5 seconds (by then it should be stable)
+        setTimeout(() => {
+          clearInterval(checkInterval);
+        }, 5000);
+        
+        // Verify Lenis is working
+        setTimeout(() => {
+          const htmlElement = document.documentElement;
+          const hasLenis = htmlElement.classList.contains('lenis');
+          const hasSmooth = htmlElement.classList.contains('lenis-smooth');
+          
+          console.log('✅ Lenis status:', {
+            hasLenisClass: hasLenis,
+            hasSmoothClass: hasSmooth,
+            allClasses: htmlElement.className,
+            scroll: Math.round(lenis.scroll),
+            limit: Math.round(lenis.limit)
+          });
+          
+          if (!hasSmooth) {
+            console.error('❌ lenis-smooth class is missing! Smooth scrolling will not work.');
+            // Force add it one more time
+            htmlElement.classList.add('lenis-smooth');
+            console.log('🔧 Force-added lenis-smooth class');
+          }
+        }, 200);
+        
+        // Make function available globally for Swup hooks
+        window.ensureLenisClasses = ensureLenisClasses;
+
+        // Now initialize Swup WITHOUT Scroll Plugin to avoid conflicts
+        if (typeof Swup === 'undefined') {
+          setTimeout(() => {
+            if (typeof Swup !== 'undefined') {
+              initSwup(lenis);
+            }
+          }, 50);
+          return;
         }
 
+        initSwup(lenis);
+      }
+
+      function initSwup(lenis) {
         // Get plugin constructors (UMD modules export to window)
-        const ScrollPlugin = window.SwupScrollPlugin;
         const HeadPlugin = window.SwupHeadPlugin;
 
+        // DO NOT use ScrollPlugin - it conflicts with Lenis
         const swup = new Swup({
+          containers: ['#swup'], // Explicitly specify container
           plugins: [
-            ScrollPlugin ? new ScrollPlugin({
-              doScrollingRightAway: false,
-              animateScroll: false, // Disable Swup's scroll animation, use Lenis instead
-              scrollFriction: 0.3,
-              scrollAcceleration: 0.04,
-            }) : null,
             HeadPlugin ? new HeadPlugin({
               persistTags: 'style[data-swup], link[rel="stylesheet"]',
             }) : null,
           ].filter(Boolean),
           cache: true,
           animateHistoryBrowsing: true,
-          animationSelector: '.transition-fade', // As per documentation
-          animationScope: 'html', // As per documentation
+          animationSelector: '.transition-fade',
+          animationScope: 'html',
         });
 
-        console.log('Swup initialized');
+        console.log('✅ Swup initialized (Scroll Plugin disabled for Lenis)');
 
-        // Alpine.js integration - as per documentation
-        // Alpine automatically reinitializes on content replace, but we can ensure it
+        // Alpine.js integration - Alpine auto-initializes, just refresh tree
         swup.hooks.on('content:replace', () => {
-          // Alpine.js will auto-initialize, but we can trigger a refresh if needed
-          if (window.Alpine) {
-            window.Alpine.initTree(document.body);
-          }
+          // Alpine automatically reinitializes, but we can ensure it
+          // Don't call Alpine.start() as it's already initialized
         });
 
         // Integrate Lenis with Swup
         if (lenis) {
-          // Stop Lenis during page transition for smoother animation
+          // Make sure Lenis is started initially
+          lenis.start();
+          console.log('✅ Lenis started after Swup init');
+          
+          // Stop Lenis during page transition
           swup.hooks.on('visit:start', () => {
             lenis.stop();
+            console.log('⏸️ Lenis stopped for page transition');
           });
           
-          // Scroll to top on page change
+          // Restart Lenis and scroll to top after content is replaced
           swup.hooks.on('content:replace', () => {
-            // Small delay to ensure content is rendered
+            // CRITICAL: Re-add lenis-smooth class after Swup replaces content
+            // Swup may remove classes from HTML element
+            if (window.ensureLenisClasses) {
+              window.ensureLenisClasses();
+            } else {
+              const htmlElement = document.documentElement;
+              if (!htmlElement.classList.contains('lenis')) {
+                htmlElement.classList.add('lenis');
+              }
+              if (!htmlElement.classList.contains('lenis-smooth')) {
+                htmlElement.classList.add('lenis-smooth');
+              }
+            }
+            
+            // Resize Lenis to recalculate scroll height
+            lenis.resize();
+            
+            // Small delay to ensure DOM is ready
             setTimeout(() => {
+              // Ensure classes are still there
+              if (window.ensureLenisClasses) {
+                window.ensureLenisClasses();
+              }
+              
               lenis.start();
               lenis.scrollTo(0, {
-                immediate: false,
-                duration: 1.2,
+                immediate: true, // Immediate scroll to top on page change
               });
-            }, 150);
+            }, 100);
           });
 
-          // Handle anchor links
+          // Handle anchor links with Lenis
           swup.hooks.on('link:anchor', ({ hash }) => {
             setTimeout(() => {
               const element = document.querySelector(hash);
@@ -197,11 +365,6 @@
                 });
               }
             }, 100);
-          });
-
-          // Update Lenis when content changes
-          swup.hooks.on('content:replace', () => {
-            lenis.resize();
           });
         }
 
@@ -218,6 +381,15 @@
           
           navLinks.forEach(link => {
             const linkUrl = link.getAttribute('href');
+            
+            // Check if this is the logo (in flex-shrink-0 div) - never make it active
+            const isLogo = link.closest('.flex-shrink-0') !== null;
+            if (isLogo) {
+              // Remove any active classes from logo
+              link.classList.remove('text-indigo-600', 'dark:text-indigo-400', 'bg-indigo-100', 'dark:bg-indigo-900/30', 'font-semibold', 'border-b-2', 'border-indigo-600', 'dark:border-indigo-400');
+              return;
+            }
+            
             let isActive = false;
             
             // Check if link matches current URL
@@ -245,7 +417,7 @@
 
         // Make swup available globally for debugging
         window.swup = swup;
-      })();
+      }
     </script>
     
     <!-- Webflow JS - Add your Webflow JS files here -->

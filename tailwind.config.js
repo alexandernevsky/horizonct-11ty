@@ -18,6 +18,10 @@ module.exports = {
     },
     extend: {
       colors: {},
+      fontFamily: {
+        sans: ['Geist', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+        serif: ['EB Garamond', 'Georgia', 'serif'],
+      },
     },
   },
   variants: {
