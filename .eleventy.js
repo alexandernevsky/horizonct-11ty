@@ -2,6 +2,8 @@ const yaml = require("js-yaml");
 const { DateTime } = require("luxon");
 const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const htmlmin = require("html-minifier");
+const fs = require("fs");
+const path = require("path");
 
 module.exports = function (eleventyConfig) {
   // Disable automatic use of your .gitignore
@@ -145,8 +147,49 @@ module.exports = function (eleventyConfig) {
   });
 
   // Add collection for jobs (careers)
+  // Files have permalink: false to prevent auto-page generation
+  // Pages are generated via pagination in job.html template
   eleventyConfig.addCollection("jobs", function(collectionApi) {
-    return collectionApi.getFilteredByGlob("src/careers/jobs/*.md");
+    // Read job files directly from filesystem to include files with permalink: false
+    const jobsDir = path.join(process.cwd(), 'src/careers/jobs');
+    const jobs = [];
+    
+    try {
+      const files = fs.readdirSync(jobsDir);
+      files.forEach(file => {
+        if (!file.endsWith('.md') || file === 'job.html') return;
+        
+        const filePath = path.join(jobsDir, file);
+        const fileContent = fs.readFileSync(filePath, 'utf8');
+        const frontMatterMatch = fileContent.match(/^---\n([\s\S]*?)\n---/);
+        
+        if (frontMatterMatch) {
+          try {
+            const frontMatter = yaml.load(frontMatterMatch[1]);
+            const content = fileContent.replace(/^---\n[\s\S]*?\n---\n/, '');
+            const fileSlug = path.basename(file, '.md');
+            
+            jobs.push({
+              data: frontMatter,
+              templateContent: content,
+              inputPath: filePath,
+              fileSlug: fileSlug,
+              url: `/careers/jobs/${fileSlug}/`
+            });
+          } catch (e) {
+            console.error(`Error parsing front matter in ${file}:`, e.message);
+          }
+        }
+      });
+    } catch (e) {
+      console.error('Error reading jobs directory:', e.message);
+    }
+    
+    return jobs.sort((a, b) => {
+      const dateA = a.data.date ? new Date(a.data.date) : new Date(0);
+      const dateB = b.data.date ? new Date(b.data.date) : new Date(0);
+      return dateB - dateA;
+    });
   });
 
   // Add collection for customer stories
@@ -158,7 +201,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addCollection("tags", function(collectionApi) {
     const allPosts = collectionApi.getFilteredByGlob("src/news/posts/*.md");
     const tags = new Set();
-    
+
     allPosts.forEach(post => {
       if (post.data.tags && Array.isArray(post.data.tags)) {
         post.data.tags.forEach(tag => {
@@ -166,18 +209,14 @@ module.exports = function (eleventyConfig) {
         });
       }
     });
-    
+
     return Array.from(tags).map(tag => {
-      const slug = tag.toLowerCase()
-        .replace(/\s+/g, '-')
-        .replace(/[^\w-]+/g, '')
-        .replace(/--+/g, '-')
-        .replace(/^-+|-+$/g, '');
-      
+      const slug = eleventyConfig.getFilter("slugify")(tag);
+
       return {
         tag: tag,
         slug: slug,
-        posts: allPosts.filter(post => 
+        posts: allPosts.filter(post =>
           post.data.tags && Array.isArray(post.data.tags) && post.data.tags.includes(tag)
         )
       };
@@ -223,7 +262,7 @@ module.exports = function (eleventyConfig) {
   // Minify HTML
   eleventyConfig.addTransform("htmlmin", function (content, outputPath) {
     // Eleventy 1.0+: use this.inputPath and this.outputPath instead
-    if (outputPath.endsWith(".html")) {
+    if (outputPath && outputPath.endsWith(".html")) {
       // Temporarily disable minification to debug language switcher
       // let minified = htmlmin.minify(content, {
       //   useShortDoctype: true,

@@ -70,21 +70,24 @@ collections:
     editor:
       preview: false
     fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Job Title", name: "title", widget: "string", required: true }
+      - { label: "Short Description", name: "description", widget: "text", required: true, hint: "Brief description shown in job listings" }
       - widget: select
-        label: "Type"
+        label: "Employment Type"
         name: "type"
         multiple: false
+        required: true
         options: ["Full Time", "Part Time", "Contract", "Internship"]
       - widget: select
         label: "Status"
         name: "status"
         multiple: false
+        required: true
         options: ["open", "closed", "filled"]
-      - { label: "Location", name: "location", widget: "string" }
-      - { label: "Publish Date", name: "date", widget: "datetime" }
-      - { label: "Body", name: "body", widget: "markdown" }
+        default: "open"
+      - { label: "Location", name: "location", widget: "string", required: true, default: "Dubai" }
+      - { label: "Publish Date", name: "date", widget: "datetime", required: true, default: "now" }
+      - { label: "Full Job Description", name: "body", widget: "markdown", required: true, hint: "Full job description with all details, requirements, and responsibilities" }
       - label: "SEO Settings"
         name: "seo"
         widget: "object"

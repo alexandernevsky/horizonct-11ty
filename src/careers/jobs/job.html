@@ -1,0 +1,13 @@
+---
+pagination:
+  data: collections.jobs
+  size: 1
+  alias: job
+permalink: /careers/jobs/{{ job.fileSlug }}/index.html
+layout: job
+eleventyComputed:
+  title: "{{ job.data.title }} | Careers"
+  description: "{{ job.data.description }}"
+eleventyExcludeFromCollections: true
+---
+
