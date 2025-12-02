@@ -4,6 +4,12 @@ const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const htmlmin = require("html-minifier");
 const fs = require("fs");
 const path = require("path");
+const markdownIt = require("markdown-it");
+const md = new markdownIt({
+  html: true,
+  breaks: true,
+  linkify: true
+});
 
 module.exports = function (eleventyConfig) {
   // Disable automatic use of your .gitignore
@@ -59,6 +65,12 @@ module.exports = function (eleventyConfig) {
       .replace(/^-+|-+$/g, '');
   });
 
+  // Markdown filter
+  eleventyConfig.addFilter("markdown", (content) => {
+    if (!content) return '';
+    return md.render(content);
+  });
+
   // Store all pages for language switching
   let allPagesCache = [];
 
@@ -92,7 +104,7 @@ module.exports = function (eleventyConfig) {
     if (cleanUrl === '/') cleanUrl = '';
 
     if (targetLang === 'ru') {
-      return '/ru' + cleanUrl;
+      return cleanUrl === '' ? '/ru/' : '/ru' + cleanUrl;
     } else {
       return cleanUrl || '/';
     }
@@ -171,7 +183,7 @@ module.exports = function (eleventyConfig) {
             
             jobs.push({
               data: frontMatter,
-              templateContent: content,
+              templateContent: md.render(content),
               inputPath: filePath,
               fileSlug: fileSlug,
               url: `/careers/jobs/${fileSlug}/`

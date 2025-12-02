@@ -3,22 +3,36 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
       <!-- Company Info -->
       <div class="col-span-1 lg:col-span-2">
+        {% set currentLang = lang | default('en') %}
         <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">{{ settings.company_name }}</h3>
-        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Registration No. {{ settings.registration_no }}</p>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+          {% if currentLang == 'ru' %}Регистрационный номер{% else %}Registration No.{% endif %} {{ settings.registration_no }}
+        </p>
         <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">{{ settings.address }}</p>
         <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
-          Phone: <a href="tel:{{ settings.phone }}" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">{{ settings.phone }}</a>
+          {% if currentLang == 'ru' %}Телефон{% else %}Phone{% endif %}: <a href="tel:{{ settings.phone }}" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">{{ settings.phone }}</a>
         </p>
         <p class="text-sm text-gray-600 dark:text-gray-400">
-          Email: <a href="mailto:{{ settings.email }}" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">{{ settings.email }}</a>
+          {% if currentLang == 'ru' %}Email{% else %}Email{% endif %}: <a href="mailto:{{ settings.email }}" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">{{ settings.email }}</a>
         </p>
       </div>
 
       <!-- Quick Links -->
       <div>
-        <h4 class="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-4">Quick Links</h4>
+        {% set currentLang = lang | default('en') %}
+        <h4 class="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-4">
+          {% if currentLang == 'ru' %}Быстрые ссылки{% else %}Quick Links{% endif %}
+        </h4>
         <ul class="space-y-2">
-          {% if navigation.items %}
+          {% if navigation[currentLang] %}
+            {% for item in navigation[currentLang] %}
+              <li>
+                <a href="{{ item.url }}" class="text-sm text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                  {{ item.text }}
+                </a>
+              </li>
+            {% endfor %}
+          {% elif navigation.items %}
             {% for item in navigation.items %}
               <li>
                 <a href="{{ item.url }}" class="text-sm text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
@@ -32,7 +46,10 @@
 
       <!-- Social Links -->
       <div>
-        <h4 class="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-4">Follow Us</h4>
+        {% set currentLang = lang | default('en') %}
+        <h4 class="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-4">
+          {% if currentLang == 'ru' %}Мы в соцсетях{% else %}Follow Us{% endif %}
+        </h4>
         <div class="flex space-x-4">
           <a href="#" target="_blank" rel="noopener" class="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors" aria-label="Facebook">
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -55,11 +72,20 @@
 
     <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-800">
       <div class="flex flex-col md:flex-row justify-between items-center">
+        {% set currentLang = lang | default('en') %}
         <p class="text-sm text-gray-600 dark:text-gray-400">
-          Copyright © {{ settings.company_name }} <span x-data="{ year: new Date().getFullYear() }" x-text="year"></span>. All rights reserved.
+          {% if currentLang == 'ru' %}
+            © {{ settings.company_name }} <span x-data="{ year: new Date().getFullYear() }" x-text="year"></span>. Все права защищены.
+          {% else %}
+            Copyright © {{ settings.company_name }} <span x-data="{ year: new Date().getFullYear() }" x-text="year"></span>. All rights reserved.
+          {% endif %}
         </p>
         <div class="mt-4 md:mt-0">
-          <a href="/privacy-policy" class="text-sm text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Privacy Policy</a>
+          {% if currentLang == 'ru' %}
+            <a href="/ru/privacy-policy" class="text-sm text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Политика конфиденциальности</a>
+          {% else %}
+            <a href="/privacy-policy" class="text-sm text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Privacy Policy</a>
+          {% endif %}
         </div>
       </div>
     </div>

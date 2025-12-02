@@ -50,40 +50,12 @@
         {% set currentLang = lang | default('en') %}
         {% if currentLang == 'ru' %}
           {% set targetLang = 'en' %}
-          {% set switchTitle = 'Switch to English' %}
-          {% if translationKey == 'home' %}
-            {% set switchUrl = '/' %}
-          {% elif translationKey == 'about' %}
-            {% set switchUrl = '/about/' %}
-          {% elif translationKey == 'careers' %}
-            {% set switchUrl = '/careers/' %}
-          {% elif translationKey == 'contact' %}
-            {% set switchUrl = '/contact/' %}
-          {% elif translationKey == 'customers' %}
-            {% set switchUrl = '/customers/' %}
-          {% elif translationKey == 'privacy-policy' %}
-            {% set switchUrl = '/privacy-policy/' %}
-          {% else %}
-            {% set switchUrl = '/' %}
-          {% endif %}
+          {% set switchTitle = 'Переключиться на английский' %}
+          {% set switchUrl = page | switchLang('en') %}
         {% else %}
           {% set targetLang = 'ru' %}
           {% set switchTitle = 'Switch to Russian' %}
-          {% if translationKey == 'home' %}
-            {% set switchUrl = '/ru/' %}
-          {% elif translationKey == 'about' %}
-            {% set switchUrl = '/ru/about/' %}
-          {% elif translationKey == 'careers' %}
-            {% set switchUrl = '/ru/careers/' %}
-          {% elif translationKey == 'contact' %}
-            {% set switchUrl = '/ru/contact/' %}
-          {% elif translationKey == 'customers' %}
-            {% set switchUrl = '/ru/customers/' %}
-          {% elif translationKey == 'privacy-policy' %}
-            {% set switchUrl = '/ru/privacy-policy/' %}
-          {% else %}
-            {% set switchUrl = '/ru/' %}
-          {% endif %}
+          {% set switchUrl = page | switchLang('ru') %}
         {% endif %}
         <a href="{{ switchUrl }}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800" title="{{ switchTitle }}"><span class="font-semibold">{{ targetLang | upper }}</span></a>
         <!-- Theme Toggle -->
