@@ -3,12 +3,7 @@
     <div class="flex items-center justify-between h-16">
       <!-- Logo -->
       <div class="flex-shrink-0">
-        {% if lang %}
-          {% set currentLang = lang %}
-        {% else %}
-          {% set currentLang = 'en' %}
-        {% endif %}
-        {% if currentLang == 'ru' %}
+        {% if lang == 'ru' %}
           {% set homeUrl = '/ru/' %}
         {% else %}
           {% set homeUrl = '/' %}
@@ -19,45 +14,102 @@
       </div>
 
       <!-- Desktop Navigation -->
-      <div class="hidden md:block">
-        <div class="ml-10 flex items-baseline space-x-4">
-          {% if lang %}
-            {% set currentLang = lang %}
-          {% else %}
-            {% set currentLang = 'en' %}
-          {% endif %}
-          {% if navigation[currentLang] %}
-            {% for item in navigation[currentLang] %}
+      <nav class="hidden md:block" aria-label="Main navigation">
+        <ul class="ml-10 flex items-baseline space-x-4">
+          {% if navigation[lang] %}
+            {% for item in navigation[lang] %}
               {% set isActive = page.url | isActive(item.url) %}
-              <a href="{{ item.url }}" class="px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 {% if isActive %}text-indigo-600 dark:text-indigo-400 bg-indigo-100 dark:bg-indigo-900/30 font-semibold border-b-2 border-indigo-600 dark:border-indigo-400{% else %}text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-gray-100 dark:hover:bg-gray-800{% endif %}">
-                {{ item.text }}
-              </a>
-            {% endfor %}
-          {% elif navigation.items %}
-            {% for item in navigation.items %}
-              {% set isActive = page.url | isActive(item.url) %}
-              <a href="{{ item.url }}" class="px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 {% if isActive %}text-indigo-600 dark:text-indigo-400 bg-indigo-100 dark:bg-indigo-900/30 font-semibold border-b-2 border-indigo-600 dark:border-indigo-400{% else %}text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-gray-100 dark:hover:bg-gray-800{% endif %}">
-                {{ item.text }}
-              </a>
+              <li>
+                <a href="{{ item.url }}" 
+                   class="px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 {% if isActive %}text-indigo-600 dark:text-indigo-400 bg-indigo-100 dark:bg-indigo-900/30 font-semibold{% else %}text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-gray-100 dark:hover:bg-gray-800{% endif %}"
+                   {% if isActive %}aria-current="page"{% endif %}>
+                  {{ item.text }}
+                </a>
+              </li>
             {% endfor %}
           {% endif %}
-        </div>
-      </div>
+        </ul>
+      </nav>
 
       <!-- Language Switcher, Theme Toggle & Mobile Menu Button -->
       <div class="flex items-center space-x-4">
-        <!-- Language Switcher -->
-        {% set currentLang = lang | default('en') %}
-        {% if currentLang == 'ru' %}
-          {% set targetLang = 'en' %}
-          {% set switchTitle = 'Переключиться на английский' %}
-          {% set switchUrl = page | switchLang('en') %}
+        <!-- Language Switcher Dropdown -->
+        {% if lang == 'ru' %}
+          {% set currentLangCode = 'RU' %}
+          {% set enUrl = page | switchLang('en') %}
+          {% set ruUrl = page.url %}
         {% else %}
-          {% set targetLang = 'ru' %}
-          {% set switchTitle = 'Switch to Russian' %}
-          {% set switchUrl = page | switchLang('ru') %}
+          {% set currentLangCode = 'EN' %}
+          {% set enUrl = page.url %}
+          {% set ruUrl = page | switchLang('ru') %}
         {% endif %}
-        <a href="{{ switchUrl }}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800" title="{{ switchTitle }}"><span class="font-semibold">{{ targetLang | upper }}</span></a>
+        
+        <div class="relative" x-data="{ isOpen: false }" @click.away="isOpen = false">
+          <!-- Dropdown Button -->
+          <button 
+            @click="isOpen = !isOpen"
+            class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 flex items-center space-x-1"
+            aria-label="Select language"
+          >
+            <span class="font-semibold">{{ currentLangCode }}</span>
+            <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" :class="{ 'rotate-180': isOpen }">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+          
+          <!-- Dropdown Menu -->
+          <div 
+            x-show="isOpen"
+            x-transition:enter="transition ease-out duration-100"
+            x-transition:enter-start="opacity-0 transform scale-95"
+            x-transition:enter-end="opacity-100 transform scale-100"
+            x-transition:leave="transition ease-in duration-75"
+            x-transition:leave-start="opacity-100 transform scale-100"
+            x-transition:leave-end="opacity-0 transform scale-95"
+            class="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-800 rounded-md shadow-lg border border-gray-200 dark:border-gray-700 z-50"
+            style="display: none;"
+          >
+            <ul class="py-1" role="list">
+              <!-- English Option -->
+              <li role="none">
+                <a 
+                  href="{{ enUrl }}"
+                  class="flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors {% if lang == 'en' %}bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400{% endif %}"
+                  @click="isOpen = false"
+                  {% if lang == 'en' %}aria-current="true"{% endif %}
+                  hreflang="en"
+                  lang="en"
+                >
+                  <span>English</span>
+                  {% if lang == 'en' %}
+                  <svg class="w-4 h-4 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  {% endif %}
+                </a>
+              </li>
+              
+              <!-- Russian Option -->
+              <li role="none">
+                <a 
+                  href="{{ ruUrl }}"
+                  class="flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors {% if lang == 'ru' %}bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400{% endif %}"
+                  @click="isOpen = false"
+                  {% if lang == 'ru' %}aria-current="true"{% endif %}
+                  hreflang="ru"
+                  lang="ru"
+                >
+                  <span>Русский</span>
+                  {% if lang == 'ru' %}
+                  <svg class="w-4 h-4 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  {% endif %}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
         <!-- Theme Toggle -->
         <button 
           @click="darkMode = !darkMode" 
@@ -89,7 +141,7 @@
     </div>
 
     <!-- Mobile Navigation -->
-    <div 
+    <nav 
       x-show="isOpen" 
       x-transition:enter="transition ease-out duration-200"
       x-transition:enter-start="opacity-0 transform scale-95"
@@ -99,37 +151,25 @@
       x-transition:leave-end="opacity-0 transform scale-95"
       class="md:hidden border-t border-gray-200 dark:border-gray-800"
       style="display: none;"
+      aria-label="Mobile navigation"
     >
-      <div class="px-2 pt-2 pb-3 space-y-1">
-          {% if lang %}
-            {% set currentLang = lang %}
-          {% else %}
-            {% set currentLang = 'en' %}
+      <ul class="px-2 pt-2 pb-3 space-y-1">
+          {% if navigation[lang] %}
+            {% for item in navigation[lang] %}
+              {% set isActive = page.url | isActive(item.url) %}
+              <li>
+                <a 
+                  href="{{ item.url }}" 
+                  @click="isOpen = false"
+                  class="block px-3 py-2 rounded-md text-base font-medium transition-all duration-200 {% if isActive %}text-indigo-600 dark:text-indigo-400 bg-indigo-100 dark:bg-indigo-900/30 font-semibold{% else %}text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-gray-50 dark:hover:bg-gray-800{% endif %}"
+                  {% if isActive %}aria-current="page"{% endif %}
+                >
+                  {{ item.text }}
+                </a>
+              </li>
+            {% endfor %}
           {% endif %}
-          {% if navigation[currentLang] %}
-          {% for item in navigation[currentLang] %}
-            {% set isActive = page.url | isActive(item.url) %}
-            <a 
-              href="{{ item.url }}" 
-              @click="isOpen = false"
-              class="block px-3 py-2 rounded-md text-base font-medium transition-all duration-200 {% if isActive %}text-indigo-600 dark:text-indigo-400 bg-indigo-100 dark:bg-indigo-900/30 font-semibold border-l-4 border-indigo-600 dark:border-indigo-400{% else %}text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-gray-50 dark:hover:bg-gray-800{% endif %}"
-            >
-              {{ item.text }}
-            </a>
-          {% endfor %}
-        {% elif navigation.items %}
-          {% for item in navigation.items %}
-            {% set isActive = page.url | isActive(item.url) %}
-            <a 
-              href="{{ item.url }}" 
-              @click="isOpen = false"
-              class="block px-3 py-2 rounded-md text-base font-medium transition-all duration-200 {% if isActive %}text-indigo-600 dark:text-indigo-400 bg-indigo-100 dark:bg-indigo-900/30 font-semibold border-l-4 border-indigo-600 dark:border-indigo-400{% else %}text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-gray-50 dark:hover:bg-gray-800{% endif %}"
-            >
-              {{ item.text }}
-            </a>
-          {% endfor %}
-        {% endif %}
-      </div>
-    </div>
+      </ul>
+    </nav>
   </div>
 </nav>

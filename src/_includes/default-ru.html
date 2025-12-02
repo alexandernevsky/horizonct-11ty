@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -53,8 +53,8 @@
     {% endif %}
     <meta name="author" content="{% if seo_author %}{{ seo_author }}{% else %}{{ settings.author }}{% endif %}">
     <meta name="robots" content="{{ page_robots }}">
-    <meta name="language" content="English">
-    <meta http-equiv="content-language" content="en">
+    <meta name="language" content="Russian">
+    <meta http-equiv="content-language" content="ru">
     <meta name="revisit-after" content="7 days">
 
     <!-- Geo Tags (for Hong Kong) -->
@@ -74,15 +74,13 @@
     {%- endif -%}
     {%- if not isNewsPage -%}
       {%- set currentUrl = page.url -%}
-      {%- set altUrl = '/' -%}
-      {%- if currentUrl == '/' -%}
-        {%- set altUrl = '/ru/' -%}
-      {%- else -%}
-        {%- set altUrl = '/ru' + currentUrl -%}
+      {%- set altUrl = currentUrl | replace('/ru/', '/') -%}
+      {%- if altUrl == '/ru/' -%}
+        {%- set altUrl = '/' -%}
       {%- endif -%}
-      <link rel="alternate" hreflang="en" href="{{ settings.url }}{{ currentUrl }}">
-      <link rel="alternate" hreflang="ru" href="{{ settings.url }}{{ altUrl }}">
-      {%- if currentUrl == '/' -%}
+      <link rel="alternate" hreflang="ru" href="{{ settings.url }}{{ currentUrl }}">
+      <link rel="alternate" hreflang="en" href="{{ settings.url }}{{ altUrl }}">
+      {%- if currentUrl == '/ru/' -%}
       <link rel="alternate" hreflang="x-default" href="{{ settings.url }}/">
       {%- endif -%}
     {%- endif -%}
@@ -123,9 +121,8 @@
     {% endif %}
     {% endif %}
     <meta property="og:site_name" content="{{ settings.company_name }}">
-    <!-- Open Graph Locale -->
-    <meta property="og:locale" content="en_US">
-    <meta property="og:locale:alternate" content="ru_RU">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:locale:alternate" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="{{ page_twitter_card }}">
@@ -182,7 +179,13 @@
       "url": "{{ settings.url }}",
       "logo": "{{ settings.url }}/static/img/logo.png",
       "description": "{{ page_seo_description }}",
-      "inLanguage": "en",
+      "inLanguage": "ru",
+      "alternateName": {
+        "@type": "Organization",
+        "name": "{{ settings.company_name }}",
+        "url": "{{ settings.url }}/",
+        "inLanguage": "en"
+      },
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "{{ settings.address }}",
@@ -219,7 +222,7 @@
           "height": 60
         }
       },
-      "inLanguage": "en"{% if page_keywords %},
+      "inLanguage": "ru"{% if page_keywords %},
       "keywords": "{{ page_keywords }}"{% endif %}{% if category %},
       "articleSection": "{{ category }}"{% endif %}{% if tags and tags.length > 0 %},
       "keywords": "{% for tag in tags %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}"{% endif %}{% if page_og_image %},
@@ -332,7 +335,7 @@
     {% endif %}
   </head>
   <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-200">
-    {% set lang = 'en' %}
+    {% set lang = 'ru' %}
     {% include "./partials/navbar.html" %}
 
     <main id="swup" class="flex-grow transition-fade">
@@ -361,6 +364,7 @@
           plugins: [
             HeadPlugin ? new HeadPlugin({
               persistTags: 'style[data-swup], link[rel="stylesheet"]',
+              headElements: ['nav', 'footer'],
             }) : null,
           ].filter(Boolean),
           cache: true,
@@ -461,21 +465,7 @@
           }
         });
       }
-
-      // Update active nav on initial load
-      updateActiveNavItem();
     </script>
-
-    <!-- Webflow JS -->
-    {% if webflow_js %}
-      {% for js_file in webflow_js %}
-        <script src="/static/webflow/js/{{ js_file }}"></script>
-      {% endfor %}
-    {% endif %}
-
-    {% if path == "home" %}
-    <!-- Netlify Identity Widget -->
-    <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    {% endif %}
   </body>
 </html>
+

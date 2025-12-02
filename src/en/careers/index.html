@@ -90,45 +90,55 @@ cta_text: "We're always on the lookout for great talent. If you didn't see your 
         {{ openings_intro }}
       </p>
 
-      <div class="space-y-6">
+      <ul class="space-y-6" role="list">
         {% for job in collections.jobs | reverse %}
           {% if job.data.status == "open" %}
-          <div class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow">
-            <div class="flex items-start justify-between">
-              <div class="flex-1">
-                <div class="flex items-center gap-3 mb-2">
-                  <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">open role</span>
-                  <h3 class="text-xl font-bold text-gray-900 dark:text-white">
-                    <a href="{{ job.url }}" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
-                      {{ job.data.title }}
+          <li>
+            <article class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow" itemscope itemtype="https://schema.org/JobPosting">
+              <div class="flex items-start justify-between">
+                <div class="flex-1">
+                  <div class="flex items-center gap-3 mb-2">
+                    <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">open role</span>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white" itemprop="title">
+                      <a href="{{ job.url }}" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors" itemprop="url">
+                        {{ job.data.title }}
+                      </a>
+                    </h3>
+                  </div>
+                  {% if job.data.description %}
+                  <p class="text-gray-600 dark:text-gray-400 mb-3" itemprop="description">
+                    {{ job.data.description }}
+                  </p>
+                  {% endif %}
+                  <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mt-2">
+                    <span itemprop="employmentType">{{ job.data.type }}</span>
+                    <span>•</span>
+                    <span itemprop="jobLocation" itemscope itemtype="https://schema.org/Place">
+                      <span itemprop="addressLocality">{{ job.data.location }}</span>
+                    </span>
+                    {% if job.data.date %}
+                    <span>•</span>
+                    <time datetime="{{ job.data.date }}" itemprop="datePosted">{{ job.data.date | readableDate }}</time>
+                    {% endif %}
+                  </div>
+                  <div class="mt-4">
+                    <a href="{{ job.url }}" class="inline-flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium">
+                      View details →
                     </a>
-                  </h3>
-                </div>
-                {% if job.data.description %}
-                <p class="text-gray-600 dark:text-gray-400 mb-3">
-                  {{ job.data.description }}
-                </p>
-                {% endif %}
-                <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mt-2">
-                  <span>{{ job.data.type }}</span>
-                  <span>•</span>
-                  <span>{{ job.data.location }}</span>
-                </div>
-                <div class="mt-4">
-                  <a href="{{ job.url }}" class="inline-flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium">
-                    View details →
-                  </a>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </article>
+          </li>
           {% endif %}
         {% else %}
-        <div class="text-center py-12">
-          <p class="text-gray-600 dark:text-gray-400 text-lg">No open positions at this time. Check back soon!</p>
-        </div>
+        <li>
+          <div class="text-center py-12">
+            <p class="text-gray-600 dark:text-gray-400 text-lg">No open positions at this time. Check back soon!</p>
+          </div>
+        </li>
         {% endfor %}
-      </div>
+      </ul>
     </div>
   </div>
 </section>

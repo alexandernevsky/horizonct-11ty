@@ -2,6 +2,7 @@ const yaml = require("js-yaml");
 const { DateTime } = require("luxon");
 const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const htmlmin = require("html-minifier");
+const prettier = require("prettier");
 const fs = require("fs");
 const path = require("path");
 const markdownIt = require("markdown-it");
@@ -41,18 +42,25 @@ module.exports = function (eleventyConfig) {
     return new Date().getFullYear();
   });
 
-  // Check if URL is active (improved for nested routes)
+  // Check if URL is active (for navigation highlighting)
   eleventyConfig.addFilter("isActive", (pageUrl, navUrl) => {
     if (!pageUrl || !navUrl) return false;
-    if (pageUrl === navUrl) return true;
-    if (navUrl === '/' && pageUrl === '/') return true;
-    // For nested routes: if we're on /news/posts/article, /news should be active
-    if (navUrl !== '/' && pageUrl.startsWith(navUrl)) {
-      // Make sure it's not just a partial match (e.g., /new shouldn't match /news)
-      const nextChar = pageUrl[navUrl.length];
-      return !nextChar || nextChar === '/' || nextChar === '?';
-    }
-    return false;
+    
+    // Normalize URLs (remove trailing slashes)
+    const page = pageUrl.replace(/\/$/, '') || '/';
+    const nav = navUrl.replace(/\/$/, '') || '/';
+    
+    // Exact match
+    if (page === nav) return true;
+    
+    // Root paths only match themselves
+    if (nav === '/' || nav === '/ru') return false;
+    
+    // Special case: News posts (/news/posts/...) should highlight /ru/news in Russian nav
+    if (nav === '/ru/news' && page.startsWith('/news/')) return true;
+    
+    // Nested routes: /news/posts/article -> /news, /careers/jobs/job -> /careers
+    return page.startsWith(nav + '/');
   });
 
   // Slugify filter for tags
@@ -71,48 +79,67 @@ module.exports = function (eleventyConfig) {
     return md.render(content);
   });
 
-  // Store all pages for language switching
-  let allPagesCache = [];
-
-  // Language switcher filter - returns alternate language URL using translationKey
+  // Language switcher filter - simple hardcoded URL mapping
   eleventyConfig.addFilter("switchLang", (page, targetLang) => {
-    if (!page) return targetLang === 'ru' ? '/ru/' : '/';
-
-    // If on news page, always redirect to home page of target language
-    if (page.url && page.url.startsWith('/news')) {
+    if (!page || !page.url) {
       return targetLang === 'ru' ? '/ru/' : '/';
     }
 
-    // If page has translationKey, find the corresponding page in target language
-    if (page.data && page.data.translationKey) {
-      const translationKey = page.data.translationKey;
-      
-      const translatedPage = allPagesCache.find(p => 
-        p.data && 
-        p.data.translationKey === translationKey && 
-        p.data.lang === targetLang
-      );
+    const currentUrl = page.url;
+    
+    // Hardcoded URL mapping table - NO CACHING, NO LOGIC, JUST SIMPLE MAPPING
+    const urlMap = {
+      // English to Russian
+      '/': '/ru/',
+      '/about/': '/ru/about/',
+      '/careers/': '/ru/careers/',
+      '/contact/': '/ru/contact/',
+      '/customers/': '/ru/customers/',
+      '/privacy-policy/': '/ru/privacy-policy/',
+      '/news/': '/ru/news/',
+      '/news': '/ru/news/',
+      // Russian to English
+      '/ru/': '/',
+      '/ru/about/': '/about/',
+      '/ru/careers/': '/careers/',
+      '/ru/contact/': '/contact/',
+      '/ru/customers/': '/customers/',
+      '/ru/privacy-policy/': '/privacy-policy/',
+      '/ru/news/': '/news/',
+      '/ru/news': '/news/',
+    };
 
-      if (translatedPage && translatedPage.data.permalink) {
-        return translatedPage.data.permalink;
-      }
+    // Normalize URL - remove trailing slash for lookup, but keep / for root
+    let lookupUrl = currentUrl;
+    if (lookupUrl !== '/' && lookupUrl.endsWith('/')) {
+      lookupUrl = lookupUrl.slice(0, -1);
+    }
+    if (lookupUrl === '') {
+      lookupUrl = '/';
+    }
+    
+    // Direct lookup in map
+    if (urlMap[lookupUrl]) {
+      return urlMap[lookupUrl];
+    }
+    
+    // Also try with trailing slash
+    if (urlMap[currentUrl]) {
+      return urlMap[currentUrl];
     }
 
-    // Fallback: use URL manipulation
-    const currentUrl = page.url || '';
-    let cleanUrl = currentUrl.replace(/^\/en\//, '/').replace(/^\/ru\//, '/');
-    if (cleanUrl === '/') cleanUrl = '';
-
-    if (targetLang === 'ru') {
-      return cleanUrl === '' ? '/ru/' : '/ru' + cleanUrl;
+    // Fallback: simple URL manipulation
+    if (currentUrl.startsWith('/ru/')) {
+      // Russian to English
+      const enUrl = currentUrl.replace('/ru/', '/');
+      return enUrl === '/' ? '/' : enUrl;
     } else {
-      return cleanUrl || '/';
+      // English to Russian
+      if (currentUrl === '/') {
+        return '/ru/';
+      }
+      return '/ru' + currentUrl;
     }
-  });
-
-  // Build cache of all pages after first pass
-  eleventyConfig.on('eleventy.after', ({ allPages }) => {
-    allPagesCache = allPages;
   });
 
   // Syntax Highlighting for Code blocks
@@ -271,22 +298,37 @@ module.exports = function (eleventyConfig) {
   // Copy robots.txt to route of /_site
   eleventyConfig.addPassthroughCopy("./src/robots.txt");
 
-  // Minify HTML
-  eleventyConfig.addTransform("htmlmin", function (content, outputPath) {
-    // Eleventy 1.0+: use this.inputPath and this.outputPath instead
+  // Format HTML beautifully using Prettier
+  eleventyConfig.addTransform("htmlformat", async function (content, outputPath) {
     if (outputPath && outputPath.endsWith(".html")) {
-      // Temporarily disable minification to debug language switcher
-      // let minified = htmlmin.minify(content, {
-      //   useShortDoctype: true,
-      //   removeComments: true,
-      //   collapseWhitespace: true,
-      //   removeEmptyElements: false, // Don't remove empty elements
-      //   keepClosingSlash: true,
-      // });
-      // return minified;
-      return content;
+      try {
+        // Remove all HTML comments
+        let cleaned = content
+          .replace(/<!--[\s\S]*?-->/g, '')
+          .replace(/\n{3,}/g, '\n\n')
+          .replace(/[ \t]+$/gm, '');
+        
+        // Format with Prettier - keep attributes on one line
+        const formatted = await prettier.format(cleaned, {
+          parser: "html",
+          printWidth: 200,
+          tabWidth: 2,
+          useTabs: false,
+          htmlWhitespaceSensitivity: "ignore",
+          endOfLine: "lf",
+          singleAttributePerLine: false
+        });
+        
+        // Post-formatting cleanup: remove excessive blank lines
+        return formatted
+          .replace(/\n{3,}/g, '\n\n')
+          .replace(/\n\s*\n(\s*<\/)/g, '\n$1')
+          .replace(/(>\s*)\n\s*\n(\s*<meta|\s*<link)/g, '$1\n$2');
+      } catch (error) {
+        console.error("Error formatting HTML:", error);
+        return content;
+      }
     }
-
     return content;
   });
 

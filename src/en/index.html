@@ -145,34 +145,38 @@ permalink: /
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     <div class="max-w-6xl mx-auto">
       <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-12 text-center">News</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <ul class="grid grid-cols-1 md:grid-cols-3 gap-6" role="list">
         {% set newsPosts = collections.news | reverse %}
         {% for post in newsPosts | limit(3) %}
-        <article class="bg-gray-50 dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
-          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-            <a href="{{ post.url }}" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">{{ post.data.title }}</a>
-          </h3>
-          {% if post.data.description %}
-          <p class="text-gray-600 dark:text-gray-400 mb-4">{{ post.data.description }}</p>
-          {% endif %}
-          
-          <!-- Tags -->
-          {% if post.data.tags and post.data.tags.length > 0 %}
-          <div class="flex flex-wrap gap-2 mb-4">
-            {% for tag in post.data.tags %}
-            <a href="/news/tags/{{ tag | slugify }}/" class="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 hover:bg-indigo-200 dark:hover:bg-indigo-800 transition-colors">
-              {{ tag }}
-            </a>
-            {% endfor %}
-          </div>
-          {% endif %}
-          
-          <a href="{{ post.url }}" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium">Read full story →</a>
-        </article>
+        <li>
+          <article class="bg-gray-50 dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700" itemscope itemtype="https://schema.org/BlogPosting">
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2" itemprop="headline">
+              <a href="{{ post.url }}" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors" itemprop="url">{{ post.data.title }}</a>
+            </h3>
+            {% if post.data.description %}
+            <p class="text-gray-600 dark:text-gray-400 mb-4" itemprop="description">{{ post.data.description }}</p>
+            {% endif %}
+            
+            <!-- Tags -->
+            {% if post.data.tags and post.data.tags.length > 0 %}
+            <nav class="flex flex-wrap gap-2 mb-4" aria-label="Article tags">
+              {% for tag in post.data.tags %}
+              <a href="/news/tags/{{ tag | slugify }}/" class="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 hover:bg-indigo-200 dark:hover:bg-indigo-800 transition-colors" rel="tag">
+                {{ tag }}
+              </a>
+              {% endfor %}
+            </nav>
+            {% endif %}
+            
+            <a href="{{ post.url }}" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium">Read full story →</a>
+          </article>
+        </li>
         {% else %}
-        <p class="col-span-3 text-center text-gray-600 dark:text-gray-400">No news posts yet. Check back soon!</p>
+        <li class="col-span-3">
+          <p class="text-center text-gray-600 dark:text-gray-400">No news posts yet. Check back soon!</p>
+        </li>
         {% endfor %}
-      </div>
+      </ul>
       <div class="text-center mt-8">
         <a href="/news" class="inline-flex items-center justify-center px-6 py-3 border border-indigo-600 dark:border-indigo-400 text-base font-medium rounded-md text-indigo-600 dark:text-indigo-400 bg-white dark:bg-gray-800 hover:bg-indigo-50 dark:hover:bg-gray-700 transition-colors">
           View All News
