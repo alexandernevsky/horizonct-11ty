@@ -159,9 +159,9 @@ collections:
     editor:
       preview: false
     files:
-      - label: "Home Page"
-        name: "home"
-        file: "src/index.html"
+      - label: "Home Page (English)"
+        name: "home_en"
+        file: "src/en/index.html"
         fields:
           - { label: "Page Title", name: "title", widget: "string" }
           - { label: "Meta Description", name: "description", widget: "string" }
@@ -179,9 +179,29 @@ collections:
               - { label: "Keywords", name: "keywords", widget: "string", required: false }
               - { label: "OG Image", name: "og_image", widget: "image", required: false }
               - { label: "Robots", name: "robots", widget: "select", options: ["index, follow", "noindex, follow", "index, nofollow", "noindex, nofollow"], default: "index, follow", required: false }
-      - label: "About Page"
-        name: "about"
-        file: "src/about/index.html"
+      - label: "Home Page (Russian)"
+        name: "home_ru"
+        file: "src/ru/index.html"
+        fields:
+          - { label: "Page Title", name: "title", widget: "string" }
+          - { label: "Meta Description", name: "description", widget: "string" }
+          - { label: "Hero Title", name: "hero_title", widget: "string" }
+          - { label: "Hero Subtitle", name: "hero_subtitle", widget: "text" }
+          - { label: "Hero CTA Text", name: "hero_cta_text", widget: "string" }
+          - { label: "Hero Badge Text", name: "hero_badge", widget: "string" }
+          - label: "SEO Settings"
+            name: "seo"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "SEO Title", name: "seo_title", widget: "string", required: false }
+              - { label: "SEO Description", name: "seo_description", widget: "text", required: false }
+              - { label: "Keywords", name: "keywords", widget: "string", required: false }
+              - { label: "OG Image", name: "og_image", widget: "image", required: false }
+              - { label: "Robots", name: "robots", widget: "select", options: ["index, follow", "noindex, follow", "index, nofollow", "noindex, nofollow"], default: "index, follow", required: false }
+      - label: "About Page (English)"
+        name: "about_en"
+        file: "src/en/about/index.html"
         fields:
           - { label: "Page Title", name: "title", widget: "string" }
           - { label: "Meta Description", name: "description", widget: "string" }
@@ -214,9 +234,106 @@ collections:
               - { label: "Keywords", name: "keywords", widget: "string", required: false }
               - { label: "OG Image", name: "og_image", widget: "image", required: false }
               - { label: "Robots", name: "robots", widget: "select", options: ["index, follow", "noindex, follow", "index, nofollow", "noindex, nofollow"], default: "index, follow", required: false }
-      - label: "Careers Page"
-        name: "careers"
-        file: "src/careers/index.html"
+      - label: "About Page (Russian)"
+        name: "about_ru"
+        file: "src/ru/about/index.html"
+        fields:
+          - { label: "Page Title", name: "title", widget: "string" }
+          - { label: "Meta Description", name: "description", widget: "string" }
+          - { label: "Hero Title", name: "hero_title", widget: "string" }
+          - { label: "Hero Subtitle", name: "hero_subtitle", widget: "string" }
+          - { label: "Main Heading", name: "main_heading", widget: "string" }
+          - { label: "Main Text Paragraph 1", name: "main_text_1", widget: "text" }
+          - { label: "Main Text Paragraph 2", name: "main_text_2", widget: "text" }
+          - { label: "Feature 1 Number", name: "feature_1_num", widget: "string" }
+          - { label: "Feature 1 Title", name: "feature_1_title", widget: "string" }
+          - { label: "Feature 1 Text", name: "feature_1_text", widget: "text" }
+          - { label: "Feature 2 Number", name: "feature_2_num", widget: "string" }
+          - { label: "Feature 2 Title", name: "feature_2_title", widget: "string" }
+          - { label: "Feature 2 Text", name: "feature_2_text", widget: "text" }
+          - { label: "Feature 3 Number", name: "feature_3_num", widget: "string" }
+          - { label: "Feature 3 Title", name: "feature_3_title", widget: "string" }
+          - { label: "Feature 3 Text", name: "feature_3_text", widget: "text" }
+          - { label: "Feature 4 Number", name: "feature_4_num", widget: "string" }
+          - { label: "Feature 4 Title", name: "feature_4_title", widget: "string" }
+          - { label: "Feature 4 Text", name: "feature_4_text", widget: "text" }
+          - { label: "News Section Title", name: "news_title", widget: "string" }
+          - { label: "News Section Description", name: "news_description", widget: "text" }
+          - label: "SEO Settings"
+            name: "seo"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "SEO Title", name: "seo_title", widget: "string", required: false }
+              - { label: "SEO Description", name: "seo_description", widget: "text", required: false }
+              - { label: "Keywords", name: "keywords", widget: "string", required: false }
+              - { label: "OG Image", name: "og_image", widget: "image", required: false }
+              - { label: "Robots", name: "robots", widget: "select", options: ["index, follow", "noindex, follow", "index, nofollow", "noindex, nofollow"], default: "index, follow", required: false }
+      - label: "Customers Page (Russian)"
+        name: "customers_ru"
+        file: "src/ru/customers/index.html"
+        fields:
+          - { label: "Page Title", name: "title", widget: "string" }
+          - { label: "Meta Description", name: "description", widget: "string" }
+          - { label: "Hero Title", name: "hero_title", widget: "string" }
+          - { label: "Hero Subtitle", name: "hero_subtitle", widget: "string" }
+          - { label: "Spotlight Title", name: "spotlight_title", widget: "string" }
+          - { label: "Testimonial Quote", name: "testimonial_quote", widget: "text" }
+          - { label: "Testimonial Author", name: "testimonial_author", widget: "string" }
+          - { label: "Testimonial Title", name: "testimonial_title", widget: "string" }
+          - { label: "Testimonial Location", name: "testimonial_location", widget: "string" }
+          - { label: "More Stories Title", name: "more_stories_title", widget: "string" }
+          - label: "SEO Settings"
+            name: "seo"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "SEO Title", name: "seo_title", widget: "string", required: false }
+              - { label: "SEO Description", name: "seo_description", widget: "text", required: false }
+              - { label: "Keywords", name: "keywords", widget: "string", required: false }
+              - { label: "OG Image", name: "og_image", widget: "image", required: false }
+              - { label: "Robots", name: "robots", widget: "select", options: ["index, follow", "noindex, follow", "index, nofollow", "noindex, nofollow"], default: "index, follow", required: false }
+      - label: "Privacy Policy Page (English)"
+        name: "privacy_policy_en"
+        file: "src/en/privacy-policy/index.html"
+        fields:
+          - { label: "Page Title", name: "title", widget: "string" }
+          - { label: "Meta Description", name: "description", widget: "string" }
+          - { label: "Hero Title", name: "hero_title", widget: "string" }
+          - { label: "Hero Description", name: "hero_description", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }
+          - label: "SEO Settings"
+            name: "seo"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "SEO Title", name: "seo_title", widget: "string", required: false }
+              - { label: "SEO Description", name: "seo_description", widget: "text", required: false }
+              - { label: "Keywords", name: "keywords", widget: "string", required: false }
+              - { label: "OG Image", name: "og_image", widget: "image", required: false }
+              - { label: "Robots", name: "robots", widget: "select", options: ["index, follow", "noindex, follow", "index, nofollow", "noindex, nofollow"], default: "index, follow", required: false }
+      - label: "Privacy Policy Page (Russian)"
+        name: "privacy_policy_ru"
+        file: "src/ru/privacy-policy/index.html"
+        fields:
+          - { label: "Page Title", name: "title", widget: "string" }
+          - { label: "Meta Description", name: "description", widget: "string" }
+          - { label: "Hero Title", name: "hero_title", widget: "string" }
+          - { label: "Hero Description", name: "hero_description", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }
+          - label: "SEO Settings"
+            name: "seo"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "SEO Title", name: "seo_title", widget: "string", required: false }
+              - { label: "SEO Description", name: "seo_description", widget: "text", required: false }
+              - { label: "Keywords", name: "keywords", widget: "string", required: false }
+              - { label: "OG Image", name: "og_image", widget: "image", required: false }
+              - { label: "Robots", name: "robots", widget: "select", options: ["index, follow", "noindex, follow", "index, nofollow", "noindex, nofollow"], default: "index, follow", required: false }
+      - label: "Careers Page (English)"
+        name: "careers_en"
+        file: "src/en/careers/index.html"
         fields:
           - { label: "Page Title", name: "title", widget: "string" }
           - { label: "Meta Description", name: "description", widget: "string" }
@@ -243,9 +360,38 @@ collections:
               - { label: "Keywords", name: "keywords", widget: "string", required: false }
               - { label: "OG Image", name: "og_image", widget: "image", required: false }
               - { label: "Robots", name: "robots", widget: "select", options: ["index, follow", "noindex, follow", "index, nofollow", "noindex, nofollow"], default: "index, follow", required: false }
-      - label: "Contact Page"
-        name: "contact"
-        file: "src/contact/index.html"
+      - label: "Careers Page (Russian)"
+        name: "careers_ru"
+        file: "src/ru/careers/index.html"
+        fields:
+          - { label: "Page Title", name: "title", widget: "string" }
+          - { label: "Meta Description", name: "description", widget: "string" }
+          - { label: "Hero Title", name: "hero_title", widget: "string" }
+          - { label: "Hero Subtitle", name: "hero_subtitle", widget: "string" }
+          - { label: "Intro Text", name: "intro_text", widget: "text" }
+          - { label: "Benefit 1 Title", name: "benefit_1_title", widget: "string" }
+          - { label: "Benefit 1 Text", name: "benefit_1_text", widget: "text" }
+          - { label: "Benefit 2 Title", name: "benefit_2_title", widget: "string" }
+          - { label: "Benefit 2 Text", name: "benefit_2_text", widget: "text" }
+          - { label: "Benefit 3 Title", name: "benefit_3_title", widget: "string" }
+          - { label: "Benefit 3 Text", name: "benefit_3_text", widget: "text" }
+          - { label: "Benefit 4 Title", name: "benefit_4_title", widget: "string" }
+          - { label: "Benefit 4 Text", name: "benefit_4_text", widget: "text" }
+          - { label: "Openings Intro", name: "openings_intro", widget: "text" }
+          - { label: "CTA Text", name: "cta_text", widget: "text" }
+          - label: "SEO Settings"
+            name: "seo"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "SEO Title", name: "seo_title", widget: "string", required: false }
+              - { label: "SEO Description", name: "seo_description", widget: "text", required: false }
+              - { label: "Keywords", name: "keywords", widget: "string", required: false }
+              - { label: "OG Image", name: "og_image", widget: "image", required: false }
+              - { label: "Robots", name: "robots", widget: "select", options: ["index, follow", "noindex, follow", "index, nofollow", "noindex, nofollow"], default: "index, follow", required: false }
+      - label: "Contact Page (English)"
+        name: "contact_en"
+        file: "src/en/contact/index.html"
         fields:
           - { label: "Page Title", name: "title", widget: "string" }
           - { label: "Meta Description", name: "description", widget: "string" }
@@ -263,9 +409,29 @@ collections:
               - { label: "Keywords", name: "keywords", widget: "string", required: false }
               - { label: "OG Image", name: "og_image", widget: "image", required: false }
               - { label: "Robots", name: "robots", widget: "select", options: ["index, follow", "noindex, follow", "index, nofollow", "noindex, nofollow"], default: "index, follow", required: false }
-      - label: "Customers Page"
-        name: "customers"
-        file: "src/customers/index.html"
+      - label: "Contact Page (Russian)"
+        name: "contact_ru"
+        file: "src/ru/contact/index.html"
+        fields:
+          - { label: "Page Title", name: "title", widget: "string" }
+          - { label: "Meta Description", name: "description", widget: "string" }
+          - { label: "Hero Title", name: "hero_title", widget: "string" }
+          - { label: "HQ Location Text", name: "hq_location", widget: "string" }
+          - { label: "Form Intro Text", name: "form_intro", widget: "text" }
+          - { label: "Form Button Text", name: "form_button_text", widget: "string" }
+          - label: "SEO Settings"
+            name: "seo"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "SEO Title", name: "seo_title", widget: "string", required: false }
+              - { label: "SEO Description", name: "seo_description", widget: "text", required: false }
+              - { label: "Keywords", name: "keywords", widget: "string", required: false }
+              - { label: "OG Image", name: "og_image", widget: "image", required: false }
+              - { label: "Robots", name: "robots", widget: "select", options: ["index, follow", "noindex, follow", "index, nofollow", "noindex, nofollow"], default: "index, follow", required: false }
+      - label: "Customers Page (English)"
+        name: "customers_en"
+        file: "src/en/customers/index.html"
         fields:
           - { label: "Page Title", name: "title", widget: "string" }
           - { label: "Meta Description", name: "description", widget: "string" }

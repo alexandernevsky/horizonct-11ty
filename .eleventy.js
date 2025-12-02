@@ -57,25 +57,48 @@ module.exports = function (eleventyConfig) {
       .replace(/^-+|-+$/g, '');
   });
 
-  // Language switcher filter - returns alternate language URL
-  eleventyConfig.addFilter("switchLang", (currentUrl, currentLang, targetLang) => {
-    if (!currentUrl) return targetLang === 'ru' ? '/ru/' : '/';
-    
+  // Store all pages for language switching
+  let allPagesCache = [];
+
+  // Language switcher filter - returns alternate language URL using translationKey
+  eleventyConfig.addFilter("switchLang", (page, targetLang) => {
+    if (!page) return targetLang === 'ru' ? '/ru/' : '/';
+
     // If on news page, always redirect to home page of target language
-    if (currentUrl.startsWith('/news')) {
+    if (page.url && page.url.startsWith('/news')) {
       return targetLang === 'ru' ? '/ru/' : '/';
     }
-    
-    // Remove language prefix if exists
+
+    // If page has translationKey, find the corresponding page in target language
+    if (page.data && page.data.translationKey) {
+      const translationKey = page.data.translationKey;
+      
+      const translatedPage = allPagesCache.find(p => 
+        p.data && 
+        p.data.translationKey === translationKey && 
+        p.data.lang === targetLang
+      );
+
+      if (translatedPage && translatedPage.data.permalink) {
+        return translatedPage.data.permalink;
+      }
+    }
+
+    // Fallback: use URL manipulation
+    const currentUrl = page.url || '';
     let cleanUrl = currentUrl.replace(/^\/en\//, '/').replace(/^\/ru\//, '/');
     if (cleanUrl === '/') cleanUrl = '';
-    
-    // Add target language prefix
+
     if (targetLang === 'ru') {
       return '/ru' + cleanUrl;
     } else {
       return cleanUrl || '/';
     }
+  });
+
+  // Build cache of all pages after first pass
+  eleventyConfig.on('eleventy.after', ({ allPages }) => {
+    allPagesCache = allPages;
   });
 
   // Syntax Highlighting for Code blocks
@@ -201,12 +224,16 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addTransform("htmlmin", function (content, outputPath) {
     // Eleventy 1.0+: use this.inputPath and this.outputPath instead
     if (outputPath.endsWith(".html")) {
-      let minified = htmlmin.minify(content, {
-        useShortDoctype: true,
-        removeComments: true,
-        collapseWhitespace: true,
-      });
-      return minified;
+      // Temporarily disable minification to debug language switcher
+      // let minified = htmlmin.minify(content, {
+      //   useShortDoctype: true,
+      //   removeComments: true,
+      //   collapseWhitespace: true,
+      //   removeEmptyElements: false, // Don't remove empty elements
+      //   keepClosingSlash: true,
+      // });
+      // return minified;
+      return content;
     }
 
     return content;

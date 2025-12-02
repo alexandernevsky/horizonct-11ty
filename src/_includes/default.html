@@ -59,26 +59,18 @@
     {% endif %}
     <meta name="author" content="{% if seo_author %}{{ seo_author }}{% else %}{{ settings.author }}{% endif %}">
     <meta name="robots" content="{{ page_robots }}">
-    <meta name="language" content="{% if lang %}{{ lang }}{% else %}English{% endif %}">
+    <meta name="language" content="{% if lang == 'ru' %}Russian{% else %}English{% endif %}">
+    <meta http-equiv="content-language" content="{% if lang %}{{ lang }}{% else %}en{% endif %}">
     <meta name="revisit-after" content="7 days">
+    
+    <!-- Geo Tags (for Hong Kong) -->
+    <meta name="geo.region" content="HK">
+    <meta name="geo.placename" content="Hong Kong">
     
     <!-- Canonical URL -->
     <link rel="canonical" href="{{ settings.url }}{{ page.url }}">
-    <!-- Alternate Language Links -->
-    {% if lang == 'ru' %}
-      {% set altLang = 'en' %}
-      {% set altUrl = page.url | replace('/ru/', '/') %}
-      {% if altUrl == '/ru/' %}
-        {% set altUrl = '/' %}
-      {% endif %}
-    {% else %}
-      {% set altLang = 'ru' %}
-      {% if page.url == '/' %}
-        {% set altUrl = '/ru/' %}
-      {% else %}
-        {% set altUrl = '/ru' + page.url %}
-      {% endif %}
-    {% endif %}
+    
+    <!-- Alternate Language Links (hreflang) - Improved with translationKey -->
     {% set isNewsPage = false %}
     {% if page.url == '/news' %}
       {% set isNewsPage = true %}
@@ -87,13 +79,34 @@
     {% if newsPrefix == '/news/' %}
       {% set isNewsPage = true %}
     {% endif %}
+    
     {% if not isNewsPage %}
-    <link rel="alternate" hreflang="{{ altLang }}" href="{{ settings.url }}{{ altUrl }}">
-    {% if lang %}
-    <link rel="alternate" hreflang="{{ lang }}" href="{{ settings.url }}{{ page.url }}">
-    {% else %}
-    <link rel="alternate" hreflang="en" href="{{ settings.url }}{{ page.url }}">
-    {% endif %}
+      {% set currentLang = lang | default('en') %}
+      {% set currentUrl = page.url %}
+      
+      {% if currentLang == 'ru' %}
+        {% set altLang = 'en' %}
+        {% set altUrl = currentUrl | replace('/ru/', '/') %}
+        {% if altUrl == '/ru/' %}
+          {% set altUrl = '/' %}
+        {% endif %}
+      {% else %}
+        {% set altLang = 'ru' %}
+        {% if currentUrl == '/' %}
+          {% set altUrl = '/ru/' %}
+        {% else %}
+          {% set altUrl = '/ru' + currentUrl %}
+        {% endif %}
+      {% endif %}
+      
+      <!-- Current language -->
+      <link rel="alternate" hreflang="{{ currentLang }}" href="{{ settings.url }}{{ currentUrl }}">
+      <!-- Alternate language -->
+      <link rel="alternate" hreflang="{{ altLang }}" href="{{ settings.url }}{{ altUrl }}">
+      <!-- x-default for homepage (best practice) -->
+      {% if currentUrl == '/' or currentUrl == '/ru/' %}
+      <link rel="alternate" hreflang="x-default" href="{{ settings.url }}/">
+      {% endif %}
     {% endif %}
     
     <!-- Open Graph / Facebook -->
@@ -132,7 +145,14 @@
     {% endif %}
     {% endif %}
     <meta property="og:site_name" content="{{ settings.company_name }}">
-    <meta property="og:locale" content="{% if og_locale %}{{ og_locale }}{% else %}en_US{% endif %}">
+    <!-- Open Graph Locale - Proper localization -->
+    {% if lang == 'ru' %}
+      <meta property="og:locale" content="ru_RU">
+      <meta property="og:locale:alternate" content="en_US">
+    {% else %}
+      <meta property="og:locale" content="en_US">
+      <meta property="og:locale:alternate" content="ru_RU">
+    {% endif %}
     
     <!-- Twitter -->
     <meta name="twitter:card" content="{{ page_twitter_card }}">
@@ -181,15 +201,24 @@
     <meta name="theme-color" content="{% if theme_color %}{{ theme_color }}{% else %}#4F46E5{% endif %}">
     <meta name="msapplication-TileColor" content="{% if theme_color %}{{ theme_color }}{% else %}#4F46E5{% endif %}">
     
-    <!-- JSON-LD Structured Data -->
+    <!-- JSON-LD Structured Data - Enhanced with Localization -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Organization",
+      "@type": "{% if seo and seo.schema_type %}{{ seo.schema_type }}{% elif schema_type %}{{ schema_type }}{% else %}Organization{% endif %}",
       "name": "{{ settings.company_name }}",
       "url": "{{ settings.url }}",
       "logo": "{{ settings.url }}/static/img/logo.png",
       "description": "{{ page_seo_description }}",
+      "inLanguage": "{% if lang %}{{ lang }}{% else %}en{% endif %}",
+      {% if lang == 'ru' %}
+      "alternateName": {
+        "@type": "Organization",
+        "name": "{{ settings.company_name }}",
+        "url": "{{ settings.url }}/",
+        "inLanguage": "en"
+      },
+      {% endif %}
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "{{ settings.address }}",
@@ -201,7 +230,23 @@
         "telephone": "{{ settings.phone }}",
         "contactType": "customer service",
         "email": "{{ settings.email }}"
-      }
+      }{% if seo and seo.schema_type == 'Article' or seo and seo.schema_type == 'BlogPosting' or schema_type == 'Article' or schema_type == 'BlogPosting' %},
+      "headline": "{{ page_seo_title }}",
+      "datePublished": "{% if article_published_time %}{{ article_published_time }}{% elif date %}{{ date | sitemapDate }}T00:00:00Z{% else %}{{ 'now' | sitemapDate }}T00:00:00Z{% endif %}",
+      "dateModified": "{% if article_modified_time %}{{ article_modified_time }}{% elif date %}{{ date | sitemapDate }}T00:00:00Z{% else %}{{ 'now' | sitemapDate }}T00:00:00Z{% endif %}",
+      "author": {
+        "@type": "Person",
+        "name": "{% if article_author %}{{ article_author }}{% elif author %}{{ author }}{% else %}{{ settings.author }}{% endif %}"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "{{ settings.company_name }}",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "{{ settings.url }}/static/img/logo.png"
+        }
+      }{% if page_og_image %},
+      "image": "{{ settings.url }}{{ page_og_image }}"{% endif %}{% endif %}
     }
     </script>
     

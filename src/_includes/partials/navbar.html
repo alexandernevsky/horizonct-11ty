@@ -21,7 +21,19 @@
       <!-- Desktop Navigation -->
       <div class="hidden md:block">
         <div class="ml-10 flex items-baseline space-x-4">
-          {% if navigation.items %}
+          {% if lang %}
+            {% set currentLang = lang %}
+          {% else %}
+            {% set currentLang = 'en' %}
+          {% endif %}
+          {% if navigation[currentLang] %}
+            {% for item in navigation[currentLang] %}
+              {% set isActive = page.url | isActive(item.url) %}
+              <a href="{{ item.url }}" class="px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 {% if isActive %}text-indigo-600 dark:text-indigo-400 bg-indigo-100 dark:bg-indigo-900/30 font-semibold border-b-2 border-indigo-600 dark:border-indigo-400{% else %}text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-gray-100 dark:hover:bg-gray-800{% endif %}">
+                {{ item.text }}
+              </a>
+            {% endfor %}
+          {% elif navigation.items %}
             {% for item in navigation.items %}
               {% set isActive = page.url | isActive(item.url) %}
               <a href="{{ item.url }}" class="px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 {% if isActive %}text-indigo-600 dark:text-indigo-400 bg-indigo-100 dark:bg-indigo-900/30 font-semibold border-b-2 border-indigo-600 dark:border-indigo-400{% else %}text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-gray-100 dark:hover:bg-gray-800{% endif %}">
@@ -35,25 +47,45 @@
       <!-- Language Switcher, Theme Toggle & Mobile Menu Button -->
       <div class="flex items-center space-x-4">
         <!-- Language Switcher -->
-        {% if lang %}
-          {% set currentLang = lang %}
-        {% else %}
-          {% set currentLang = 'en' %}
-        {% endif %}
-        {% if currentLang == 'en' %}
-          {% set targetLang = 'ru' %}
-        {% else %}
+        {% set currentLang = lang | default('en') %}
+        {% if currentLang == 'ru' %}
           {% set targetLang = 'en' %}
+          {% set switchTitle = 'Switch to English' %}
+          {% if translationKey == 'home' %}
+            {% set switchUrl = '/' %}
+          {% elif translationKey == 'about' %}
+            {% set switchUrl = '/about/' %}
+          {% elif translationKey == 'careers' %}
+            {% set switchUrl = '/careers/' %}
+          {% elif translationKey == 'contact' %}
+            {% set switchUrl = '/contact/' %}
+          {% elif translationKey == 'customers' %}
+            {% set switchUrl = '/customers/' %}
+          {% elif translationKey == 'privacy-policy' %}
+            {% set switchUrl = '/privacy-policy/' %}
+          {% else %}
+            {% set switchUrl = '/' %}
+          {% endif %}
+        {% else %}
+          {% set targetLang = 'ru' %}
+          {% set switchTitle = 'Switch to Russian' %}
+          {% if translationKey == 'home' %}
+            {% set switchUrl = '/ru/' %}
+          {% elif translationKey == 'about' %}
+            {% set switchUrl = '/ru/about/' %}
+          {% elif translationKey == 'careers' %}
+            {% set switchUrl = '/ru/careers/' %}
+          {% elif translationKey == 'contact' %}
+            {% set switchUrl = '/ru/contact/' %}
+          {% elif translationKey == 'customers' %}
+            {% set switchUrl = '/ru/customers/' %}
+          {% elif translationKey == 'privacy-policy' %}
+            {% set switchUrl = '/ru/privacy-policy/' %}
+          {% else %}
+            {% set switchUrl = '/ru/' %}
+          {% endif %}
         {% endif %}
-        {% set switchUrl = page.url | switchLang(currentLang, targetLang) %}
-        <a 
-          href="{{ switchUrl }}" 
-          class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-          title="{% if i18n and i18n[targetLang] %}{{ i18n[targetLang].switchTo }}{% else %}Switch language{% endif %}"
-        >
-          {{ targetLang | upper }}
-        </a>
-        
+        <a href="{{ switchUrl }}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800" title="{{ switchTitle }}"><span class="font-semibold">{{ targetLang | upper }}</span></a>
         <!-- Theme Toggle -->
         <button 
           @click="darkMode = !darkMode" 

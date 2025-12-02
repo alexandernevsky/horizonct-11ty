@@ -4,6 +4,8 @@ title: About Us | Horizon Commodities Trading
 description: Learn about Horizon Commodities Trading Limited - connecting reputable mining producers with large-scale industrial end-users across Asia and the Middle East
 path: about
 lang: en
+translationKey: about
+permalink: /about/
 hero_title: "We Move the Raw Power<br>That Drives Civilization"
 hero_subtitle: "Learn About us"
 main_heading: "Horizon Commodities Trading Limited powers industrial growth through reliable, producer-direct commodity trading"
@@ -47,12 +49,12 @@ news_description: "Curated articles that provide professional and balanced persp
         <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
           {{ main_heading }}
         </h2>
-        <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
-          {{ main_text_1 }}
-        </p>
-        <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
-          {{ main_text_2 }}
-        </p>
+        <div class="text-lg text-gray-700 dark:text-gray-300 mb-6 prose dark:prose-invert">
+          {{ main_text_1 | safe }}
+        </div>
+        <div class="text-lg text-gray-700 dark:text-gray-300 mb-6 prose dark:prose-invert">
+          {{ main_text_2 | safe }}
+        </div>
       </div>
 
       <!-- Key Features Grid -->
