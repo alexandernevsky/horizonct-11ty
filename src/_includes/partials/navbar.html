@@ -22,7 +22,7 @@
               <li>
                 <a 
                   href="{{ item.url }}" 
-                  class="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 {% if isActive %}bg-accent/50 text-primary font-semibold{% else %}text-foreground{% endif %}"
+                  class="group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors focus:outline-none disabled:pointer-events-none disabled:opacity-50 {% if isActive %}bg-accent/50 text-white font-semibold pointer-events-none{% else %}bg-background text-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground{% endif %}"
                   {% if isActive %}data-active="true" aria-current="page"{% endif %}
                 >
                   {{ item.text }}
@@ -150,7 +150,7 @@
                 <a 
                   href="{{ item.url }}" 
                   @click="isOpen = false"
-                  class="block px-3 py-2 rounded-md text-base font-medium transition-colors hover:bg-accent hover:text-accent-foreground {% if isActive %}bg-accent/50 text-primary font-semibold{% else %}text-foreground{% endif %}"
+                  class="block px-3 py-2 rounded-md text-base font-medium transition-colors {% if isActive %}bg-accent/50 text-white font-semibold pointer-events-none{% else %}bg-background text-foreground hover:bg-accent hover:text-accent-foreground{% endif %}"
                   {% if isActive %}aria-current="page"{% endif %}
                 >
                   {{ item.text }}

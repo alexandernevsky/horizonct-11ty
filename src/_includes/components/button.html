@@ -32,7 +32,7 @@
   <a
     href="{{ buttonHref }}"
     {% if buttonDisabled %}aria-disabled="true" tabindex="-1"{% endif %}
-    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 {{ variantClasses[buttonVariant] }} {{ sizeClasses[buttonSize] }} {{ buttonClass }}"
+    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 {% if buttonClass and 'bg-' in buttonClass %}{{ sizeClasses[buttonSize] }} {{ buttonClass }}{% else %}{{ variantClasses[buttonVariant] }} {{ sizeClasses[buttonSize] }} {{ buttonClass }}{% endif %}"
     {{ buttonAttributes | default("") }}
   >
     {{ buttonContent | safe }}
@@ -41,7 +41,7 @@
   <button
     type="{{ buttonType }}"
     {% if buttonDisabled %}disabled{% endif %}
-    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 {{ variantClasses[buttonVariant] }} {{ sizeClasses[buttonSize] }} {{ buttonClass }}"
+    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 {% if buttonClass and 'bg-' in buttonClass %}{{ sizeClasses[buttonSize] }} {{ buttonClass }}{% else %}{{ variantClasses[buttonVariant] }} {{ sizeClasses[buttonSize] }} {{ buttonClass }}{% endif %}"
     {{ buttonAttributes | default("") }}
   >
     {{ buttonContent | safe }}

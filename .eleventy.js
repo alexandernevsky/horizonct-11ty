@@ -116,17 +116,16 @@ module.exports = function (eleventyConfig) {
     return `<svg ${svgAttrs}>${iconPath}</svg>`;
   });
 
-  // Language switcher filter - simple hardcoded URL mapping
-  eleventyConfig.addFilter("switchLang", (page, targetLang) => {
+  // Language switcher filter - hardcoded URL mapping only
+  eleventyConfig.addFilter("switchLang", (page) => {
     if (!page || !page.url) {
-      return targetLang === 'ru' ? '/ru/' : '/';
+      return '/';
     }
 
     const currentUrl = page.url;
     
-    // Hardcoded URL mapping table - NO CACHING, NO LOGIC, JUST SIMPLE MAPPING
+    // Hardcoded URL mapping table
     const urlMap = {
-      // English to Russian
       '/': '/ru/',
       '/about/': '/ru/about/',
       '/careers/': '/ru/careers/',
@@ -135,7 +134,6 @@ module.exports = function (eleventyConfig) {
       '/privacy-policy/': '/ru/privacy-policy/',
       '/news/': '/ru/news/',
       '/news': '/ru/news/',
-      // Russian to English
       '/ru/': '/',
       '/ru/about/': '/about/',
       '/ru/careers/': '/careers/',
@@ -146,7 +144,7 @@ module.exports = function (eleventyConfig) {
       '/ru/news': '/news/',
     };
 
-    // Normalize URL - remove trailing slash for lookup, but keep / for root
+    // Normalize URL for lookup
     let lookupUrl = currentUrl;
     if (lookupUrl !== '/' && lookupUrl.endsWith('/')) {
       lookupUrl = lookupUrl.slice(0, -1);
@@ -155,28 +153,8 @@ module.exports = function (eleventyConfig) {
       lookupUrl = '/';
     }
     
-    // Direct lookup in map
-    if (urlMap[lookupUrl]) {
-      return urlMap[lookupUrl];
-    }
-    
-    // Also try with trailing slash
-    if (urlMap[currentUrl]) {
-      return urlMap[currentUrl];
-    }
-
-    // Fallback: simple URL manipulation
-    if (currentUrl.startsWith('/ru/')) {
-      // Russian to English
-      const enUrl = currentUrl.replace('/ru/', '/');
-      return enUrl === '/' ? '/' : enUrl;
-    } else {
-      // English to Russian
-      if (currentUrl === '/') {
-        return '/ru/';
-      }
-      return '/ru' + currentUrl;
-    }
+    // Direct lookup
+    return urlMap[lookupUrl] || urlMap[currentUrl] || '/';
   });
 
   // Syntax Highlighting for Code blocks
@@ -302,6 +280,7 @@ module.exports = function (eleventyConfig) {
   // Copy Static Files to /_Site
   eleventyConfig.addPassthroughCopy({
     "./src/admin/config.yml": "./admin/config.yml",
+    "./src/static/js/swup-init.js": "./static/js/swup-init.js",
     "./node_modules/alpinejs/dist/cdn.min.js": "./static/js/alpine.js",
     "./node_modules/prismjs/themes/prism-tomorrow.css":
       "./static/css/prism-tomorrow.css",
