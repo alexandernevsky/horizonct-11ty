@@ -1,0 +1,41 @@
+{# 
+  Loading Skeleton Component for page loading states
+  Usage:
+    {% include "components/loading-skeleton.html" %}
+#}
+<div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+  <div class="max-w-4xl mx-auto space-y-8">
+    {# Hero Skeleton #}
+    <div class="space-y-4">
+      {% set skeletonClass = "h-12 w-3/4 mx-auto" %}
+      {% include "components/skeleton.html" %}
+      {% set skeletonClass = "h-6 w-1/2 mx-auto" %}
+      {% include "components/skeleton.html" %}
+    </div>
+    
+    {# Content Skeleton #}
+    <div class="space-y-4">
+      {% set skeletonClass = "h-4 w-full" %}
+      {% include "components/skeleton.html" %}
+      {% set skeletonClass = "h-4 w-full" %}
+      {% include "components/skeleton.html" %}
+      {% set skeletonClass = "h-4 w-5/6" %}
+      {% include "components/skeleton.html" %}
+    </div>
+    
+    {# Cards Skeleton #}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for i in range(1, 6) %}
+      <div class="space-y-3 p-6 border border-border rounded-lg">
+        {% set skeletonClass = "h-6 w-3/4" %}
+        {% include "components/skeleton.html" %}
+        {% set skeletonClass = "h-4 w-full" %}
+        {% include "components/skeleton.html" %}
+        {% set skeletonClass = "h-4 w-5/6" %}
+        {% include "components/skeleton.html" %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+

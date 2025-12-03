@@ -1,0 +1,10 @@
+{# 
+  Skeleton Component based on shadcn/ui
+  Usage:
+    {% set skeletonClass = "h-4 w-full" %}
+    {% include "components/skeleton.html" %}
+#}
+{% set skeletonClass = skeletonClass | default("h-4 w-[250px]") %}
+
+<div class="animate-pulse rounded-md bg-muted {{ skeletonClass }}"></div>
+

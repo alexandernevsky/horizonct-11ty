@@ -12,7 +12,7 @@ pagination:
   alias: posts
 ---
 
-<section class="py-12 bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
+<section class="py-12 bg-gradient-to-br from-violet-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     <div class="max-w-4xl mx-auto text-center">
       <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">Новости</h1>
@@ -26,7 +26,7 @@ pagination:
       <div class="flex flex-wrap justify-center gap-2 mt-6">
         <span class="text-sm text-gray-600 dark:text-gray-400 mr-2">Фильтр по тегам:</span>
         {% for tagData in allTags %}
-        <a href="/news/tags/{{ tagData.slug }}/" class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-white dark:bg-gray-800 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-700 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-colors">
+        <a href="/news/tags/{{ tagData.slug }}/" class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-white dark:bg-gray-800 text-violet-600 dark:text-violet-400 border border-violet-200 dark:border-violet-700 hover:bg-violet-50 dark:hover:bg-violet-900/30 transition-colors">
           {{ tagData.tag }} ({{ tagData.posts.length }})
         </a>
         {% endfor %}
@@ -39,12 +39,12 @@ pagination:
 <section class="py-16 bg-white dark:bg-gray-800">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     <div class="max-w-4xl mx-auto">
-      <ul class="space-y-8" role="list">
+      <ul class="space-y-8 list-none" role="list">
         {% for post in posts %}
         <li>
           <article class="bg-gray-50 dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow" itemscope itemtype="https://schema.org/BlogPosting">
             <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-3" itemprop="headline">
-              <a href="{{ post.url }}" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors" itemprop="url">{{ post.data.title }}</a>
+              <a href="{{ post.url }}" class="hover:text-violet-600 dark:hover:text-violet-400 transition-colors" itemprop="url">{{ post.data.title }}</a>
             </h2>
             {% if post.data.description %}
             <p class="text-gray-600 dark:text-gray-400 mb-4" itemprop="description">{{ post.data.description }}</p>
@@ -54,7 +54,7 @@ pagination:
             {% if post.data.tags and post.data.tags.length > 0 %}
             <nav class="flex flex-wrap gap-2 mb-4" aria-label="Теги статьи">
               {% for tag in post.data.tags %}
-              <a href="/news/tags/{{ tag | slugify }}/" class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 hover:bg-indigo-200 dark:hover:bg-indigo-800 transition-colors" rel="tag">
+              <a href="/news/tags/{{ tag | slugify }}/" class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-violet-100 dark:bg-violet-900 text-violet-800 dark:text-violet-200 hover:bg-violet-200 dark:hover:bg-violet-800 transition-colors" rel="tag">
                 {{ tag }}
               </a>
               {% endfor %}
@@ -64,7 +64,7 @@ pagination:
             {% if post.data.date %}
             <time class="text-sm text-gray-500 dark:text-gray-500 block mb-4" datetime="{{ post.data.date }}" itemprop="datePublished">{{ post.data.date | readableDate }}</time>
             {% endif %}
-            <a href="{{ post.url }}" class="inline-flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium">
+            <a href="{{ post.url }}" class="inline-flex items-center text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300 font-medium">
               Читать полностью →
             </a>
           </article>
@@ -81,10 +81,10 @@ pagination:
       {% if pagination.pages.length > 1 %}
       <nav class="mt-12 flex justify-center space-x-4">
         {% if pagination.href.previous %}
-        <a href="{{ pagination.href.previous }}" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors">← Предыдущая</a>
+        <a href="{{ pagination.href.previous }}" class="px-4 py-2 bg-violet-600 text-white rounded-md hover:bg-violet-700 transition-colors">← Предыдущая</a>
         {% endif %}
         {% if pagination.href.next %}
-        <a href="{{ pagination.href.next }}" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors">Следующая →</a>
+        <a href="{{ pagination.href.next }}" class="px-4 py-2 bg-violet-600 text-white rounded-md hover:bg-violet-700 transition-colors">Следующая →</a>
         {% endif %}
       </nav>
       {% endif %}

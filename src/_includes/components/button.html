@@ -1,0 +1,50 @@
+{# 
+  Button Component based on shadcn/ui
+  Usage:
+    {% set buttonVariant = "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" %}
+    {% set buttonSize = "default" | "sm" | "lg" | "icon" %}
+    {% include "components/button.html" %}
+#}
+{% set buttonVariant = buttonVariant | default("default") %}
+{% set buttonSize = buttonSize | default("default") %}
+{% set buttonClass = buttonClass | default("") %}
+{% set buttonType = buttonType | default("button") %}
+{% set buttonDisabled = buttonDisabled | default(false) %}
+{% set buttonHref = buttonHref | default("") %}
+
+{% set variantClasses = {
+  "default": "bg-primary text-primary-foreground hover:bg-primary/90",
+  "destructive": "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+  "outline": "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+  "secondary": "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+  "ghost": "hover:bg-accent hover:text-accent-foreground",
+  "link": "text-primary underline-offset-4 hover:underline"
+} %}
+
+{% set sizeClasses = {
+  "default": "h-10 px-4 py-2",
+  "sm": "h-9 rounded-md px-3",
+  "lg": "h-11 rounded-md px-8",
+  "icon": "h-10 w-10"
+} %}
+
+{% if buttonHref %}
+  <a
+    href="{{ buttonHref }}"
+    {% if buttonDisabled %}aria-disabled="true" tabindex="-1"{% endif %}
+    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 {{ variantClasses[buttonVariant] }} {{ sizeClasses[buttonSize] }} {{ buttonClass }}"
+    {{ buttonAttributes | default("") }}
+  >
+    {{ buttonContent | safe }}
+  </a>
+{% else %}
+  <button
+    type="{{ buttonType }}"
+    {% if buttonDisabled %}disabled{% endif %}
+    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 {{ variantClasses[buttonVariant] }} {{ sizeClasses[buttonSize] }} {{ buttonClass }}"
+    {{ buttonAttributes | default("") }}
+  >
+    {{ buttonContent | safe }}
+  </button>
+{% endif %}
+

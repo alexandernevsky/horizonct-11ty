@@ -1,4 +1,4 @@
-<nav class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50 shadow-sm" x-data="{ isOpen: false, darkMode: false }" x-init="darkMode = localStorage.getItem('darkMode') === 'true' || (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches); if (darkMode) document.documentElement.classList.add('dark'); $watch('darkMode', value => { localStorage.setItem('darkMode', value); document.documentElement.classList.toggle('dark', value) })">
+<nav class="bg-background border-b border-border sticky top-0 z-50 shadow-sm" x-data="{ isOpen: false, darkMode: false }" x-init="darkMode = localStorage.getItem('darkMode') === 'true' || (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches); if (darkMode) document.documentElement.classList.add('dark'); $watch('darkMode', value => { localStorage.setItem('darkMode', value); document.documentElement.classList.toggle('dark', value) })">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
       <!-- Logo -->
@@ -8,21 +8,23 @@
         {% else %}
           {% set homeUrl = '/' %}
         {% endif %}
-        <a href="{{ homeUrl }}" class="text-xl font-bold text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+        <a href="{{ homeUrl }}" class="text-xl font-bold text-foreground hover:text-primary transition-colors">
           {{ settings.company_name }}
         </a>
       </div>
 
       <!-- Desktop Navigation -->
-      <nav class="hidden md:block" aria-label="Main navigation">
-        <ul class="ml-10 flex items-baseline space-x-4">
+      <nav class="hidden md:block ml-10" aria-label="Main navigation">
+        <ul class="flex items-baseline space-x-4">
           {% if navigation[lang] %}
             {% for item in navigation[lang] %}
               {% set isActive = page.url | isActive(item.url) %}
               <li>
-                <a href="{{ item.url }}" 
-                   class="px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 {% if isActive %}text-indigo-600 dark:text-indigo-400 bg-indigo-100 dark:bg-indigo-900/30 font-semibold{% else %}text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-gray-100 dark:hover:bg-gray-800{% endif %}"
-                   {% if isActive %}aria-current="page"{% endif %}>
+                <a 
+                  href="{{ item.url }}" 
+                  class="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 {% if isActive %}bg-accent/50 text-primary font-semibold{% else %}text-foreground{% endif %}"
+                  {% if isActive %}data-active="true" aria-current="page"{% endif %}
+                >
                   {{ item.text }}
                 </a>
               </li>
@@ -44,98 +46,85 @@
           {% set ruUrl = page | switchLang('ru') %}
         {% endif %}
         
-        <div class="relative" x-data="{ isOpen: false }" @click.away="isOpen = false">
-          <!-- Dropdown Button -->
-          <button 
-            @click="isOpen = !isOpen"
-            class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 flex items-center space-x-1"
-            aria-label="Select language"
+        <div class="relative" x-data="{ open: false }" @click.away="open = false">
+          <button
+            type="button"
+            @click="open = !open"
+            class="flex h-10 w-24 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+            aria-haspopup="listbox"
+            :aria-expanded="open"
           >
             <span class="font-semibold">{{ currentLangCode }}</span>
-            <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" :class="{ 'rotate-180': isOpen }">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
+            <span class="h-4 w-4 opacity-50 transition-transform duration-200" :class="{ 'rotate-180': open }">
+              {% icon "chevron-down", { size: 16, class: "h-4 w-4" } %}
+            </span>
           </button>
           
-          <!-- Dropdown Menu -->
-          <div 
-            x-show="isOpen"
+          <ul
+            x-show="open"
             x-transition:enter="transition ease-out duration-100"
-            x-transition:enter-start="opacity-0 transform scale-95"
-            x-transition:enter-end="opacity-100 transform scale-100"
+            x-transition:enter-start="opacity-0 scale-95"
+            x-transition:enter-end="opacity-100 scale-100"
             x-transition:leave="transition ease-in duration-75"
-            x-transition:leave-start="opacity-100 transform scale-100"
-            x-transition:leave-end="opacity-0 transform scale-95"
-            class="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-800 rounded-md shadow-lg border border-gray-200 dark:border-gray-700 z-50"
+            x-transition:leave-start="opacity-100 scale-100"
+            x-transition:leave-end="opacity-0 scale-95"
+            class="absolute right-0 z-50 mt-1 w-40 overflow-auto rounded-md border bg-popover p-1 text-popover-foreground shadow-md"
+            role="listbox"
             style="display: none;"
           >
-            <ul class="py-1" role="list">
-              <!-- English Option -->
-              <li role="none">
-                <a 
-                  href="{{ enUrl }}"
-                  class="flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors {% if lang == 'en' %}bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400{% endif %}"
-                  @click="isOpen = false"
-                  {% if lang == 'en' %}aria-current="true"{% endif %}
-                  hreflang="en"
-                  lang="en"
-                >
-                  <span>English</span>
-                  {% if lang == 'en' %}
-                  <svg class="w-4 h-4 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                  </svg>
-                  {% endif %}
-                </a>
-              </li>
-              
-              <!-- Russian Option -->
-              <li role="none">
-                <a 
-                  href="{{ ruUrl }}"
-                  class="flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors {% if lang == 'ru' %}bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400{% endif %}"
-                  @click="isOpen = false"
-                  {% if lang == 'ru' %}aria-current="true"{% endif %}
-                  hreflang="ru"
-                  lang="ru"
-                >
-                  <span>Русский</span>
-                  {% if lang == 'ru' %}
-                  <svg class="w-4 h-4 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                  </svg>
-                  {% endif %}
-                </a>
-              </li>
-            </ul>
-          </div>
+            <li
+              role="option"
+              @click="open = false; window.location.href = '{{ enUrl }}'"
+              class="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-muted hover:text-foreground focus:bg-muted focus:text-foreground transition-colors {% if lang == 'en' %}bg-primary/10 text-primary font-medium{% endif %}"
+            >
+              <span>English</span>
+              {% if lang == 'en' %}
+              <span class="ml-auto h-4 w-4">
+                {% icon "check", { size: 16, class: "h-4 w-4" } %}
+              </span>
+              {% endif %}
+            </li>
+            <li
+              role="option"
+              @click="open = false; window.location.href = '{{ ruUrl }}'"
+              class="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-muted hover:text-foreground focus:bg-muted focus:text-foreground transition-colors {% if lang == 'ru' %}bg-primary/10 text-primary font-medium{% endif %}"
+            >
+              <span>Русский</span>
+              {% if lang == 'ru' %}
+              <span class="ml-auto h-4 w-4">
+                {% icon "check", { size: 16, class: "h-4 w-4" } %}
+              </span>
+              {% endif %}
+            </li>
+          </ul>
         </div>
+        
         <!-- Theme Toggle -->
         <button 
           @click="darkMode = !darkMode" 
-          class="p-2 rounded-md text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-colors"
+          class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"
           aria-label="Toggle theme"
         >
-          <svg x-show="!darkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-          </svg>
-          <svg x-show="darkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-          </svg>
+          <span x-show="!darkMode" class="w-5 h-5">
+            {% icon "moon", { size: 20, class: "w-5 h-5" } %}
+          </span>
+          <span x-show="darkMode" class="w-5 h-5" style="display: none;">
+            {% icon "sun", { size: 20, class: "w-5 h-5" } %}
+          </span>
         </button>
 
         <!-- Mobile menu button -->
         <button 
           @click="isOpen = !isOpen" 
-          class="md:hidden p-2 rounded-md text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-colors"
+          class="md:hidden inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"
           aria-label="Toggle menu"
         >
-          <svg x-show="!isOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-          </svg>
-          <svg x-show="isOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
+          <span x-show="!isOpen" class="w-6 h-6">
+            {% icon "menu", { size: 24, class: "w-6 h-6" } %}
+          </span>
+          <span x-show="isOpen" class="w-6 h-6" style="display: none;">
+            {% icon "x", { size: 24, class: "w-6 h-6" } %}
+          </span>
         </button>
       </div>
     </div>
@@ -149,7 +138,7 @@
       x-transition:leave="transition ease-in duration-150"
       x-transition:leave-start="opacity-100 transform scale-100"
       x-transition:leave-end="opacity-0 transform scale-95"
-      class="md:hidden border-t border-gray-200 dark:border-gray-800"
+      class="md:hidden border-t border-border"
       style="display: none;"
       aria-label="Mobile navigation"
     >
@@ -161,7 +150,7 @@
                 <a 
                   href="{{ item.url }}" 
                   @click="isOpen = false"
-                  class="block px-3 py-2 rounded-md text-base font-medium transition-all duration-200 {% if isActive %}text-indigo-600 dark:text-indigo-400 bg-indigo-100 dark:bg-indigo-900/30 font-semibold{% else %}text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-gray-50 dark:hover:bg-gray-800{% endif %}"
+                  class="block px-3 py-2 rounded-md text-base font-medium transition-colors hover:bg-accent hover:text-accent-foreground {% if isActive %}bg-accent/50 text-primary font-semibold{% else %}text-foreground{% endif %}"
                   {% if isActive %}aria-current="page"{% endif %}
                 >
                   {{ item.text }}

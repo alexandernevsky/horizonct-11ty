@@ -22,15 +22,15 @@ feature_4_title: "Устойчивое развитие"
 feature_4_text: "Мы стремимся к устойчивым практикам в торговле товарами, способствуя экологически ответственным решениям в энергетическом секторе."
 news_title: "Новости и аналитика"
 news_description: "Следите за последними новостями и аналитикой в области торговли товарами и энергетики."
-news_cta_link: "/news"
+news_cta_link: "/ru/news/"
 news_cta_text: "Посмотреть новости"
 ---
 
 <!-- Hero Section -->
-<section class="py-20 bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
+<section class="py-20 bg-gradient-to-br from-violet-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     <div class="max-w-4xl mx-auto text-center">
-      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+      <h1 class="scroll-m-20 text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-6">
         {{ hero_title | safe }}
       </h1>
       <p class="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-8">
@@ -60,7 +60,7 @@ news_cta_text: "Посмотреть новости"
       <div class="grid md:grid-cols-2 gap-8 mb-16">
         <div class="bg-gray-50 dark:bg-gray-900 p-8 rounded-lg border border-gray-200 dark:border-gray-700">
           <div class="flex items-start mb-4">
-            <span class="text-4xl font-bold text-indigo-600 dark:text-indigo-400 mr-4">{{ feature_1_num }}.</span>
+            <span class="text-4xl font-bold text-violet-600 dark:text-violet-400 mr-4">{{ feature_1_num }}.</span>
             <h3 class="text-2xl font-bold text-gray-900 dark:text-white">{{ feature_1_title }}</h3>
           </div>
           <p class="text-gray-700 dark:text-gray-300">
@@ -69,7 +69,7 @@ news_cta_text: "Посмотреть новости"
         </div>
         <div class="bg-gray-50 dark:bg-gray-900 p-8 rounded-lg border border-gray-200 dark:border-gray-700">
           <div class="flex items-start mb-4">
-            <span class="text-4xl font-bold text-indigo-600 dark:text-indigo-400 mr-4">{{ feature_2_num }}.</span>
+            <span class="text-4xl font-bold text-violet-600 dark:text-violet-400 mr-4">{{ feature_2_num }}.</span>
             <h3 class="text-2xl font-bold text-gray-900 dark:text-white">{{ feature_2_title }}</h3>
           </div>
           <p class="text-gray-700 dark:text-gray-300">
@@ -78,7 +78,7 @@ news_cta_text: "Посмотреть новости"
         </div>
         <div class="bg-gray-50 dark:bg-gray-900 p-8 rounded-lg border border-gray-200 dark:border-gray-700">
           <div class="flex items-start mb-4">
-            <span class="text-4xl font-bold text-indigo-600 dark:text-indigo-400 mr-4">{{ feature_3_num }}.</span>
+            <span class="text-4xl font-bold text-violet-600 dark:text-violet-400 mr-4">{{ feature_3_num }}.</span>
             <h3 class="text-2xl font-bold text-gray-900 dark:text-white">{{ feature_3_title }}</h3>
           </div>
           <p class="text-gray-700 dark:text-gray-300">
@@ -87,7 +87,7 @@ news_cta_text: "Посмотреть новости"
         </div>
         <div class="bg-gray-50 dark:bg-gray-900 p-8 rounded-lg border border-gray-200 dark:border-gray-700">
           <div class="flex items-start mb-4">
-            <span class="text-4xl font-bold text-indigo-600 dark:text-indigo-400 mr-4">{{ feature_4_num }}.</span>
+            <span class="text-4xl font-bold text-violet-600 dark:text-violet-400 mr-4">{{ feature_4_num }}.</span>
             <h3 class="text-2xl font-bold text-gray-900 dark:text-white">{{ feature_4_title }}</h3>
           </div>
           <p class="text-gray-700 dark:text-gray-300">
@@ -106,9 +106,10 @@ news_cta_text: "Посмотреть новости"
             </p>
           </div>
         </div>
-        <a href="{{ news_cta_link }}" class="inline-flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium">
-          {{ news_cta_text }} →
-        </a>
+        {% set buttonVariant = "link" %}
+        {% set buttonContent = news_cta_text + " →" %}
+        {% set buttonHref = news_cta_link %}
+        {% include "components/button.html" %}
       </div>
     </div>
   </div>

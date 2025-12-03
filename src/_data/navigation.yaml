@@ -3,25 +3,25 @@ en:
   - text: Home
     url: "/"
   - text: About
-    url: "/about"
+    url: "/about/"
   - text: Careers
-    url: "/careers"
+    url: "/careers/"
   - text: News
-    url: "/news"
+    url: "/news/"
   - text: Customers
-    url: "/customers"
+    url: "/customers/"
   - text: Contact
-    url: "/contact"
+    url: "/contact/"
 ru:
   - text: Главная
     url: "/ru/"
   - text: О нас
-    url: "/ru/about"
+    url: "/ru/about/"
   - text: Карьера
-    url: "/ru/careers"
+    url: "/ru/careers/"
   - text: Новости
-    url: "/ru/news"
+    url: "/ru/news/"
   - text: Клиенты
-    url: "/ru/customers"
+    url: "/ru/customers/"
   - text: Контакты
-    url: "/ru/contact"
+    url: "/ru/contact/"

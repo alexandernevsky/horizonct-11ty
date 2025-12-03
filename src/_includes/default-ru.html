@@ -339,6 +339,10 @@
     {% include "./partials/navbar.html" %}
 
     <main id="swup" class="flex-grow transition-fade">
+      {# Loading Skeleton - shown during Swup transitions #}
+      <div id="swup-loading" class="hidden">
+        {% include "components/loading-skeleton.html" %}
+      </div>
       {{ content | safe }}
     </main>
 
@@ -414,6 +418,14 @@
             });
         }
 
+        // Show loading skeleton during page transition
+        swup.hooks.on('visit:start', () => {
+          const loadingEl = document.getElementById('swup-loading');
+          if (loadingEl) {
+            loadingEl.classList.remove('hidden');
+          }
+        });
+        
         // Scroll to top on page transition
         swup.hooks.on('content:replace', () => {
           window.scrollTo(0, 0);
@@ -422,6 +434,11 @@
 
         // Update navbar and footer after page is loaded
         swup.hooks.on('visit:end', () => {
+          // Hide loading skeleton
+          const loadingEl = document.getElementById('swup-loading');
+          if (loadingEl) {
+            loadingEl.classList.add('hidden');
+          }
           updateNavbarAndFooter();
         });
 
@@ -445,7 +462,7 @@
         navLinks.forEach(link => {
           // Skip logo
           if (link.closest('.flex-shrink-0')) {
-            link.classList.remove('text-indigo-600', 'dark:text-indigo-400', 'bg-indigo-100', 'dark:bg-indigo-900/30', 'font-semibold');
+            link.classList.remove('text-primary', 'dark:text-primary', 'bg-primary/10', 'dark:bg-primary/20', 'font-semibold');
             return;
           }
           
@@ -457,10 +474,10 @@
           
           // Update classes
           if (isActive) {
-            link.classList.add('text-indigo-600', 'dark:text-indigo-400', 'bg-indigo-100', 'dark:bg-indigo-900/30', 'font-semibold');
-            link.classList.remove('text-gray-700', 'dark:text-gray-300', 'hover:text-indigo-600', 'dark:hover:text-indigo-400', 'hover:bg-gray-100', 'dark:hover:bg-gray-800');
+            link.classList.add('text-primary', 'dark:text-primary', 'bg-primary/10', 'dark:bg-primary/20', 'font-semibold');
+            link.classList.remove('text-gray-700', 'dark:text-gray-300', 'hover:text-primary', 'dark:hover:text-primary', 'hover:bg-gray-100', 'dark:hover:bg-gray-800');
           } else {
-            link.classList.remove('text-indigo-600', 'dark:text-indigo-400', 'bg-indigo-100', 'dark:bg-indigo-900/30', 'font-semibold');
+            link.classList.remove('text-primary', 'dark:text-primary', 'bg-primary/10', 'dark:bg-primary/20', 'font-semibold');
             link.classList.add('text-gray-700', 'dark:text-gray-300');
           }
         });

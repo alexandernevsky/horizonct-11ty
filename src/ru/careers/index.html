@@ -16,23 +16,25 @@ benefit_4_title: "Инновации"
 benefit_4_text: "Участвуйте в современных решениях для устойчивых цепочек поставок и инновационных технологиях."
 openings_intro: "Каждая позиция важна для продвижения устойчивых решений в цепочках поставок и предлагает уникальную возможность внести вклад в значимую работу лидеров отрасли."
 cta_text: "Мы всегда ищем талантливых людей. Если вы не нашли подходящую вакансию, но хотите работать в Horizon CT, мы хотим услышать от вас."
-cta_link: "/ru/contact"
+cta_link: "/ru/contact/"
 ---
 
 <!-- Hero Section -->
-<section class="bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-gray-800 dark:to-gray-900 py-20">
+<section class="bg-gradient-to-br from-violet-50 to-blue-50 dark:from-gray-800 dark:to-gray-900 py-20">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     <div class="max-w-4xl mx-auto text-center">
-      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+      <h1 class="scroll-m-20 text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-6">
         {{ hero_title | safe }}
       </h1>
       <p class="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-8">
         {{ hero_subtitle }}
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="#openings" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 transition-colors">
-          Посмотреть вакансии
-        </a>
+        {% set buttonVariant = "default" %}
+        {% set buttonSize = "lg" %}
+        {% set buttonContent = "Посмотреть вакансии" %}
+        {% set buttonHref = "#openings" %}
+        {% include "components/button.html" %}
       </div>
     </div>
   </div>
@@ -86,7 +88,7 @@ cta_link: "/ru/contact"
         {{ openings_intro }}
       </p>
 
-      <ul class="space-y-6" role="list">
+      <ul class="space-y-6 list-none" role="list">
         {% for job in collections.jobs | reverse %}
           {% if job.data.status == "open" %}
           <li>
@@ -96,7 +98,7 @@ cta_link: "/ru/contact"
                   <div class="flex items-center gap-3 mb-2">
                     <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">открытая вакансия</span>
                     <h3 class="text-xl font-bold text-gray-900 dark:text-white" itemprop="title">
-                      <a href="{{ job.url }}" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors" itemprop="url">
+                      <a href="{{ job.url }}" class="hover:text-violet-600 dark:hover:text-violet-400 transition-colors" itemprop="url">
                         {{ job.data.title }}
                       </a>
                     </h3>
@@ -118,7 +120,7 @@ cta_link: "/ru/contact"
                     {% endif %}
                   </div>
                   <div class="mt-4">
-                    <a href="{{ job.url }}" class="inline-flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium">
+                    <a href="{{ job.url }}" class="inline-flex items-center text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300 font-medium">
                       Подробнее →
                     </a>
                   </div>
@@ -140,9 +142,11 @@ cta_link: "/ru/contact"
         <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
           {{ cta_text }}
         </p>
-        <a href="{{ cta_link }}" class="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 transition-colors">
-          Связаться с нами
-        </a>
+        {% set buttonVariant = "default" %}
+        {% set buttonSize = "lg" %}
+        {% set buttonContent = "Связаться с нами" %}
+        {% set buttonHref = cta_link %}
+        {% include "components/button.html" %}
       </div>
     </div>
   </div>

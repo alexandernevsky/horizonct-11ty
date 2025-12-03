@@ -2,20 +2,20 @@
 layout: default
 ---
 
-<section class="py-12 bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
+<section class="py-12 bg-gradient-to-br from-violet-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     <div class="max-w-4xl mx-auto">
       <nav class="mb-6" aria-label="Breadcrumb">
         <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="flex items-center space-x-2 text-sm">
           <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-            <a href="/" itemprop="item" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300">
+            <a href="/" itemprop="item" class="text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300">
               <span itemprop="name">Home</span>
             </a>
             <meta itemprop="position" content="1" />
           </li>
           <li class="text-gray-500 dark:text-gray-400">/</li>
           <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-            <a href="/careers" itemprop="item" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300">
+            <a href="/careers/" itemprop="item" class="text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300">
               <span itemprop="name">Careers</span>
             </a>
             <meta itemprop="position" content="2" />
@@ -38,7 +38,7 @@ layout: default
             {% endif %}
           </div>
 
-          <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 text-left" itemprop="title">{{ job.data.title }}</h1>
+          <h1 class="scroll-m-20 text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-4 text-left" itemprop="title">{{ job.data.title }}</h1>
 
           <div class="flex items-center gap-4 text-gray-600 dark:text-gray-400 mb-8">
             <span itemprop="employmentType">{{ job.data.type }}</span>
@@ -110,11 +110,11 @@ layout: default
 <section class="py-12 bg-gray-50 dark:bg-gray-900">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     <div class="max-w-4xl mx-auto text-center">
-      <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Ready to Apply?</h2>
+      <h2 class="scroll-m-20 text-2xl font-semibold tracking-tight border-b pb-2 text-gray-900 dark:text-white mb-4">Ready to Apply?</h2>
       <p class="text-gray-700 dark:text-gray-300 mb-6">
-        Send your CV and cover letter to <a href="mailto:{{ settings.email }}" class="text-indigo-600 dark:text-indigo-400 hover:underline">{{ settings.email }}</a> with the subject line "Career Application - {{ job.data.title }}".
+        Send your CV and cover letter to <a href="mailto:{{ settings.email }}" class="text-violet-600 dark:text-violet-400 hover:underline">{{ settings.email }}</a> with the subject line "Career Application - {{ job.data.title }}".
       </p>
-      <a href="/contact" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 transition-colors">
+      <a href="/contact/" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 dark:bg-violet-500 dark:hover:bg-violet-600 transition-colors">
         Contact Us
       </a>
     </div>

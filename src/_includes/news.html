@@ -2,20 +2,20 @@
 layout: default
 ---
 
-<section class="py-12 bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
+<section class="py-12 bg-gradient-to-br from-violet-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     <div class="max-w-4xl mx-auto">
       <nav class="mb-6" aria-label="Breadcrumb">
         <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="flex items-center space-x-2 text-sm">
           <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-            <a href="/" itemprop="item" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300">
+            <a href="/" itemprop="item" class="text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300">
               <span itemprop="name">Home</span>
             </a>
             <meta itemprop="position" content="1" />
           </li>
           <li class="text-gray-500 dark:text-gray-400">/</li>
           <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-            <a href="/news" itemprop="item" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300">
+            <a href="/news/" itemprop="item" class="text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300">
               <span itemprop="name">News</span>
             </a>
             <meta itemprop="position" content="2" />
@@ -30,7 +30,7 @@ layout: default
       
       <header class="mb-6">
         {% if category %}
-        <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 mb-4" itemprop="articleSection">
+        <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-violet-100 dark:bg-violet-900 text-violet-800 dark:text-violet-200 mb-4" itemprop="articleSection">
           {{ category }}
         </span>
         {% endif %}
@@ -39,14 +39,14 @@ layout: default
         {% if tags and tags.length > 0 %}
         <nav class="flex flex-wrap gap-2 mb-4" aria-label="Article tags">
           {% for tag in tags %}
-          <a href="/news/tags/{{ tag | slugify }}/" class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 hover:bg-indigo-200 dark:hover:bg-indigo-800 transition-colors" rel="tag">
+          <a href="/news/tags/{{ tag | slugify }}/" class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-violet-100 dark:bg-violet-900 text-violet-800 dark:text-violet-200 hover:bg-violet-200 dark:hover:bg-violet-800 transition-colors" rel="tag">
             {{ tag }}
           </a>
           {% endfor %}
         </nav>
         {% endif %}
         
-        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 text-left" itemprop="headline">{{ title }}</h1>
+        <h1 class="scroll-m-20 text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-4 text-left" itemprop="headline">{{ title }}</h1>
         {% if description %}
         <p class="text-xl text-gray-700 dark:text-gray-300 mb-6" itemprop="description">{{ description }}</p>
         {% endif %}
@@ -65,7 +65,7 @@ layout: default
 
 <section class="py-16 bg-white dark:bg-gray-800">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-    <article class="max-w-4xl mx-auto prose prose-lg dark:prose-invert prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-a:text-indigo-600 dark:prose-a:text-indigo-400 prose-strong:text-gray-900 dark:prose-strong:text-white" itemscope itemtype="https://schema.org/BlogPosting" itemprop="mainEntity" itemid="{{ settings.url }}{{ page.url }}">
+    <article class="max-w-4xl mx-auto prose prose-lg dark:prose-invert prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-a:text-violet-600 dark:prose-a:text-violet-400 prose-strong:text-gray-900 dark:prose-strong:text-white" itemscope itemtype="https://schema.org/BlogPosting" itemprop="mainEntity" itemid="{{ settings.url }}{{ page.url }}">
       {{ content | safe }}
     </article>
     
@@ -92,13 +92,13 @@ layout: default
     {% endif %}
     {% if relatedPosts and relatedPosts.length > 0 %}
     <aside class="max-w-4xl mx-auto mt-16 pt-12 border-t border-gray-200 dark:border-gray-700" aria-label="Related articles">
-      <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-8">Related Articles</h2>
-      <ul class="space-y-6" role="list">
+      <h2 class="scroll-m-20 text-2xl md:text-3xl font-semibold tracking-tight border-b pb-2 text-gray-900 dark:text-white mb-8">Related Articles</h2>
+      <ul class="space-y-6 list-none" role="list">
         {% for relatedPost in relatedPosts %}
         <li>
           <article class="bg-gray-50 dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow" itemscope itemtype="https://schema.org/BlogPosting">
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3" itemprop="headline">
-              <a href="{{ relatedPost.url }}" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors" itemprop="url">{{ relatedPost.data.title }}</a>
+            <h3 class="scroll-m-20 text-xl font-semibold tracking-tight text-gray-900 dark:text-white mb-3" itemprop="headline">
+              <a href="{{ relatedPost.url }}" class="hover:text-violet-600 dark:hover:text-violet-400 transition-colors" itemprop="url">{{ relatedPost.data.title }}</a>
             </h3>
             {% if relatedPost.data.description %}
             <p class="text-gray-600 dark:text-gray-400 mb-4" itemprop="description">{{ relatedPost.data.description }}</p>
@@ -108,7 +108,7 @@ layout: default
             {% if relatedPost.data.tags and relatedPost.data.tags.length > 0 %}
             <nav class="flex flex-wrap gap-2 mb-4" aria-label="Article tags">
               {% for tag in relatedPost.data.tags %}
-              <a href="/news/tags/{{ tag | slugify }}/" class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 hover:bg-indigo-200 dark:hover:bg-indigo-800 transition-colors" rel="tag">
+              <a href="/news/tags/{{ tag | slugify }}/" class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-violet-100 dark:bg-violet-900 text-violet-800 dark:text-violet-200 hover:bg-violet-200 dark:hover:bg-violet-800 transition-colors" rel="tag">
                 {{ tag }}
               </a>
               {% endfor %}
@@ -118,7 +118,7 @@ layout: default
             {% if relatedPost.data.date %}
             <time class="text-sm text-gray-500 dark:text-gray-500 block mb-4" datetime="{{ relatedPost.data.date }}" itemprop="datePublished">{{ relatedPost.data.date | readableDate }}</time>
             {% endif %}
-            <a href="{{ relatedPost.url }}" class="inline-flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium">
+            <a href="{{ relatedPost.url }}" class="inline-flex items-center text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300 font-medium">
               Read full story →
             </a>
           </article>
@@ -129,7 +129,7 @@ layout: default
     {% endif %}
     
     <div class="max-w-4xl mx-auto mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
-      <a href="/news" class="inline-flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium">
+      <a href="/news/" class="inline-flex items-center text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300 font-medium">
         ← Back to All News
       </a>
     </div>

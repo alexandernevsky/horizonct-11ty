@@ -1,11 +1,25 @@
 ---
+layout: default
+permalink: /customers/
+lang: en
+translationKey: "customers"
+title: Customers | Horizon Commodities Trading
+description: Learn about our successful partnerships with leading industrial companies
+hero_title: Our Customers
+hero_subtitle: Trust Us for Reliable Supply
+spotlight_title: Customer Success Story
+testimonial_quote: Horizon Commodities Trading has provided us with consistent, high-quality coal supplies that have enabled us to optimize our production processes and reduce operational costs.
+testimonial_author: CEO
+testimonial_title: Major Energy Company
+testimonial_location: Asia
+more_stories_title: More Success Stories
 ---
 
 <!-- Hero Section -->
-<section class="py-20 bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
+<section class="py-20 bg-gradient-to-br from-violet-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     <div class="max-w-4xl mx-auto text-center">
-      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+      <h1 class="scroll-m-20 text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-6">
         {{ hero_title }}<br>{{ hero_subtitle }}
       </h1>
     </div>
@@ -16,15 +30,15 @@
 <section class="py-16 bg-white dark:bg-gray-800">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     <div class="max-w-4xl mx-auto">
-      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-12 text-center">
+      <h2 class="scroll-m-20 text-3xl md:text-4xl font-semibold tracking-tight text-gray-900 dark:text-white mb-12 text-center">
         {{ spotlight_title }}
       </h2>
       
-      <div class="bg-indigo-50 dark:bg-indigo-900/20 p-8 md:p-12 rounded-lg border border-indigo-200 dark:border-indigo-800">
+      <div class="bg-violet-50 dark:bg-violet-900/20 p-8 md:p-12 rounded-lg border border-violet-200 dark:border-violet-800">
         <blockquote class="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-6 italic leading-relaxed">
           "{{ testimonial_quote }}"
         </blockquote>
-        <div class="border-t border-indigo-200 dark:border-indigo-700 pt-6">
+        <div class="border-t border-violet-200 dark:border-violet-700 pt-6">
           <p class="text-lg font-semibold text-gray-900 dark:text-white mb-1">
             {{ testimonial_author }}
           </p>
@@ -42,7 +56,7 @@
 <section class="py-16 bg-gray-50 dark:bg-gray-900">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     <div class="max-w-6xl mx-auto">
-      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-12 text-center">
+      <h2 class="scroll-m-20 text-3xl md:text-4xl font-semibold tracking-tight text-gray-900 dark:text-white mb-12 text-center">
         {{ more_stories_title }}
       </h2>
       
@@ -54,7 +68,7 @@
             <img src="{{ story.data.image }}" alt="{{ story.data.title }}" class="w-full h-48 object-cover rounded-lg">
           </div>
           {% endif %}
-          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">
+          <h3 class="scroll-m-20 text-xl font-semibold tracking-tight text-gray-900 dark:text-white mb-3">
             {{ story.data.title }}
           </h3>
           {% if story.data.description %}
@@ -62,7 +76,7 @@
             {{ story.data.description }}
           </p>
           {% endif %}
-          <a href="{{ story.url }}" class="inline-flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium">
+          <a href="{{ story.url }}" class="inline-flex items-center text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300 font-medium">
             Read customer story →
           </a>
         </article>

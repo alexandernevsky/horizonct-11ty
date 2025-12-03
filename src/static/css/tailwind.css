@@ -2,13 +2,65 @@
 @tailwind components;
 @tailwind utilities;
 
-/*Your Custom CSS Goes here*/
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 224 71.4% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 224 71.4% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71.4% 4.1%;
+    --primary: 262.1 83.3% 57.8%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 220 14.3% 95.9%;
+    --secondary-foreground: 220.9 39.3% 11%;
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
+    --accent: 220 14.3% 95.9%;
+    --accent-foreground: 220.9 39.3% 11%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 262.1 83.3% 57.8%;
+    --radius: 0.5rem;
+  }
 
-/* Base font settings */
-body {
-  font-family: theme('fontFamily.sans');
-  font-variation-settings: 'wght' 400;
+  .dark {
+    --background: 224 71.4% 4.1%;
+    --foreground: 210 20% 98%;
+    --card: 224 71.4% 4.1%;
+    --card-foreground: 210 20% 98%;
+    --popover: 224 71.4% 4.1%;
+    --popover-foreground: 210 20% 98%;
+    --primary: 263.4 70% 50.4%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 215 27.9% 16.9%;
+    --secondary-foreground: 210 20% 98%;
+    --muted: 215 27.9% 16.9%;
+    --muted-foreground: 217.9 10.6% 64.9%;
+    --accent: 215 27.9% 16.9%;
+    --accent-foreground: 210 20% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 215 27.9% 16.9%;
+    --input: 215 27.9% 16.9%;
+    --ring: 263.4 70% 50.4%;
+  }
 }
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: theme('fontFamily.sans');
+    font-variation-settings: 'wght' 400;
+  }
+}
+
+/*Your Custom CSS Goes here*/
 
 /* Secondary font ONLY for dates, captions, meta info - NOT for buttons or tags */
 time,
@@ -22,35 +74,199 @@ small,
   font-variation-settings: 'wght' 400;
 }
 
-/* Headings - all use Geist with bold weight */
+/* Typography styles based on shadcn/ui Typography */
+/* https://ui.shadcn.com/docs/components/typography */
+
+/* Headings - all use Geist */
 h1, h2, h3, h4, h5, h6 {
   font-family: theme('fontFamily.sans');
-  font-weight: 700;
-  font-variation-settings: 'wght' 700;
 }
 
 h1 {
-  @apply text-4xl tracking-tighter mb-3 text-center lg:text-7xl;
+  @apply scroll-m-20 text-4xl font-extrabold tracking-tight;
 }
 
 h2 {
-  @apply text-3xl font-bold mb-3;
+  @apply scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0;
 }
 
 h3 {
-  @apply text-2xl font-bold mb-3;
+  @apply scroll-m-20 text-2xl font-semibold tracking-tight;
 }
 
 h4 {
-  @apply text-xl font-bold mb-2;
+  @apply scroll-m-20 text-xl font-semibold tracking-tight;
 }
 
 h5 {
-  @apply text-lg font-bold mb-2;
+  @apply scroll-m-20 text-lg font-semibold tracking-tight;
 }
 
 h6 {
-  @apply text-base font-bold mb-2;
+  @apply scroll-m-20 text-base font-semibold tracking-tight;
+}
+
+/* Paragraphs */
+p {
+  @apply leading-7;
+}
+
+p:not(:first-child) {
+  @apply mt-6;
+}
+
+/* Typography utility classes based on shadcn/ui */
+.lead {
+  @apply text-xl text-muted-foreground;
+}
+
+.large {
+  @apply text-lg font-semibold;
+}
+
+.small {
+  @apply text-sm font-medium leading-none;
+}
+
+.muted {
+  @apply text-sm text-muted-foreground;
+}
+
+/* Lists - only apply to content areas, not navigation */
+.prose ul, .prose ol,
+article ul, article ol,
+section ul, section ol {
+  @apply my-6 ml-6;
+}
+
+.prose ul, article ul, section ul {
+  @apply list-disc;
+}
+
+.prose ol, article ol, section ol {
+  @apply list-decimal;
+}
+
+.prose ul > li, .prose ol > li,
+article ul > li, article ol > li,
+section ul > li, section ol > li {
+  @apply mt-2;
+}
+
+/* Navigation lists should not have list styles */
+nav ul, nav ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul > li, nav ol > li {
+  margin: 0;
+  padding: 0;
+}
+
+/* Blockquote */
+blockquote {
+  @apply mt-6 border-l-2 pl-6 italic;
+}
+
+/* Inline code */
+code {
+  @apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold;
+}
+
+/* Code blocks */
+pre {
+  @apply overflow-x-auto rounded-lg bg-muted p-4;
+}
+
+pre code {
+  @apply relative rounded bg-transparent p-0;
+}
+
+/* Tailwind Typography (prose) customization for shadcn/ui Typography */
+.prose {
+  @apply text-foreground;
+}
+
+.prose h1 {
+  @apply scroll-m-20 text-4xl font-extrabold tracking-tight;
+}
+
+.prose h2 {
+  @apply scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0;
+}
+
+.prose h3 {
+  @apply scroll-m-20 text-2xl font-semibold tracking-tight;
+}
+
+.prose h4 {
+  @apply scroll-m-20 text-xl font-semibold tracking-tight;
+}
+
+.prose p {
+  @apply leading-7;
+}
+
+.prose p:not(:first-child) {
+  @apply mt-6;
+}
+
+.prose ul, .prose ol {
+  @apply my-6 ml-6;
+}
+
+.prose ul {
+  @apply list-disc;
+}
+
+.prose ol {
+  @apply list-decimal;
+}
+
+.prose ul > li, .prose ol > li {
+  @apply mt-2;
+}
+
+.prose blockquote {
+  @apply mt-6 border-l-2 pl-6 italic;
+}
+
+.prose code {
+  @apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold;
+}
+
+.prose pre {
+  @apply overflow-x-auto rounded-lg bg-muted p-4;
+}
+
+.prose pre code {
+  @apply relative rounded bg-transparent p-0;
+}
+
+.prose table {
+  @apply my-6 w-full overflow-y-auto;
+}
+
+.prose table thead tr {
+  @apply m-0 border-t p-0;
+}
+
+.prose table thead tr th {
+  @apply border px-4 py-2 text-left font-bold;
+}
+
+.prose table tbody tr {
+  @apply m-0 border-t p-0;
+}
+
+.prose table tbody tr:nth-child(even) {
+  @apply bg-muted;
+}
+
+.prose table tbody tr td {
+  @apply border px-4 py-2 text-left;
 }
 
 /* Syntax Highlighting*/
